@@ -71,7 +71,7 @@ const ProfileMenu: React.FunctionComponent<IProfileMenu> = ({ className }) => {
               className="fixed inset-0 z-40"
               onClick={() => setShowMenu(false)}
             />
-            <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-xl text-slate-700 py-2 z-50">
+            <div className="absolute right-0 mt-2 w-48 bg-white rounded-[18px] shadow-brand-card border border-[var(--ds-mist)] text-[var(--ds-navy)] py-2 z-50 font-montserrat">
               <button
                 type="button"
                 className="w-full text-left px-4 py-2 text-sm hover:bg-slate-50"
@@ -107,11 +107,11 @@ const ProfileMenu: React.FunctionComponent<IProfileMenu> = ({ className }) => {
           onClick={() => setShowProfile(false)}
         >
           <div
-            className="w-full max-w-sm bg-white rounded-2xl shadow-2xl border border-slate-100 p-6"
+            className="w-full max-w-sm bg-white rounded-[24px] shadow-brand-card border border-[var(--ds-mist)] p-6 font-montserrat"
             onClick={e => e.stopPropagation()}
           >
             <div className="flex flex-col items-center text-center">
-              <div className="w-24 h-24 rounded-full overflow-hidden bg-slate-100 border-4 border-[#18668D]/10">
+              <div className="w-24 h-24 rounded-full overflow-hidden bg-brand-mist border-4 border-[var(--ds-blue)]/10">
                 {user.avatar ? (
                   <img
                     src={user.avatar}
@@ -119,7 +119,7 @@ const ProfileMenu: React.FunctionComponent<IProfileMenu> = ({ className }) => {
                     className="w-full h-full object-cover"
                   />
                 ) : (
-                  <div className="w-full h-full flex items-center justify-center text-2xl font-semibold text-[#18668D]">
+                  <div className="w-full h-full flex items-center justify-center text-2xl font-semibold text-[var(--ds-blue)]">
                     {displayName.charAt(0).toUpperCase()}
                   </div>
                 )}
@@ -147,7 +147,7 @@ const ProfileMenu: React.FunctionComponent<IProfileMenu> = ({ className }) => {
             <button
               type="button"
               onClick={() => setShowProfile(false)}
-              className="mt-6 w-full rounded-lg bg-[#18668D] text-white font-medium py-2.5 hover:bg-[#145676] transition-colors"
+              className="mt-6 w-full rounded-full bg-[var(--ds-blue)] text-white font-semibold py-2.5 hover:brightness-110 transition-[filter] ds-focus-visible"
             >
               Close
             </button>

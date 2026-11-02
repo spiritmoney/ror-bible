@@ -51,7 +51,7 @@ const Footer: React.FunctionComponent<IFooter> = () => {
       className="flex items-center bg-[#DDDDDD] "
       ref={ref}
     >
-      <div className={clsx("flex items-center mr-auto bg-[#18668D] h-full w-[18%] transition-width duration-500 ease-in-out", { '!w-[6%]': sideNav === false })}
+      <div className={clsx("flex items-center mr-auto bg-[var(--ds-blue)] h-full w-[18%] transition-width duration-500 ease-in-out font-montserrat", { '!w-[6%]': sideNav === false })}
         style={{
           minHeight: height,
           maxHeight: height,
