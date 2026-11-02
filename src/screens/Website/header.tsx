@@ -6,7 +6,7 @@ import ProfileMenu from 'components/ProfileMenu';
 import { LoginRoute } from 'navigation/routes';
 import BrandStripe from './BrandStripe';
 import WebsiteButton from './WebsiteButton';
-import { useWebsiteMenu } from './WebsiteLayout';
+import { useWebsiteMenu } from './websiteMenuContext';
 import {
   WebsiteDownloadRoute,
   WebsiteFeaturesRoute,
@@ -82,7 +82,7 @@ export default function Header({ headerOffset }: Props) {
       className="site-header fixed left-0 right-0 top-0 z-50"
       style={{ height: headerOffset }}
     >
-      <div className="hidden website-md:block bg-brand-blue">
+      <div className="bg-brand-blue website-md:hidden">
         <div className="max-w-website mx-auto px-8 website-sm:px-4 min-h-10 flex items-center justify-between gap-6 text-[13px] font-semibold text-white">
           <span>
             The Word. Across your world.{' '}
@@ -146,7 +146,7 @@ export default function Header({ headerOffset }: Props) {
             </span>
           </Link>
 
-          <nav className="hidden website-md:flex items-center gap-8" aria-label="Main">
+          <nav className="flex items-center gap-8 website-md:hidden" aria-label="Main">
             <Link to={WebsiteFeaturesRoute} className={navClass(path === WebsiteFeaturesRoute)}>
               Features
             </Link>
@@ -214,7 +214,7 @@ export default function Header({ headerOffset }: Props) {
             <button
               type="button"
               aria-label="Search"
-              className="hidden website-md:inline-flex w-11 h-11 rounded-full bg-brand-mist items-center justify-center focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-brand-orange"
+              className="inline-flex website-md:hidden w-11 h-11 rounded-full bg-brand-mist items-center justify-center focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-brand-orange"
             >
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden>
                 <circle cx="11" cy="11" r="6" stroke="#19688B" strokeWidth="2.2" />
@@ -223,7 +223,7 @@ export default function Header({ headerOffset }: Props) {
             </button>
             <WebsiteButton
               to={WebsiteDownloadRoute}
-              className="hidden website-md:inline-flex !min-h-12 !px-5 !text-[15px] website-sm:!text-[15px] shadow-brand-orange-sm"
+              className="inline-flex website-md:hidden !min-h-12 !px-5 !text-[15px] website-sm:!text-[15px] shadow-brand-orange-sm"
             >
               Get the app
             </WebsiteButton>
@@ -233,7 +233,7 @@ export default function Header({ headerOffset }: Props) {
               aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
               aria-expanded={mobileOpen}
               aria-controls="mobile-menu"
-              className="website-md:hidden inline-flex w-11 h-11 rounded-xl bg-brand-mist items-center justify-center"
+              className="hidden website-md:inline-flex w-11 h-11 rounded-xl bg-brand-mist items-center justify-center"
               onClick={() => setMobileOpen(!mobileOpen)}
             >
               <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden>
@@ -309,5 +309,3 @@ export default function Header({ headerOffset }: Props) {
     </header>
   );
 }
-
-export { HEADER_HEIGHT, HEADER_HEIGHT_COMPACT } from './WebsiteLayout';

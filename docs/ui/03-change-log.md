@@ -61,3 +61,9 @@
 ## Screenshots
 
 Re-run comparison against `docs/ui/shots/` after local QA on `npm run react` (port 3400) and reference `npx serve` on `ROR_Bible_Plus_Website`.
+
+## Runtime fix (2026-11-02)
+
+- **Blank page:** circular ES module init — `give.tsx` (and modal pages) imported `HEADER_HEIGHT` from `header.tsx`, which pulled `WebsiteLayout` → `header` before `HEADER_HEIGHT` was initialized (`ReferenceError: Cannot access 'HEADER_HEIGHT' before initialization`).
+- **Fix:** `constants.ts` (header offsets) and `websiteMenuContext.tsx` (`useWebsiteMenu`); modal pages import offsets from `constants`; `DashboardStore` imports `HEADER_HEIGHT` from `constants`. `madge --circular src/screens/Website`: no cycles.
+- **Verify shots:** `docs/ui/shots/debug/*-{1440,390}.png` after fix on branch `ui-upgrade`.

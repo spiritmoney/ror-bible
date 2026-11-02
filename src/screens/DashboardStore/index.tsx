@@ -1,7 +1,8 @@
 import React, { useEffect } from 'react';
 import Footer from '../../components/Footer';
 import Header2 from '../../components/Header';
-import Header1, { HEADER_HEIGHT } from "../Website/header";
+import Header1 from "../Website/header";
+import { HEADER_HEIGHT } from "../Website/constants";
 import Workspace from '../../components/Workspace';
 import { useState } from 'react';
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';

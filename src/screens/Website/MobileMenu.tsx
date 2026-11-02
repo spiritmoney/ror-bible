@@ -3,7 +3,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { LoginRoute } from 'navigation/routes';
 import BrandStripe from './BrandStripe';
 import WebsiteButton from './WebsiteButton';
-import { useWebsiteMenu } from './WebsiteLayout';
+import { useWebsiteMenu } from './websiteMenuContext';
 import {
   WebsiteDownloadRoute,
   WebsiteFeaturesRoute,
@@ -51,7 +51,7 @@ export default function MobileMenu() {
   return (
     <div
       id="mobile-menu"
-      className="website-md:hidden fixed inset-0 z-[80] bg-brand-pale overflow-y-auto"
+      className="fixed inset-0 z-[80] bg-brand-pale overflow-y-auto"
       role="dialog"
       aria-modal="true"
       aria-label="Menu"

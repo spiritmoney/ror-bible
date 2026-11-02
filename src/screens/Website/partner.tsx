@@ -5,7 +5,7 @@ import 'react-phone-input-2/lib/style.css';
 // @ts-ignore
 import './partnerPhoneInput.css';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { HEADER_HEIGHT } from './header';
+import { HEADER_HEIGHT } from './constants';
 import WebsiteLayout from './WebsiteLayout';
 import FeaturesSection, { ProductFeature } from './featureProduct';
 import { scrollToHash } from '../../utils/scrolToHash';

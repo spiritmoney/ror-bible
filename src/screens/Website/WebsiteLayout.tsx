@@ -1,33 +1,16 @@
-import React, { createContext, useContext, useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import './website.css';
 import Header from './header';
 import Footer from './footer';
 import MobileMenu from './MobileMenu';
-
-/** Scroll offset for in-page anchors (utility bar hidden below 980px). */
-export const HEADER_HEIGHT = 126;
-export const HEADER_HEIGHT_COMPACT = 86;
+import { HEADER_HEIGHT, HEADER_HEIGHT_COMPACT } from './constants';
+import { MenuContext } from './websiteMenuContext';
 
 type LayoutProps = {
   children: React.ReactNode;
   isModal?: boolean;
   onClose?: () => void;
 };
-
-type MenuContextValue = {
-  mobileOpen: boolean;
-  setMobileOpen: (open: boolean) => void;
-  megaOpen: boolean;
-  setMegaOpen: (open: boolean) => void;
-};
-
-const MenuContext = createContext<MenuContextValue | null>(null);
-
-export function useWebsiteMenu() {
-  const ctx = useContext(MenuContext);
-  if (!ctx) throw new Error('useWebsiteMenu must be used within WebsiteLayout');
-  return ctx;
-}
 
 export function useWebsiteHeaderOffset() {
   const [offset, setOffset] = useState(HEADER_HEIGHT);
@@ -101,7 +84,7 @@ export default function WebsiteLayout({
 
   return (
     <MenuContext.Provider value={menuValue}>
-      <div className="website-root min-h-screen bg-brand-pale text-brand-navy">
+      <div className="website-root min-h-screen bg-brand-pale text-brand-navy font-montserrat">
         <a href="#main" className="website-skip-link">
           Skip to content
         </a>

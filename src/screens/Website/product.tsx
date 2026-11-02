@@ -1,7 +1,7 @@
 // src/pages/productPage.tsx
 import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { HEADER_HEIGHT } from './header';
+import { HEADER_HEIGHT } from './constants';
 import WebsiteLayout from './WebsiteLayout';
 import FeaturesSection from './featureProduct';
 import { scrollToHash } from '../../utils/scrolToHash';

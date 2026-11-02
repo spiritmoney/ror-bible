@@ -1,7 +1,7 @@
 // src/pages/AboutPage.tsx
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { HEADER_HEIGHT } from "./header";
+import { HEADER_HEIGHT } from './constants';
 import WebsiteLayout from "./WebsiteLayout";
 import FeaturesSection from "./featuresAbout";
 import { scrollToHash } from "../../utils/scrolToHash"; // fixed import

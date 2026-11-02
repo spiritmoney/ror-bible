@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import axios from 'axios';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { HEADER_HEIGHT } from './header';
+import { HEADER_HEIGHT } from './constants';
 import WebsiteLayout from './WebsiteLayout';
 
 import giveBanner from '../../assets/give/giveBanner.png';
