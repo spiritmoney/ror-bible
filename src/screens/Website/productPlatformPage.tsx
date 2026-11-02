@@ -1,16 +1,22 @@
 import React from 'react';
 import WebsiteLayout from './WebsiteLayout';
 import PageHero from './PageHero';
-import Section from './Section';
 import WebsiteButton from './WebsiteButton';
 import { WebsiteDownloadRoute, WebsitePricingRoute } from './websitePaths';
 import bibleOnline from '../../assets/website/new/bible-online-reader.jpg';
+import f01 from '../../assets/website/new/feature-01-personalized-study.jpg';
+import f02 from '../../assets/website/new/feature-02-solution-search.jpg';
+import {
+  WebsiteProductAlsoAvailable,
+  WebsiteProductInstallPwa,
+  WebsiteProductWhatYouGet,
+} from './WebsiteProductSections';
 
 export type ProductPlatform = 'web' | 'mobile' | 'desktop' | 'voice';
 
 const PLATFORM_COPY: Record<
   ProductPlatform,
-  { eyebrow: string; title: React.ReactNode; description: string; bullets: string[] }
+  { eyebrow: string; title: React.ReactNode; description: string; bullets: string[]; image: string; imageAlt: string }
 > = {
   web: {
     eyebrow: 'ROR Bible+ Web',
@@ -21,6 +27,8 @@ const PLATFORM_COPY: Record<
     ),
     description: 'Bible Online and Bible Lite (PWA) for reading and study in the browser.',
     bullets: ['Bible Online reader', 'Bible Lite progressive web app', 'Sync with your ROR Bible+ account'],
+    image: bibleOnline,
+    imageAlt: 'ROR Bible+ Web reader',
   },
   mobile: {
     eyebrow: 'ROR Bible+ Mobile',
@@ -31,6 +39,8 @@ const PLATFORM_COPY: Record<
     ),
     description: 'Android and iOS apps for reading, study and ministry on the move.',
     bullets: ['Android and iOS', 'Offline downloads where available', 'Personalized study experience'],
+    image: f01,
+    imageAlt: 'ROR Bible+ Mobile app',
   },
   desktop: {
     eyebrow: 'ROR Bible+ Desktop',
@@ -41,6 +51,8 @@ const PLATFORM_COPY: Record<
     ),
     description: 'MacOS, Windows and Linux clients for extended study sessions.',
     bullets: ['MacOS, Windows and Linux', 'Expanded workspace layouts', 'Study resources and parallel views'],
+    image: bibleOnline,
+    imageAlt: 'ROR Bible+ Desktop',
   },
   voice: {
     eyebrow: 'ROR Bible+ Voice',
@@ -51,6 +63,8 @@ const PLATFORM_COPY: Record<
     ),
     description: 'Amazon Alexa and Google Home experiences for hands-free engagement.',
     bullets: ['Amazon Alexa', 'Google Home', 'Listen and explore with voice commands'],
+    image: f02,
+    imageAlt: 'ROR Bible+ Voice',
   },
 };
 
@@ -74,21 +88,9 @@ export default function ProductPlatformPage({ platform }: Props): JSX.Element {
           </>
         }
       />
-      <Section className="bg-white">
-        <div className="grid lg:grid-cols-2 gap-10 items-center">
-          <ul className="space-y-3">
-            {copy.bullets.map((b) => (
-              <li key={b} className="flex gap-2 text-brand-navy font-semibold">
-                <span className="text-brand-teal">✓</span>
-                {b}
-              </li>
-            ))}
-          </ul>
-          <div className="rounded-3xl overflow-hidden shadow-brand-card">
-            <img src={bibleOnline} alt="" className="w-full h-auto" />
-          </div>
-        </div>
-      </Section>
+      <WebsiteProductWhatYouGet bullets={copy.bullets} image={copy.image} imageAlt={copy.imageAlt} />
+      {platform === 'web' ? <WebsiteProductInstallPwa /> : null}
+      <WebsiteProductAlsoAvailable platform={platform} />
     </WebsiteLayout>
   );
 }
