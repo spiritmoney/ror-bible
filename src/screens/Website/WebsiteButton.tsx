@@ -27,9 +27,9 @@ type ExternalLinkProps = BaseProps &
 
 const styles: Record<Variant, string> = {
   primary:
-    'inline-flex items-center justify-center min-h-[52px] px-7 rounded-full bg-brand-orange text-white text-base font-extrabold shadow-brand-orange website-btn-lift focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-brand-orange focus-visible:outline-offset-[3px]',
+    'inline-flex items-center justify-center min-h-[52px] px-7 rounded-full bg-brand-orange text-white hover:text-white hover:bg-brand-orange text-base font-extrabold shadow-brand-orange website-btn-lift focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-brand-orange focus-visible:outline-offset-[3px]',
   secondary:
-    'inline-flex items-center justify-center min-h-[52px] px-7 rounded-full bg-white text-brand-blue border-2 border-brand-blue text-base font-extrabold website-btn-lift focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-brand-orange focus-visible:outline-offset-[3px]',
+    'inline-flex items-center justify-center min-h-[52px] px-7 rounded-full bg-white text-brand-blue hover:text-brand-blue hover:bg-white border-2 border-brand-blue text-base font-extrabold website-btn-lift focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-brand-orange focus-visible:outline-offset-[3px]',
   ghost:
     'inline-flex items-center gap-2 px-3 py-2 rounded-lg text-brand-navy font-semibold hover:text-brand-blue focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-brand-orange focus-visible:outline-offset-[3px]',
 };

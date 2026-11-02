@@ -28,3 +28,9 @@ Collapsed **335** register rows → **8** root-cause groups (ignore image-filena
 **Left unchanged:** `[PRICE]`; modals; ProfileMenu; Partner/Give; Store/Contact URLs; webpack filenames.
 
 **Blockers:** Home automated extract still hits splash on cold load; pixel diff n/a (no Pillow). `06-parity-report.md` regenerated locally during spot-check — use `07` as fix source of truth.
+
+## Hover on dark surfaces (commit `1e7767c`)
+
+- **Reference [grep styles.css]:** default `a:hover` → navy; `.btn-lift:hover` → lift + brightness; `focus-visible` → orange outline; utility/footer links stay readable on dark bars.
+- **Root cause:** Bootstrap Reboot (via global `tw-elements`) retargets `--bs-link-color-rgb` on `a:hover`, overriding Tailwind `text-*` on marketing links.
+- **Fix:** `.website-root` hover rules in `website.css`; explicit `hover:text-*` on `WebsiteButton`, utility bar, footer, CTA bands.

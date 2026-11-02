@@ -40,6 +40,47 @@
   text-rendering: optimizeLegibility;
 }
 
+/* Bootstrap Reboot (tw-elements) sets a{color:rgba(var(--bs-link-color-rgb))} and a:hover swaps that
+   variable, which overrides Tailwind text-* on <a> and darkens labels on navy/blue surfaces. */
+.website-root a {
+  text-decoration: inherit;
+}
+
+.website-root a.text-white:hover,
+.website-root a.text-white:focus-visible {
+  color: #ffffff;
+}
+
+.website-root a.text-brand-cyan:hover,
+.website-root a.text-brand-cyan:focus-visible {
+  color: #07bdd2;
+}
+
+.website-root a.text-brand-navy:hover,
+.website-root a.text-brand-navy:focus-visible {
+  color: #0b2f44;
+}
+
+.website-root a.text-brand-blue:hover,
+.website-root a.text-brand-blue:focus-visible {
+  color: #19688b;
+}
+
+.website-root a.bg-brand-navy:hover,
+.website-root a.bg-brand-navy:focus-visible {
+  color: #ffffff;
+}
+
+.website-root .bg-brand-blue nav[aria-label='Utility'] a:hover,
+.website-root .bg-brand-blue nav[aria-label='Utility'] a:focus-visible {
+  color: #ffffff;
+}
+
+.website-root a.hover\:text-brand-blue:hover,
+.website-root a.hover\:text-brand-blue:focus-visible {
+  color: #19688b;
+}
+
 .website-skip-link {
   position: absolute;
   left: 16px;

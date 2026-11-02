@@ -92,29 +92,29 @@ export default function Header({ headerOffset }: Props) {
             <span className="text-[#BDE9F0] font-medium">Mobile · Web · Desktop · Voice</span>
           </span>
           <nav className="flex items-center gap-5 flex-wrap justify-end" aria-label="Utility">
-            <Link to="/bible-online" className="hover:underline">
+            <Link to="/bible-online" className="text-white hover:text-white hover:underline">
               Bible Online
             </Link>
-            <a href="https://blog.rorbible.plus" className="hover:underline">
+            <a href="https://blog.rorbible.plus" className="text-white hover:text-white hover:underline">
               Blog
             </a>
-            <button type="button" className="hover:underline" onClick={() => openModal('/partner')}>
+            <button type="button" className="text-white hover:text-white hover:underline" onClick={() => openModal('/partner')}>
               Partner
             </button>
-            <button type="button" className="hover:underline" onClick={() => openModal('/give')}>
+            <button type="button" className="text-white hover:text-white hover:underline" onClick={() => openModal('/give')}>
               Give
             </button>
-            <Link to={`${WebsiteDownloadRoute}#support`} className="hover:underline">
+            <Link to={`${WebsiteDownloadRoute}#support`} className="text-white hover:text-white hover:underline">
               Support
             </Link>
-            <Link to="/store" className="hover:underline">
+            <Link to="/store" className="text-white hover:text-white hover:underline">
               Store
             </Link>
-            <Link to={`${WebsiteDownloadRoute}#contact`} className="hover:underline">
+            <Link to={`${WebsiteDownloadRoute}#contact`} className="text-white hover:text-white hover:underline">
               Contact
             </Link>
             <span className="w-px h-4 bg-white/40" aria-hidden />
-            <Link to={LoginRoute} className="inline-flex items-center gap-2 font-bold">
+            <Link to={LoginRoute} className="inline-flex items-center gap-2 font-bold text-white hover:text-white">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden>
                 <path
                   d="M4 5h16v11H9l-5 4z"

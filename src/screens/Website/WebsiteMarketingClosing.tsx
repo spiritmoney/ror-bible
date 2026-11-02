@@ -32,7 +32,7 @@ export function WebsitePlatformBand() {
           <Link
             key={to}
             to={to}
-            className="website-card-lift block p-6 rounded-3xl bg-brand-navy text-white min-h-[220px] flex flex-col"
+            className="website-card-lift block p-6 rounded-3xl bg-brand-navy text-white hover:text-white min-h-[220px] flex flex-col"
           >
             <span className="font-extrabold text-lg">{title}</span>
             <span className="mt-2 text-sm text-white/90 flex-1">{line}</span>
@@ -65,14 +65,14 @@ export function WebsiteDownloadCtaBand() {
               <a
                 key={label}
                 href="#"
-                className="website-btn-lift flex items-center gap-3 bg-white text-brand-navy rounded-2xl px-4 py-3 min-w-[160px]"
+                className="website-btn-lift flex items-center gap-3 bg-white text-brand-navy hover:text-brand-navy rounded-2xl px-4 py-3 min-w-[160px]"
               >
                 <img src={img} alt="" className="h-10 w-auto" />
                 <span className="text-sm font-bold">{label}</span>
               </a>
             ))}
           </div>
-          <Link to={WebsiteProductDesktopRoute} className="text-sm font-semibold text-brand-cyan hover:underline">
+          <Link to={WebsiteProductDesktopRoute} className="text-sm font-semibold text-brand-cyan hover:text-brand-cyan hover:underline">
             Also on MacOS, Windows and Linux →
           </Link>
         </div>

@@ -24,13 +24,13 @@ export default function Footer() {
             </span>
           </Link>
           <p className="mt-4 text-sm font-semibold text-white/90">Read. Study. Meditate. Triumph.</p>
-          <Link to={`${WebsiteDownloadRoute}#support`} className="block mt-3 text-sm text-brand-cyan font-semibold hover:underline">
+          <Link to={`${WebsiteDownloadRoute}#support`} className="block mt-3 text-sm text-brand-cyan font-semibold hover:text-brand-cyan hover:underline">
             Technical support
           </Link>
-          <Link to={`${WebsiteDownloadRoute}#contact`} className="block mt-2 text-sm text-brand-cyan font-semibold hover:underline">
+          <Link to={`${WebsiteDownloadRoute}#contact`} className="block mt-2 text-sm text-brand-cyan font-semibold hover:text-brand-cyan hover:underline">
             Contact us
           </Link>
-          <Link to="/store" className="block mt-2 text-sm text-brand-cyan font-semibold hover:underline">
+          <Link to="/store" className="block mt-2 text-sm text-brand-cyan font-semibold hover:text-brand-cyan hover:underline">
             Store
           </Link>
         </div>
@@ -106,11 +106,11 @@ function FooterCol({
       <div className="flex flex-col gap-2">
         {links.map(([label, href]) =>
           external || href.startsWith('http') ? (
-            <a key={label} href={href} className="text-sm font-semibold text-brand-cyan hover:underline">
+            <a key={label} href={href} className="text-sm font-semibold text-brand-cyan hover:text-brand-cyan hover:underline">
               {label}
             </a>
           ) : (
-            <Link key={label} to={href} className="text-sm font-semibold text-brand-cyan hover:underline">
+            <Link key={label} to={href} className="text-sm font-semibold text-brand-cyan hover:text-brand-cyan hover:underline">
               {label}
             </Link>
           )
