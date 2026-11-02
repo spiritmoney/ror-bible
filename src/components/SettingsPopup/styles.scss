@@ -1,0 +1,60 @@
+.setting-popup {
+  width: 100vw;
+  max-width: 40rem;
+
+  .form {
+
+    &.Dark{
+      .font-light{
+        color: #EDF1F3;
+        opacity: 0.5;
+      }
+    }
+
+    .title {
+      margin-left: 1rem;
+    }
+
+    .close-modal {
+      margin-right: 0.7rem;
+    }
+
+    .btn-close {
+      color: white;
+      // background-color:  white;
+
+      margin-right: 1rem;
+    }
+
+
+    .submit-buttons {
+      position: relative;
+      display: flex;
+      justify-content: flex-end;
+      // padding-inline: 2rem;
+
+      .subClick {
+        width: 8rem;
+        height: 2.5rem;
+        display: flex;
+        border-radius: 10px;
+      }
+    }
+
+    .font-light {
+      color: rgba(0, 0, 0, 0.5);
+      // height: 3px;
+    }
+
+    .user {
+      display: flex;
+      align-items: center;
+      // justify-content: center;
+      // justify-items: center;
+    }
+  }
+
+
+
+
+}

@@ -1,0 +1,38 @@
+{
+  "hosting": [
+    {
+      "site": "rhapsodybible",
+      "public": "build",
+      "ignore": [
+        "firebase.json",
+        "**/.*",
+        "**/node_modules/**"
+      ],
+      "rewrites": [
+        {
+          "source": "/espees/create-product",
+          "function": "espeesCreateProduct"
+        },
+        {
+          "source": "/espees/confirm-payment",
+          "function": "espeesConfirmPayment"
+        },
+        {
+          "source": "**",
+          "destination": "/index.html"
+        }
+      ]
+    }
+  ],
+  "firestore": {
+    "rules": "firestore.rules"
+  },
+  "functions": {
+    "ignore": [
+      "node_modules",
+      ".git",
+      "firebase-debug.log",
+      "firebase-debug.*.log"
+    ]
+  }
+}

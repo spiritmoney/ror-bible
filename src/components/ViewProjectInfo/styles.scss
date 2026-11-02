@@ -1,0 +1,128 @@
+.ProjectInfo-popup {
+  width: 100vw;
+  max-width: 40rem;
+  height: 32rem;
+
+  .title {
+    margin-left: 1rem;
+  }
+
+  .close-modal {
+    margin-right: 1rem;
+  }
+
+  .main {
+    margin: 1rem;
+    margin-top: 2rem;
+    margin-bottom: 2.5rem;
+
+    .bookIcon {
+      width: 30%;
+      margin-right: 2rem;
+      height: fit-content;
+      border-radius: 3.27397px;
+      position: relative;
+
+      .approved {
+        position: absolute;
+        // top: 11rem;
+        bottom: -0.8rem;
+        right: -14px;
+      }
+
+      .book-sect {
+        margin-left: 1rem;
+      }
+    }
+
+    .select {
+      overflow-y: auto;
+      // max-height: 25rem;
+      margin-top: 1rem;
+      margin-right: 1rem;
+      width: 65%;
+
+      .top {
+        display: flex;
+        align-items: center;
+        background: #d4d4d5;
+        border-radius: 2px;
+        // margin-right: 1rem;
+        font-size: 13px;
+        // margin-bottom: 1rem;
+        padding: 0.5rem;
+
+        svg {
+          margin-right: 0.5rem;
+        }
+      }
+
+      .a_books {
+        &.hide {
+          display: none;
+        }
+      }
+
+      .bookOption {
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+
+        :hover {
+          // background-color: rgba(36, 128, 202, 0.05);
+          // color: rgba(36, 128, 202, )
+        }
+
+        .libraryTitle {
+          font-size: 13px;
+          opacity: 95%;
+        }
+
+        .libraryVersion {
+          font-size: 11px;
+          font-weight: lighter;
+          opacity: 75%;
+        }
+      }
+    }
+  }
+
+  .library-buttons {
+    position: relative;
+    display: flex;
+    justify-content: flex-end;
+    padding-inline: 2rem;
+
+    .cancel {
+      width: 8rem;
+      height: 2.5rem;
+      display: flex;
+      margin-bottom: 1rem;
+      border-radius: 10px;
+      margin-right: 1rem;
+    }
+
+    .open {
+      opacity: 100%;
+      width: 8rem;
+      height: 2.5rem;
+      display: flex;
+      margin-bottom: 1rem;
+      border: 0.8px solid;
+      border-radius: 10px;
+    }
+  }
+
+  &.darkTheme {
+    background-color: #151a20;
+    color: grey;
+  }
+
+  input[type='text'] {
+    font-size: 0.7rem;
+  }
+
+  input[label] {
+    font-size: 0.2rem;
+  }
+}

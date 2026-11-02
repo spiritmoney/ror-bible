@@ -1,0 +1,52 @@
+.collab-popup {
+  width: 100vw;
+  max-width: 35rem;
+
+  .form {
+
+    &.Dark{
+      .font-light{
+        color: #EDF1F3;
+        opacity: 0.5;
+      }
+    }
+
+
+    .btn-close {
+      color: white;
+      margin-right: 1rem;
+    }
+
+    .N-S-opts{
+      &.active{
+        color: #0271d8;
+      }
+    }
+
+
+    .submit-buttons {
+      position: relative;
+      display: flex;
+      justify-content: flex-end;
+
+      .subClick {
+        width: 8.5rem;
+        height: 2.5rem;
+        display: flex;
+        border-radius: 10px;
+      }
+    }
+
+    .font-light {
+      color: rgba(0, 0, 0, 0.5);
+    }
+
+
+
+    
+  }
+
+
+
+
+}

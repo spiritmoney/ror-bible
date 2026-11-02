@@ -1,0 +1,43 @@
+.admin {
+  background-color: #f9fbff;
+  position: relative;
+
+  &.darkTheme {
+    background-color: #151A20;
+    color: grey;
+  }
+
+  .bg {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background-color: rgba(255, 0, 0, 0);
+    z-index: 1;
+    display: none;
+
+    &.show {
+      display: block;
+    }
+  }
+
+  .bg_dark {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background-color: rgba(68, 72, 77, 0.3);
+    z-index: 1;
+    opacity: 0;
+    transform: scale(0);
+    transition: opacity 0.25s ease-in-out, transform 0s 0.25s ease-in-out;
+
+    &.show {
+      opacity: 1;
+      transform: scale(1);
+      transition: opacity 0.25s ease-in-out, transform 0s 0s ease-in-out;
+    }
+  }
+}

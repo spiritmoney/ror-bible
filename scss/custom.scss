@@ -1,0 +1,96 @@
+// Include any default variable overrides here (though functions won't be available)
+// Variables
+//
+// Variables should follow the `$component-state-property-size` formula for
+// consistent naming. Ex: $nav-link-disabled-color and $modal-content-box-shadow-xs.
+$blue: #1CA4FC !default;
+$bg: #2277B8;
+$indigo: #1D2CA9 !default;
+$purple: #6f42c1 !default;
+$light-pink: #FBEFEE !default;
+$red: #FF0000 !default;
+$orange: #E6160F !default;
+$yellow: #E1A814 !default;
+$green: #1DB207 !default;
+$mainBg: #00DBC5 !default;
+$teal: rgba(0, 219, 197, 0.1) !default;
+$cyan: #0dcaf0 !default;
+$secondary: #F7F7F8 !default;
+$vgrey: #DADADA !default;
+$defaultText: #353f50 !default;
+$white: #fff;
+$gray-100: #fff;
+$gray-200: #e9ecef;
+$gray-300: #dee2e6;
+$gray-400: #ced4da;
+$gray-500: #C4C4C4;
+$gray-600: #858585;
+$gray-700: #495057;
+$gray-800: #343a40;
+$gray-900: #212529;
+$black: #09121F;
+
+// $container-max-widths: (
+//   sm: 540px,
+//   md: 720px,
+//   lg: 730px,
+//   xl: 740px,
+//   xxl: 750px,
+// );
+
+$primary: $black;
+$dark: $vgrey;
+
+// $primary: $blue;
+$secondary: $secondary;
+$success: $green;
+$info: $cyan;
+$warning: #DFAE10;
+$danger: $red;
+$light: $gray-100;
+$dark: $gray-900;
+
+$theme-colors: (
+  "primary": $bg,
+  "secondary": #F7F7F8,
+  "black": $black,
+  "blue": $indigo,
+  "maroon": maroon,
+  "border": $gray-500,
+  "green": $mainBg,
+  "success": $green,
+  "info": $cyan,
+  "warning": $warning,
+  "danger": $danger,
+  "light": $light,
+  "light-grey": $gray-600,
+  "dark": $dark,
+  "header": $defaultText,
+  "grey": $vgrey,
+  "light-pink": $light-pink,
+);
+
+$offcanvas-vertical-height: 50vh;
+
+$input-btn-padding-y: 0.375rem;
+$input-btn-padding-x: 0.75rem;
+$input-btn-font-family: "Mulish";
+
+$input-btn-focus-width: 0.09rem;
+$input-btn-focus-color-opacity: 0.25;
+$input-btn-focus-color: $black;
+$input-btn-focus-blur: 0;
+$input-btn-focus-box-shadow: 0 0 $input-btn-focus-blur $input-btn-focus-width
+  $input-btn-focus-color;
+  
+//NAVIGATION
+$navbar-dark-color: $white;
+
+$display-font-sizes: (
+  1: 5rem,
+  2: 14.5rem,
+  3: 4rem,
+  4: 3.5rem,
+  5: 3rem,
+  6: 2.5rem
+);

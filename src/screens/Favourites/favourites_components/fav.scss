@@ -1,0 +1,109 @@
+.favourite_home{
+    // border: 1px solid red;
+    background-color: #E7EADF;
+    width: 100%;
+    padding: 1rem 2rem;
+    padding-top: 0;
+    overflow-y: auto;
+
+    &_ad{
+        display: flex;
+        justify-content: space-between;
+        margin-top: 2rem;
+
+        & img{
+            width: 48.5%;
+
+            &:last-child{
+                border-radius: 12px;
+            }
+
+        }
+
+    }
+
+    &_list{
+        margin-top: 2rem;
+        border-bottom: 1px solid #C6C6C6;
+        padding-bottom: 1.7rem;
+
+        &_top{
+            display: flex;
+            justify-content: space-between;
+
+            &_left{
+                display: flex;
+
+                & img{
+                    width: 1.5rem;
+                    height: 1.5rem;
+                }
+    
+                & h5{
+                    color: #333;
+                    font-weight: 700;
+                    margin-left: .7rem;
+                }
+            }
+
+            & a{
+                color: #008AFF;
+                font-weight: 700;
+            }
+
+        }
+
+        &_btm{
+            margin-top: 2rem;
+            display: flex;
+            justify-content: space-between;
+
+            &_div{
+                // border: 1px solid red;
+                width: 30%;
+                display: flex;
+
+                & img{
+                    width: 5rem;
+                    height: 5rem;
+                    object-fit: contain;
+                }
+
+                & div{
+                    margin-left: 1rem;
+                    border-bottom: 1px solid #59585D;
+                    padding-bottom: 1.2rem;
+                    width: 100%;
+
+                    & h5{
+                        color: #333;
+                        font-size: .9rem;
+                        font-weight: 700;
+                    }
+
+                    & h6{
+                        color: #59585D;
+                        font-size: .7rem;
+                        font-weight: 600;
+                    }
+
+                    & button{
+                        font-size: .7rem;
+                        // border: 2px solid #C6C6C6;
+                        padding: .3rem .8rem;
+                        border-radius: 100px;
+                        color: white;
+                        background-color: #00D800;
+                        font-weight: 700;
+                        margin-top: .6rem;
+                    }
+
+                }
+
+            }
+
+        }
+
+    }
+
+}

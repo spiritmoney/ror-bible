@@ -1,0 +1,77 @@
+.store_bible{
+    padding: 1rem;
+    background-color: #E6E9DE;
+    width: 100% !important;
+    height: 100% !important;
+
+    &_top{
+        display: flex;
+        align-items: center;
+        border-bottom: 1px solid #797D7A;
+        padding-bottom: .5rem;
+
+        & img{
+            width: 2rem;
+        }
+
+        & h4{
+            font-weight: 600;
+            font-size: 1.6rem;
+            color: #2C3033;
+            margin-left: .9rem;
+        }
+
+    }
+
+    &_count{
+        font-weight: 600;
+        font-size: .9rem;
+        color: #3B3F40;
+    }
+
+    
+    &_main{
+        // align-items: center;
+        margin-left: 4rem;
+        padding-left: 4rem;
+
+        .bible_list{
+            width: 18%;
+            // border: 1px solid red;
+            margin-top: .5rem;
+            
+        
+            & img{
+                width: 9rem;
+                margin-bottom: .9rem;
+                box-shadow: 3px 13px 17px -3px rgba(0,0,0,0.37);
+            }
+        
+            & h5{
+                color: #686769;
+                font-weight: 700;
+                font-size: .7rem;
+            }
+            & h3{
+                color: #686769;
+                font-weight: 700;
+                // font-size: .7rem;
+            }
+        
+            & button{
+                font-size: .7rem;
+                // border: 2px solid #C6C6C6;
+                padding: .3rem .9rem;
+                border-radius: 100px;
+                color: #04557D !important;
+                background-color: #00D800;
+                font-weight: 500;
+                margin-top: .6rem;
+            }
+        
+        }
+    }
+   
+
+
+}

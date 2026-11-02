@@ -1,0 +1,31 @@
+.store_bible{
+    padding: 1.5rem;
+    background-color: #E6E9DE;
+    width: 83%;
+
+    &_top{
+        display: flex;
+        align-items: center;
+        border-bottom: 1px solid #797D7A;
+        padding-bottom: .5rem;
+
+        & img{
+            width: 2rem;
+        }
+
+        & h4{
+            font-weight: 600;
+            font-size: 1.6rem;
+            color: #2C3033;
+            margin-left: .9rem;
+        }
+
+    }
+
+    &_count{
+        font-weight: 600;
+        font-size: .9rem;
+        color: #3B3F40;
+    }
+
+}

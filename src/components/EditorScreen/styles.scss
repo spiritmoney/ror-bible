@@ -1,0 +1,38 @@
+.editor {
+    // position: relative;
+    // background-color: red;
+    // height: 100%;
+    // top: 0;
+    // left: 0;
+    // overflow-y: hidden;
+    .ql-toolbar {
+        // background-color: red !important;
+        position: absolute !important;
+        top: 0;
+        left: 0;
+        min-width: 27rem;
+        min-height: 60px;
+        width: 100%;
+        z-index: 1;
+        max-height: 60px;
+        box-shadow: 0px 2px 8px rgba(73 , 95, 137, 0.1);
+        border: none;
+    }
+
+    .ql-container {
+        overflow-y: auto;
+        // max-height: 100%;
+        padding: 60px 0 0 0;
+
+        img {
+            display: inline !important;
+        }
+    }
+
+    &.darkTheme{
+        .ql-toolbar {
+            color: #EDF1F3 !important;
+            // background-color: red;
+        }
+    }
+}

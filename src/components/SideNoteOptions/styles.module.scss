@@ -1,0 +1,15 @@
+@use 'src/theme/colors' as *;
+
+.icon {
+    width: 23px;
+    height: fit-content;
+    path {
+        fill: rgba(0, 0, 0, 0.5);
+    }
+
+    &.active {
+        path {
+            fill: $primary-color;
+        }
+    }
+}

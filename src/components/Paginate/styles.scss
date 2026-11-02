@@ -1,0 +1,48 @@
+.paginate {
+  background-color: white;
+  padding-inline: 1rem;
+  width: 100%;
+
+  .set-rows-label {
+    margin-right: 1rem;
+
+  }
+
+  .set-rows-select {
+    border: grey !important ;
+    width: 5rem;
+    
+  }
+
+  .page-info-nav {
+    .page-info {
+      margin-right: 1rem;
+    }
+
+    .page-nav {
+      button {
+        background-color: rgb(255, 255, 255);
+        padding: 0.3rem 0.5rem;
+        svg {
+          path {
+            fill: #151a20;
+            fillOpacity: 1;
+          }
+        }
+
+        &:first-child {
+          margin-right: 1rem;
+        }
+
+        &:disabled {
+          svg {
+            path {
+              fill: rgba(21, 26, 32, 0.45);
+              fillOpacity: 0.45;
+            }
+          }
+        }
+      }
+    }
+  }
+}

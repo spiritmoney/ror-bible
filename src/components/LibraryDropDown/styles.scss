@@ -1,0 +1,12 @@
+.a_books {
+    .book-img {
+        position: relative;
+
+        .approved {
+            position: absolute;
+            bottom: -0.2rem;
+            right: -0px;
+        }
+
+    }
+}

@@ -1,0 +1,33 @@
+@use 'src/theme/colors' as *;
+
+::-webkit-scrollbar {
+  // vertical
+  width: 0.1em;
+  // horizontal
+  height: 0.2em;
+}
+
+::-webkit-scrollbar-track {
+  background-color: inherit;
+  border-radius: 100vw;
+  // margin-block: 0.5em;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: $primary-color;
+  border: 0.1em solid #00a2ff00;
+  border-radius: 100vw;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: $primary-color;
+}
+
+@supports (scrollbar-color: #ffffff #0f0700) {
+  // Scroll bar style for firefox
+  :root,
+  * {
+    scrollbar-color: $primary-color rgba(255, 255, 255, 0);
+    scrollbar-width: thin; // auto, thin, none
+  }
+}

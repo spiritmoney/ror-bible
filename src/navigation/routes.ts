@@ -1,0 +1,16 @@
+export const AuthRoute = '/auth';
+export const DashboardRoute = '/dash';
+export const StoreRoute = '/store';
+export const FavouritesRoute = '/favourites';
+export const LoginRoute = '/login';
+export const RegisterRoute = '/register';
+export const ForgetPasswordRoute = '/fp';
+export const ResetPasswordRoute = '/rp';
+export const EmailSentRoute = '/es';
+export const AdminRoute = '/admin';
+export const UserAdminRoute = '/userAdmin';
+export const AnnotateRoute = '/annotate';
+export const VoiceNoteRoute = '/voice-note';
+export const HomeRoute = '/home';
+export const WelcomeRoute = '/welcome';
+export const KingsChatCallbackRoute = '/auth/callback';

@@ -1,0 +1,105 @@
+.submit-popup {
+  width: 100vw;
+  max-width: 40rem;
+
+  .title {
+    margin-left: 1rem;
+  }
+
+  .close-modal {
+    margin-right: 0.7rem;
+  }
+
+  .btn-close {
+    color: white;
+    // background-color:  white;
+
+    margin-right: 1rem;
+  }
+
+  &.darkTheme {
+    background-color: #151A20;
+    color: grey;
+  }
+
+
+
+  // input[type=text] {
+  //   // font-size: 0.7rem;
+  // }
+
+  input[label] {
+    font-size: 0.2rem;
+  }
+
+  .contact {
+    position: relative;
+
+    .copy-con {
+      position: absolute;
+      top: 0.3rem;
+      right: 1rem;
+      font-weight: lighter;
+      opacity: 0.5;
+
+      &.hide {
+        display: none;
+      }
+    }
+
+  }
+
+  .cc-f {
+    position: relative;
+    display: none;
+
+    &.show {
+      display: block;
+    }
+
+    .cc-field {
+      position: absolute;
+      top: 0.2rem;
+      right: 0.5rem;
+      font-weight: lighter;
+      opacity: 0.5;
+    }
+
+    .sub-but {
+      width: 8rem;
+      height: 2.5rem;
+      display: flex;
+    }
+
+  }
+
+  .submit-buttons {
+    position: relative;
+    display: flex;
+    justify-content: flex-end;
+    // padding-inline: 2rem;
+
+    .subClick {
+      width: 8rem;
+      height: 2.5rem;
+      display: flex;
+      border-radius: 10px;
+    }
+  }
+
+  .font-light{
+    color: rgba(0, 0, 0, 0.5);
+    // height: 3px;
+  }
+
+  .user{
+    display: flex;
+    align-items: center;
+    // justify-content: center;
+    // justify-items: center;
+  }
+
+
+
+
+}

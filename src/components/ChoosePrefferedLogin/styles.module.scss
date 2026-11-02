@@ -1,0 +1,67 @@
+@use '../../theme/colors' as *;
+@use '../../theme/fonts' as *;
+
+.preferred-login {
+  display: flex;
+  min-height: 100vh;
+  color: $white;
+  max-width: 90rem;
+  margin-inline: auto;
+  font-family: $font-family;
+
+
+}
+
+.left-text-content {
+  padding-top: 65px;
+  padding-inline: 3.9063rem;
+}
+
+.right {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  justify-content: center;
+}
+
+.right-content {
+  // width: 480px;
+  margin-inline: auto;
+  text-align: center;
+}
+
+.btn {
+  padding-block: 3.75rem 2.5rem;
+}
+
+.logo {
+  max-width: 4.625rem;
+  max-height: 3.6156rem;
+  margin-inline: auto;
+}
+
+.text {
+  color: black;
+  font-size: 2rem;
+  font-weight: 500;
+  padding-top: 3rem;
+}
+
+.icon-before {
+  width: 1.8638rem;
+  height: fit-content;
+}
+
+.bottom-text {
+  color: $primary-color;
+  font-weight: 400;
+}
+
+.footer {
+  padding-bottom: 2.875rem;
+  padding-inline: 4.625rem;
+  text-align: center;
+  justify-self: flex-end !important;
+  font-size: 0.875rem;
+}

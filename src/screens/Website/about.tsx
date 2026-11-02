@@ -1,0 +1,388 @@
+// src/pages/AboutPage.tsx
+import React, { useEffect, useRef, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import Header, { HEADER_HEIGHT } from "./header";
+import SideNav from "./sideNav";
+import Footer from "./footer";
+import FeaturesSection from "./featuresAbout";
+import { scrollToHash } from "../../utils/scrolToHash"; // fixed import
+
+
+// ---------- Assets (update filenames to match your repo) ----------
+import aboutBanner from "../../assets/about/missionBanner.png";
+import aboutImg from "../../assets/about/image1.png";
+import aboutImg1 from "../../assets/about/about-1.png";
+import aboutImg2 from "../../assets/about/about-2.png";
+import aboutImg3 from "../../assets/about/about-3.png";
+import aboutImg4 from "../../assets/about/about-4.png";
+import aboutImg5 from "../../assets/about/about-5.png";
+import aboutImg6 from "../../assets/about/about-6.png";
+import aboutImg7 from "../../assets/about/about-7.png";
+import aboutImg8 from "../../assets/about/about-8.png";
+import kc from "../../assets/about/kc.png";
+import link from "../../assets/about/link.png";
+import press from "../../assets/about/press.png";
+import stories from "../../assets/about/stories.png";
+import appreciation from "../../assets/about/appreciation.png";
+// ------------------------------------------------------------------
+export type LinkBadge = { label: string; href: string; icon?: string | React.ReactNode };
+export type Bullet = string | { text: string; links?: LinkBadge[] };
+
+
+type Feature = {
+  id: number;
+  slugId?: string;
+  title?: string;
+  description?: string;
+  // bullets accepts either string[] or Bullet[]
+  bullets?: Bullet[];
+  // top-level links still supported if you want general links not tied to a bullet
+  links?: LinkBadge[];
+  image?: string;
+};
+
+type AboutPageProps = {
+  isModal?: boolean;
+  onClose?: () => void;
+};
+
+export default function AboutPage({ isModal = false, onClose }: AboutPageProps): JSX.Element {
+  const [drawerOpen, setDrawerOpen] = useState(false);
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  useEffect(() => {
+    if (isModal) return; // skip when rendering modal overlay
+    const state = (location.state as any) || {};
+    const slug = state?.scrollTo ?? (window.location.hash ? window.location.hash : undefined);
+    if (!slug) return;
+
+    // slug may be 'bible_mobile' (from state) or '#bible_mobile' (from hash)
+    const hash = slug.startsWith("#") ? slug : `#${slug}`;
+
+    (async () => {
+      // headerOffset is your imported HEADER_HEIGHT
+      await scrollToHash(hash, { headerOffset: HEADER_HEIGHT, behavior: "smooth", maxAttempts: 20, retryDelay: 80 });
+      // optional: clear the hash from history/state if you don't want it visible
+      // window.history.replaceState({}, "", window.location.pathname + window.location.search);
+    })();
+  }, [location, isModal]);
+
+  // features array
+  const features: Feature[] = [
+    // feature with paragraph + image (classic)
+    {
+      id: 1,
+      slugId: "bible",
+      title: "More Than Just A Bible!",
+      description:
+        "Apart from the usual electronic stationery features like note-keeping, highlighting, bookmarking etc., this novel app is built on solid interactive technologies that avail users of the opportunities to take advantage of the following extra-special features: inspirational articles reading, access all online or download versions to use offline. Read, study, meditate and triumph in life while you share your victories verses with friends.",
+      image: aboutImg1,
+    },
+
+    // feature with bullet list + image
+    {
+      id: 2,
+      slugId: "read",
+      title: "Read The Rhapsody Bible Daily",
+      bullets: [
+        "Experience the illumination of God’s Word in 20+ flavors of the Rhapsody Bible",
+        "Switch between several Bible versions, in over 70 languages",
+        "Offline Feature: Download and read ALL Bibles without Internet access",
+        "Read daily Rhapsody of Realities inspirational articles by the author.",
+      ],
+      image: aboutImg2,
+    },
+
+    {
+      id: 3,
+      slugId: "meditate",
+      title: "Study & Meditate On Rhapsody Bible",
+      bullets: [
+        "Inspirational articles: Do topical study with hundreds of daily inspirations articles by Pastor Chris, all year round",
+        "Bible Study Plans: Topical study of the entire Bible using the Rhapsody 1-Year® or 2- Year® Bible Study Planners.",
+        "Study Resources: Adopt immersive study, take advantage of study resources like the Hebrew Greek Bible, Enhanced Hebrew & Greek Dictionaries, LoveWorld Concordance, Enhanced Exhaustive Strong’s concordance.",
+        "Parallel Study: Use the Split view to enhance your Parallel Bible Study experience; comparing scriptures or scripture in one Bible Version with another.",
+      ],
+      image: aboutImg3,
+    },
+
+    {
+      id: 4,
+      slugId: "hub",
+      title: "Use the Rhapsody Bible with Friends",
+      bullets: [
+        "Share your daily reading with your friends.",
+        "Send your notes via email, KingsChat to loved ones or evangelism contacts.",
+      ],
+      image: aboutImg4,
+    },
+    {
+      id: 5,
+      title: "Customize Your Free Rhapsody Bible",
+      bullets: [
+        "On-Screen Setting: Make the ROR Bible+ completely yours. Personalize your Bible Study experience. Adjust the fonts, font type, and color to your preference. Switch the reference letters and Strong’s numbers off/on etc.",
+        "Easy Reading & Night Mode: Adjust font, text size, and contrast for bright or low-light.",
+        "Highlights: Keep your favorite scripture in your choice color",
+        "Bookmarks: Smart utility for sharing, memorizing, finding your favorite verses.",
+        "Share verses with friends: on social media, email, or via SMS/text,",
+        "Notes: Keep your study notes privately, or share them with friends",
+        "Cloud Sync: With your free ROR Bible+ account, see all of your Notes, Highlights, Bookmarks, on any supported devices, just at the tap of the Sync button!",
+      ],
+      image: aboutImg5,
+    },
+
+
+    {
+      id: 6,
+      title: "Connect With ROR Bible+",
+      bullets: [
+        "Contact support from inside the ROR Bible+ App",
+        {
+          text: "Follow us on KingsChat app, download @:",
+          links: [
+            { label: "ROR Bible+ Superuser", href: "https://kingschat.online/user/rorbible", icon: kc },
+          ],
+        },
+        {
+          text: "Keep current on our blog:",
+          links: [{ label: "https://blog.rorbible.plus", href: "#blog", icon: link }],
+        },
+        {
+          text: "ROR Bible+ Online:",
+          links: [{ label: "https://www.rorbible.plus", href: "/bible-online", icon: link }],
+        },
+      ],
+      image: aboutImg6,
+    },
+    {
+      id: 7,
+      slugId: "version",
+      title: "Several ROR Bible Versions:",
+      bullets: [
+        "King James Version (KJV)",
+        "New King James Version (NKJV)",
+        "Amplified Classic Bible (AMPC)",
+        "New International Version (NIV)",
+        "New Living Translation (NLT)",
+        "English Standard Version (ESV)",
+        "The Message (MSG)",
+        "and many more! ",
+      ],
+      image: aboutImg7,
+    },
+    {
+      id: 8,
+      slugId: "lang",
+      title: "More Than 2000+ Int’l Languages",
+      description:
+        "English, Spanish, Hindi, Urdu, Myanmar, Mandarin, Portuguese, Korean, German, French, Russian, Malayalam, Indonesian, Arabic, Zulu, Efik, Igbo, Tagalog, Bengali, Nepali, Swedish, Norwegian, Kazakh, Acehnese, Cebuano, Turkmen, Mongol, Javanese, Kannada, Italian, Afrikaans, Albanian, Amharic, Bulgarian, Czech, Farsi, Gujarati, Hebrew, Marathi, Orija, Swahili, Thai, Ukrainian, Vietnamese, Latvian.",
+      image: aboutImg8,
+    },
+
+
+
+  ];
+
+  const finalFeature: Feature[] = [
+    {
+      id: 1,
+      slugId: "stories",
+      title: "Stories",
+      description:
+        "See how God is using ROR Bible+ to impact lives across the world.",
+      links: [
+        { label: "Read More", href: "/about" },
+      ],
+      image: stories,
+    },
+    {
+      id: 2,
+      slugId: "press",
+      title: "Press",
+      description:
+        "ROR Bible+ have been covered by the press all over the world.",
+      links: [
+        { label: "Read More", href: "/about" },
+      ],
+      image: press,
+    },
+  ];
+
+  // layout sizing (tweak if needed)
+  const imgW = 469;
+  const imgH = 487;
+  const [DRAWER_W, setDrawerW] = useState(50);
+
+  // Responsive breakpoints for drawer width
+  useEffect(() => {
+    const updateDrawerWidth = () => {
+      const width = window.innerWidth;
+      if (width < 640) setDrawerW(50); // sm → small phones
+      else if (width < 768) setDrawerW(80); // md → tablets
+      else if (width < 1024) setDrawerW(80); // lg → small laptops
+      else setDrawerW(100); // xl+ → large screens
+    };
+
+    updateDrawerWidth();
+    window.addEventListener("resize", updateDrawerWidth);
+    return () => window.removeEventListener("resize", updateDrawerWidth);
+  }, []);
+
+
+
+  const [isLg, setIsLg] = useState<boolean>(() => (typeof window !== "undefined" ? window.innerWidth >= 1024 : false));
+  useEffect(() => {
+    const onResize = () => setIsLg(window.innerWidth >= 1024);
+    onResize();
+    window.addEventListener("resize", onResize);
+    return () => window.removeEventListener("resize", onResize);
+  }, []);
+
+  // lock page scroll when side drawer open
+  // useEffect(() => {
+  //   document.body.style.overflow = drawerOpen ? "hidden" : "";
+  //   return () => {
+  //     document.body.style.overflow = "";
+  //   };
+  // }, [drawerOpen]);
+
+  // modal focus + body-lock when opened as modal (full-screen)
+  const containerRef = useRef<HTMLDivElement | null>(null);
+  useEffect(() => {
+    if (!isModal) return;
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    const prevFocused = document.activeElement as HTMLElement | null;
+    containerRef.current?.focus();
+    return () => {
+      document.body.style.overflow = prev;
+      if (prevFocused && typeof prevFocused.focus === "function") prevFocused.focus();
+      if (onClose) onClose();
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isModal]);
+
+  // hash scrolling support (direct visits)
+  useEffect(() => {
+    if (isModal) return;
+
+    // get slug from state or hash
+    const state = (location.state as any) || {};
+    let slug = state.scrollTo || window.location.hash;
+
+    if (!slug) return;
+
+    // normalize format
+    const hash = slug.startsWith("#") ? slug : `#${slug}`;
+
+    // Update the browser URL if state.scrollTo was used
+    if (!window.location.hash && state.scrollTo) {
+      window.history.replaceState({}, "", `${window.location.pathname}${hash}`);
+    }
+
+    // Scroll after mount/layout
+    const timer = setTimeout(() => {
+      scrollToHash(hash, {
+        headerOffset: HEADER_HEIGHT,
+        behavior: "smooth",
+        maxAttempts: 20,
+        retryDelay: 80,
+      });
+    }, 200);
+
+    return () => clearTimeout(timer);
+  }, [location, isModal]);
+
+
+  // PageInner (shared between modal & full-page)
+  const PageInner = (
+    <div className=" bg-slate-50 text-slate-800">
+      <div className="w-full">
+        <div className="relative w-full overflow-hidden">
+          <img src={aboutBanner} alt="About banner" className="w-full h-auto object-contain " draggable={false} />
+        </div>
+      </div>
+
+      {/* Intro image block */}
+      <img src={aboutImg} alt="About ROR Bible" className="w-full h-full object-cover" />
+
+      {/* callout paragraph */}
+
+      <div className="max-w-6xl mx-auto px-12 py-10 text-center text-slate-700">
+        <span className=" font-semibold text-[1.35rem]">
+          All around the world, over 3 billion people are daily reading and sharing the #1 best-selling  daily devotional “Rhapsody of Realities” by Rev. (Dr.) Chris Oyakhilome, DSc. DSc. DD., completely free. From the desk of the same author, comes the ROR Bible+, a fully interactive Bible reader developed to deliver the most exhilarating study experience!
+
+        </span>
+      </div>
+
+
+      {/* Features — delegated to FeaturesSection (pairwise layout, 2-column) */}
+      <div className="max-w-6xl mx-auto px-6 py-12">
+        <FeaturesSection features={features} imgW={imgW} imgH={imgH} isLg={isLg} />
+      </div>
+
+      {/* Appreciation */}
+      <img src={appreciation} alt="Appreciation block" className="w-full h-full object-cover" />
+
+      <div className="max-w-6xl mx-auto px-6 py-12">
+        <FeaturesSection features={finalFeature} imgW={imgW} imgH={imgH} isLg={isLg} />
+      </div>
+
+      {/* Footer */}
+      <Footer />
+    </div>
+  );
+
+  // If modal: render full-screen overlay so user cannot tell it's a modal
+  if (isModal) {
+    return (
+      <div
+        role="dialog"
+        aria-modal="true"
+        ref={containerRef}
+        tabIndex={-1}
+        className="fixed inset-0 z-60 flex flex-col bg-white"
+        style={{ outline: "none" }}
+      >
+        {/* backdrop */}
+        <div className="absolute inset-0 bg-slate-50 pointer-events-none" />
+
+        {/* content (full-screen) */}
+        <div className="relative z-10 w-full h-full overflow-auto">
+          {/* sticky top bar containing a close button */}
+          <div className="sticky top-0 z-20 bg-white border-b">
+            <div className="max-w-6xl mx-auto px-6 py-3 flex items-center justify-between">
+              <div />
+              <div className="flex items-center gap-3">
+                <button
+                  onClick={() => (onClose ? onClose() : navigate(-1))}
+                  className="px-3 py-1 rounded hover:bg-slate-100"
+                  aria-label="Close"
+                >
+                  Close
+                </button>
+              </div>
+            </div>
+          </div>
+
+          {/* the page inner content */}
+          {PageInner}
+        </div>
+      </div>
+    );
+  }
+
+  // Normal full-page render (non-modal)
+  return (
+    <div className="">
+      <Header drawerOpen={drawerOpen} setDrawerOpen={setDrawerOpen} />
+      <div className="flex">
+        <SideNav drawerOpen={drawerOpen} setDrawerOpen={setDrawerOpen} drawerWidth={DRAWER_W} topOffset={HEADER_HEIGHT - 50} />
+        <div className="flex-1 transition-[margin-left,width] duration-300 ease-in-out" style={{ marginLeft: drawerOpen ? DRAWER_W : 0, paddingTop: HEADER_HEIGHT }}>
+          {PageInner}
+        </div>
+      </div>
+    </div>
+  );
+}

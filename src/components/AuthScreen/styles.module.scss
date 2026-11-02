@@ -1,0 +1,73 @@
+@use '../../theme/colors' as *;
+@use '../../theme/fonts' as *;
+
+.left {
+  background-color: $primary-color;
+  display: flex;
+  flex-direction: column;
+  margin-inline: auto;
+  min-height: 100vh;
+  font-family: $font-family;
+  position: relative;
+  padding-inline: 8px;
+  
+
+  .left-content {
+    text-align: center;
+    width: 100%;
+    max-width: 33.1875rem;
+    margin-inline: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding-block: 2rem;
+  }
+
+  .left-text-content {
+    color: $white;
+  }
+
+  .title {
+    font-weight: 600;
+    font-size: 25px;
+  }
+
+  .description {
+    font-weight: 400;
+    font-size: 16px;
+    max-width: 21.9375rem;
+    margin-inline: auto;
+    margin-top: 15px;
+  }
+
+  .list-items {
+    font-family: $font-family-poppins;
+    text-align: left;
+    .flex {
+      display: flex;
+      column-gap: 24px;
+
+      svg {
+        width: 24px;
+        max-height: 30px;
+      }
+    }
+
+    .text-head {
+      font-size: 14px;
+      font-weight: 400;
+      padding-bottom: 3px;
+    }
+
+    .text-small {
+      font-size: 13px;
+      font-weight: 300;
+    }
+
+    .padtop {
+      padding-top: 25px;
+    }
+  }
+}

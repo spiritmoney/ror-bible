@@ -1,0 +1,98 @@
+.store_bibleProd {
+    padding: 1.5rem;
+    background-color: #E6E9DE;
+    width: 100% !important;
+
+    &_top {
+        display: flex;
+        align-items: center;
+        border-bottom: 1px solid #797D7A;
+        padding-bottom: .5rem;
+
+        & img {
+            width: 2rem;
+        }
+
+        & h4 {
+            font-weight: 600;
+            font-size: 1.6rem;
+            color: #2C3033;
+            margin-left: .9rem;
+        }
+
+    }
+
+    &_prod {
+        margin-left: 4rem;
+    }
+
+
+    .product_list {
+        // border: 1px solid red;
+        margin-top: .5rem;
+
+        .sec1 {
+            position: relative;
+            // display: inline-block;
+
+           
+
+            & img {
+                width: 15rem;
+                // height: 16rem !important;
+                margin-bottom: .9rem;
+                box-shadow: 3px 13px 17px -3px rgba(0, 0, 0, 0.37);
+                position: relative; /* Ensure the pseudo-element is positioned relative to the image */
+
+                &::before {
+                    content: '';
+                    position: absolute;
+                    top: 0;
+                    left: -100%;
+                    width: 200%;
+                    height: 100%;
+                    background: linear-gradient(to right, transparent, silver, transparent);
+                    animation: shine 2s linear infinite;
+                    pointer-events: none;
+                    /* Prevent interaction with the pseudo-element */
+                }
+            }
+
+
+            & h2 {
+                color: #686769;
+                font-weight: 700;
+                font-size: 1.2rem;
+            }
+
+            & span {
+                color: #686769;
+            }
+        }
+
+
+
+        & button {
+            font-size: .7rem;
+            // border: 2px solid #C6C6C6;
+            padding: .3rem .9rem;
+            border-radius: 100px;
+            color: white;
+            background-color: #00D800;
+            font-weight: 500;
+            margin-top: .6rem;
+        }
+
+    }
+
+}
+
+@keyframes shine {
+    0% {
+        transform: translateX(-100%);
+    }
+
+    100% {
+        transform: translateX(100%);
+    }
+}

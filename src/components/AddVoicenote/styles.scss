@@ -1,0 +1,130 @@
+.voice-popup {
+  width: 100vw;
+  max-width: 40rem;
+
+  // min-height: 50rem !important;
+  .form {
+    min-height: 30rem !important;
+
+  }
+
+  .recorder {
+    border: 1px solid rgba(0, 0, 0, 0.35);
+    border-radius: 10px;
+    padding: 20px;
+
+    .contai {
+      .note {
+        border: none !important;
+        // background-color: red;
+        height: 1.5rem !important;
+        padding: 0;
+      }
+
+    }
+
+    div {
+      // max-height: 15rem !important;
+
+      div {
+        div {
+          background-color: white;
+
+          p,
+          span {
+            color: black !important;
+          }
+
+          &:first-of-type {
+            min-height: 220px;
+          }
+
+          div {
+            &:first-of-type {
+              display: none;
+            }
+          }
+        }
+      }
+    }
+
+    &.DD {
+      div {
+
+        div {
+          div {
+            background-color: #071723;
+
+            p,
+            span {
+              color: #EDF1F3 !important;
+            }
+
+            &:first-of-type {
+              min-height: 220px;
+            }
+
+            div {
+              &:first-of-type {
+                display: none;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .title {
+    margin-left: 1rem;
+  }
+
+  .close-modal {
+    margin-right: 0.7rem;
+  }
+
+  .btn-close {
+    color: white;
+    // background-color:  white;
+
+    margin-right: 1rem;
+  }
+
+  &.darkTheme {
+    background-color: #151A20;
+    color: grey;
+  }
+
+
+
+
+  .submit-buttons {
+    position: relative;
+    display: flex;
+    justify-content: flex-end;
+    // padding-inline: 2rem;
+
+    .status {
+      margin-right: 4rem;
+    }
+
+    .subClick {
+      width: 8rem;
+      height: 2.5rem;
+      display: flex;
+      border-radius: 10px;
+    }
+  }
+
+
+  .font-light {
+    color: rgba(0, 0, 0, 0.5);
+    // height: 3px;
+  }
+
+
+
+
+
+
+}

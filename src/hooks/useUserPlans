@@ -1,0 +1,13 @@
+import { IUser } from "../interface/user";
+import { useUser } from '../hooks/useUser';
+
+
+export const useUserPlan = () => {
+    const { user: authUser } = useUser();
+    return{
+        isFree: authUser.plan !== 'team' && authUser.plan !== 'organization' && authUser.plan !== 'enterprise',
+        isTeam: authUser.plan === 'team',
+        isOrg: authUser.plan === 'organization',
+        isEnter: authUser.plan === 'enterprise',
+    };
+};

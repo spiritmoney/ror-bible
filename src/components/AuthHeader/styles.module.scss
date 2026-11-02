@@ -1,0 +1,35 @@
+@use '../../theme/fonts' as *;
+@use '../../theme/colors' as *;
+
+.header {
+  font-family: $font-family-monteCarlo;
+  display: flex;
+  gap: 0.6613rem;
+  color: $white;
+  align-items: center;
+
+  span {
+    font-size: 2.6281rem;
+    font-weight: 400;
+    position: relative;
+  }
+
+  sup {
+    font-family: $font-family;
+    font-size: .4654rem;
+    border: .0347rem solid $white;
+    border-radius: 50%;
+    position: absolute;
+    top: .875rem;
+    right: -1rem;
+    width: .8125rem;
+    height: .8125rem;
+    display: grid;
+    place-items: center;
+  }
+
+  svg {
+    max-width: 2.9169rem;
+    max-height: 2.25rem;
+  }
+}

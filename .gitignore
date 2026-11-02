@@ -1,0 +1,9 @@
+node_modules/
+build/
+.env
+.env.*
+!.env.example
+firebase-debug.log
+backup/**/.env
+.DS_Store
+*.log
