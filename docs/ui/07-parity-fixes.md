@@ -35,7 +35,7 @@ Collapsed **335** register rows → **8** root-cause groups (ignore image-filena
 - **Root cause:** Bootstrap Reboot (via global `tw-elements`) retargets `--bs-link-color-rgb` on `a:hover`, overriding Tailwind `text-*` on marketing links.
 - **Fix:** `.website-root` hover rules in `website.css`; explicit `hover:text-*` on `WebsiteButton`, utility bar, footer, CTA bands.
 
-## Link hover leak (commit TBD)
+## Link hover leak (commit `93582e0`)
 
 - **Root cause:** Bootstrap Reboot `a:hover { --bs-link-color-rgb: var(--bs-link-hover-color-rgb) }` plus global `reference.css` `a:hover { navy }` overriding explicit token link colors in the React bundle only.
 - **Fix:** Unset `--bs-link-*` on `.website-root a`/`:hover` in `website-isolation.css`; restore token hover colors with higher-specificity selectors (utility, CTAs, cards, footer).
