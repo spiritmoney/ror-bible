@@ -5,6 +5,7 @@ import PageHero from './PageHero';
 import Section from './Section';
 import WebsiteButton from './WebsiteButton';
 import { WebsiteDownloadRoute } from './websitePaths';
+import { WebsiteMarketingClosing } from './WebsiteMarketingClosing';
 
 type Period = 'monthly' | 'yearly';
 
@@ -185,6 +186,8 @@ export default function PricingPage(): JSX.Element {
           ))}
         </div>
       </Section>
+
+      <WebsiteMarketingClosing showPlatformBand={false} />
     </WebsiteLayout>
   );
 }

@@ -19,9 +19,7 @@ import f2 from '../../assets/website/new/feature-02-solution-search.jpg';
 import f3 from '../../assets/website/new/feature-03-audio-bible.jpg';
 import f4 from '../../assets/website/new/feature-04-pulpit.jpg';
 import f8 from '../../assets/website/new/feature-08-roar.jpg';
-import lwStore from '../../assets/website/new/loveworld-app-store.png';
-import googlePlay from '../../assets/website/new/google-play.png';
-import appStore from '../../assets/website/new/app-store.png';
+import { WebsiteMarketingClosing } from './WebsiteMarketingClosing';
 
 const homeFeatureCards = [
   { title: 'Read with comfort', body: 'Choose a layout, adjust fonts and themes, and follow references in pop-up windows.' },
@@ -91,7 +89,7 @@ export default function LandingPage(): JSX.Element {
         <div className="max-w-website mx-auto px-8 website-sm:px-4 grid lg:grid-cols-2 gap-12 items-center relative z-[1]">
           <div>
             <Eyebrow>Now on Mobile · Web · Desktop · Voice</Eyebrow>
-            <h1 className="mt-4 text-[56px] website-sm:text-[42px] font-extrabold text-brand-navy leading-[1.05] tracking-tight">
+            <h1 className="mt-4 text-website-hero-home website-sm:text-[42px] font-extrabold text-brand-blue leading-[1.05] tracking-tight">
               Read. Study. Meditate. <span className="text-brand-orange">Triumph.</span>
             </h1>
             <p className="mt-3 text-2xl font-bold text-brand-navy">
@@ -228,63 +226,7 @@ export default function LandingPage(): JSX.Element {
         </div>
       </Section>
 
-      <Section className="bg-brand-pale">
-        <Eyebrow>Mobile · Web · Desktop · Voice</Eyebrow>
-        <h2 className="mt-4 text-4xl font-extrabold text-brand-navy mb-10">
-          One Bible experience. <span className="text-brand-orange">Four ways in.</span>
-        </h2>
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          {[
-            [WebsiteProductMobileRoute, 'ROR Bible+ Mobile', 'The Word wherever you go.', 'Android and iOS'],
-            [WebsiteProductWebRoute, 'ROR Bible+ Web', 'Open your browser. Open the Word.', 'Bible Online and Bible Lite (PWA)'],
-            [WebsiteProductDesktopRoute, 'ROR Bible+ Desktop', 'More room for deeper study.', 'MacOS, Windows and Linux'],
-            [WebsiteProductVoiceRoute, 'ROR Bible+ Voice', 'Speak. Listen. Engage with the Word.', 'Amazon Alexa and Google Home'],
-          ].map(([to, title, line, sub]) => (
-            <Link
-              key={to as string}
-              to={to as string}
-              className="website-card-lift block p-6 rounded-3xl bg-brand-navy text-white min-h-[220px] flex flex-col"
-            >
-              <span className="font-extrabold text-lg">{title}</span>
-              <span className="mt-2 text-sm text-white/90 flex-1">{line}</span>
-              <span className="text-xs text-brand-cyan mt-2">{sub}</span>
-              <span className="mt-4 inline-flex items-center gap-2 text-sm font-bold text-brand-orange">Explore →</span>
-            </Link>
-          ))}
-        </div>
-      </Section>
-
-      <Section className="bg-brand-blue text-white">
-        <div className="grid lg:grid-cols-2 gap-10 items-center">
-          <div>
-            <h2 className="text-3xl lg:text-4xl font-extrabold">
-              Download ROR Bible+ and begin your next discovery in <span className="text-brand-cyan">the Word.</span>
-            </h2>
-            <p className="mt-3 text-white/85">Free to download. Some features and resources require a subscription.</p>
-          </div>
-          <div className="flex flex-col gap-4">
-            <div className="flex flex-wrap gap-3">
-              {[
-                [lwStore, 'Loveworld App Store'],
-                [googlePlay, 'Google Play'],
-                [appStore, 'App Store'],
-              ].map(([img, label]) => (
-                <a
-                  key={label as string}
-                  href="#"
-                  className="website-btn-lift flex items-center gap-3 bg-white text-brand-navy rounded-2xl px-4 py-3 min-w-[160px]"
-                >
-                  <img src={img as string} alt="" className="h-10 w-auto" />
-                  <span className="text-sm font-bold">{label as string}</span>
-                </a>
-              ))}
-            </div>
-            <Link to={WebsiteProductDesktopRoute} className="text-sm font-semibold text-brand-cyan hover:underline">
-              Also on MacOS, Windows and Linux →
-            </Link>
-          </div>
-        </div>
-      </Section>
+      <WebsiteMarketingClosing />
     </WebsiteLayout>
   );
 }

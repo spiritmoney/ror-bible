@@ -5,6 +5,7 @@ import Section from './Section';
 import WebsiteButton from './WebsiteButton';
 import { WebsiteDownloadRoute, WebsitePricingRoute } from './websitePaths';
 import { WEBSITE_FEATURES } from './websiteFeaturesData';
+import { WebsiteMarketingClosing } from './WebsiteMarketingClosing';
 
 export default function FeaturesPage(): JSX.Element {
   return (
@@ -69,6 +70,8 @@ export default function FeaturesPage(): JSX.Element {
           </div>
         </Section>
       ))}
+
+      <WebsiteMarketingClosing />
     </WebsiteLayout>
   );
 }
