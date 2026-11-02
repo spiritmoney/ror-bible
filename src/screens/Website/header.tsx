@@ -79,7 +79,10 @@ export default function Header({ headerOffset }: Props) {
 
   return (
     <header
-      className="site-header fixed left-0 right-0 top-0 z-50"
+      className={clsx(
+        'site-header sticky left-0 right-0 top-0 z-50 transition-shadow',
+        scrolled && 'shadow-brand-header'
+      )}
       style={{ height: headerOffset }}
     >
       <div className="bg-brand-blue website-md:hidden">
