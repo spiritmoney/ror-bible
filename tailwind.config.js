@@ -24,11 +24,28 @@ module.exports = {
         'dark-blue': '#134974',
         'maroon-red': '#E00345',
         'grey-box': '#C0C5CA',
+        'brand-cyan': '#07BDD2',
+        'brand-teal': '#099DB2',
+        'brand-blue': '#19688B',
+        'brand-navy': '#0B2F44',
+        'brand-orange': '#FF5900',
+        'brand-pale': '#F6FBFD',
+        'brand-mist': '#EAF5F8',
+        'brand-ink': '#3D5566',
       },
       fontFamily: {
         'monte-carlo': `MonteCarlo, cursive`,
-        'montserrat': ['Montserrat'],
+        montserrat: ['Montserrat', 'system-ui', 'sans-serif'],
         raleway: 'Raleway, sans-serif',
+      },
+      boxShadow: {
+        'brand-header': '0 10px 30px rgba(11, 47, 68, 0.10)',
+        'brand-card': '0 30px 80px rgba(11, 47, 68, 0.18)',
+        'brand-orange': '0 10px 24px rgba(255, 89, 0, 0.28)',
+        'brand-orange-sm': '0 8px 20px rgba(255, 89, 0, 0.25)',
+      },
+      maxWidth: {
+        website: '1200px',
       },
       keyframes: {
         fadein: {
@@ -95,6 +112,9 @@ module.exports = {
         vibrate: 'vibrate 2.6s ease-in-out infinite',
       },
       screens: {
+        'website-lg': { max: '1100px' },
+        'website-md': { max: '980px' },
+        'website-sm': { max: '720px' },
         'small-mobile': {'max' : '400px'},
         // => @media (min-width: 400px) { ... }
   

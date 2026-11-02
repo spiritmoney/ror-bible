@@ -1,9 +1,8 @@
 // src/pages/AboutPage.tsx
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import Header, { HEADER_HEIGHT } from "./header";
-import SideNav from "./sideNav";
-import Footer from "./footer";
+import { HEADER_HEIGHT } from "./header";
+import WebsiteLayout from "./WebsiteLayout";
 import FeaturesSection from "./featuresAbout";
 import { scrollToHash } from "../../utils/scrolToHash"; // fixed import
 
@@ -47,7 +46,6 @@ type AboutPageProps = {
 };
 
 export default function AboutPage({ isModal = false, onClose }: AboutPageProps): JSX.Element {
-  const [drawerOpen, setDrawerOpen] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -212,24 +210,6 @@ export default function AboutPage({ isModal = false, onClose }: AboutPageProps):
   // layout sizing (tweak if needed)
   const imgW = 469;
   const imgH = 487;
-  const [DRAWER_W, setDrawerW] = useState(50);
-
-  // Responsive breakpoints for drawer width
-  useEffect(() => {
-    const updateDrawerWidth = () => {
-      const width = window.innerWidth;
-      if (width < 640) setDrawerW(50); // sm → small phones
-      else if (width < 768) setDrawerW(80); // md → tablets
-      else if (width < 1024) setDrawerW(80); // lg → small laptops
-      else setDrawerW(100); // xl+ → large screens
-    };
-
-    updateDrawerWidth();
-    window.addEventListener("resize", updateDrawerWidth);
-    return () => window.removeEventListener("resize", updateDrawerWidth);
-  }, []);
-
-
 
   const [isLg, setIsLg] = useState<boolean>(() => (typeof window !== "undefined" ? window.innerWidth >= 1024 : false));
   useEffect(() => {
@@ -238,30 +218,6 @@ export default function AboutPage({ isModal = false, onClose }: AboutPageProps):
     window.addEventListener("resize", onResize);
     return () => window.removeEventListener("resize", onResize);
   }, []);
-
-  // lock page scroll when side drawer open
-  // useEffect(() => {
-  //   document.body.style.overflow = drawerOpen ? "hidden" : "";
-  //   return () => {
-  //     document.body.style.overflow = "";
-  //   };
-  // }, [drawerOpen]);
-
-  // modal focus + body-lock when opened as modal (full-screen)
-  const containerRef = useRef<HTMLDivElement | null>(null);
-  useEffect(() => {
-    if (!isModal) return;
-    const prev = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-    const prevFocused = document.activeElement as HTMLElement | null;
-    containerRef.current?.focus();
-    return () => {
-      document.body.style.overflow = prev;
-      if (prevFocused && typeof prevFocused.focus === "function") prevFocused.focus();
-      if (onClose) onClose();
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isModal]);
 
   // hash scrolling support (direct visits)
   useEffect(() => {
@@ -297,7 +253,7 @@ export default function AboutPage({ isModal = false, onClose }: AboutPageProps):
 
   // PageInner (shared between modal & full-page)
   const PageInner = (
-    <div className=" bg-slate-50 text-slate-800">
+    <div className="bg-brand-pale text-brand-navy">
       <div className="w-full">
         <div className="relative w-full overflow-hidden">
           <img src={aboutBanner} alt="About banner" className="w-full h-auto object-contain " draggable={false} />
@@ -328,61 +284,16 @@ export default function AboutPage({ isModal = false, onClose }: AboutPageProps):
       <div className="max-w-6xl mx-auto px-6 py-12">
         <FeaturesSection features={finalFeature} imgW={imgW} imgH={imgH} isLg={isLg} />
       </div>
-
-      {/* Footer */}
-      <Footer />
     </div>
   );
 
-  // If modal: render full-screen overlay so user cannot tell it's a modal
   if (isModal) {
     return (
-      <div
-        role="dialog"
-        aria-modal="true"
-        ref={containerRef}
-        tabIndex={-1}
-        className="fixed inset-0 z-60 flex flex-col bg-white"
-        style={{ outline: "none" }}
-      >
-        {/* backdrop */}
-        <div className="absolute inset-0 bg-slate-50 pointer-events-none" />
-
-        {/* content (full-screen) */}
-        <div className="relative z-10 w-full h-full overflow-auto">
-          {/* sticky top bar containing a close button */}
-          <div className="sticky top-0 z-20 bg-white border-b">
-            <div className="max-w-6xl mx-auto px-6 py-3 flex items-center justify-between">
-              <div />
-              <div className="flex items-center gap-3">
-                <button
-                  onClick={() => (onClose ? onClose() : navigate(-1))}
-                  className="px-3 py-1 rounded hover:bg-slate-100"
-                  aria-label="Close"
-                >
-                  Close
-                </button>
-              </div>
-            </div>
-          </div>
-
-          {/* the page inner content */}
-          {PageInner}
-        </div>
-      </div>
+      <WebsiteLayout isModal onClose={() => (onClose ? onClose() : navigate(-1))}>
+        {PageInner}
+      </WebsiteLayout>
     );
   }
 
-  // Normal full-page render (non-modal)
-  return (
-    <div className="">
-      <Header drawerOpen={drawerOpen} setDrawerOpen={setDrawerOpen} />
-      <div className="flex">
-        <SideNav drawerOpen={drawerOpen} setDrawerOpen={setDrawerOpen} drawerWidth={DRAWER_W} topOffset={HEADER_HEIGHT - 50} />
-        <div className="flex-1 transition-[margin-left,width] duration-300 ease-in-out" style={{ marginLeft: drawerOpen ? DRAWER_W : 0, paddingTop: HEADER_HEIGHT }}>
-          {PageInner}
-        </div>
-      </div>
-    </div>
-  );
+  return <WebsiteLayout>{PageInner}</WebsiteLayout>;
 }

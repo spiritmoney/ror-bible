@@ -1,5 +1,4 @@
 import React from "react";
-import { motion } from "framer-motion";
 
 export type LinkBadge = { label: string; href: string; icon?: string | React.ReactNode };
 export type Bullet = string | { text: string; links?: LinkBadge[] };
@@ -22,11 +21,6 @@ type Props = {
 };
 
 export default function FeaturesSection({ features, imgW, imgH, isLg }: Props) {
-  const slideVariant = (direction: "left" | "right" = "left") => ({
-    hidden: { opacity: 0, x: direction === "left" ? -80 : 80 },
-    visible: { opacity: 1, x: 0, transition: { duration: 0.6, ease: "easeOut" } },
-  });
-
   const imageLeftForPair = (index: number) => Math.floor(index / 2) % 2 === 0;
 
   // tweak this to scale images up/down slightly (no cropping — image is scaled inside same box)
@@ -47,14 +41,10 @@ export default function FeaturesSection({ features, imgW, imgH, isLg }: Props) {
             : {};
 
           return (
-            <motion.div
+            <div
               key={feature.id}
               id={feature.slugId}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, amount: 0.25 }}
-              variants={slideVariant(imageOnLeft ? "left" : "right")}
-              className="grid grid-cols-1 lg:grid-cols-2 gap-6"
+              className="grid grid-cols-1 lg:grid-cols-2 gap-6 motion-safe:transition-opacity motion-safe:duration-500"
               style={isLg ? gridStyle : undefined}
             >
               {/* IMAGE */}
@@ -173,7 +163,7 @@ export default function FeaturesSection({ features, imgW, imgH, isLg }: Props) {
                   </div>
                 </div>
               </div>
-            </motion.div>
+            </div>
           );
         })}
       </div>

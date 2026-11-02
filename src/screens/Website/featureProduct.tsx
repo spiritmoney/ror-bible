@@ -1,6 +1,5 @@
 // src/components/featureProduct.tsx
 import React from 'react';
-import { motion } from 'framer-motion';
 
 export type LinkBadge = {
   label?: string;
@@ -232,15 +231,11 @@ export default function FeatureProduct({
           ) : null;
 
           return (
-            <motion.div
+            <div
               key={f.id}
               id={f.slugId}
-              className={`grid grid-cols-1 ${large && placement === 'aside' ? 'lg:grid-cols-2' : ''} gap-6`}
+              className={`grid grid-cols-1 ${large && placement === 'aside' ? 'lg:grid-cols-2' : ''} gap-6 motion-safe:transition-all motion-safe:duration-500`}
               style={large && placement === 'aside' ? gridStyle : undefined}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, amount: 0.2 }}
-              variants={slideVariant(slideFrom)}
             >
               {/* aside-left image (DOM-first when left) */}
               {placement === 'aside' && imageSide === 'left' && f.image && (
@@ -452,7 +447,7 @@ export default function FeatureProduct({
                     )}
                 </div>
               )}
-            </motion.div>
+            </div>
           );
         })}
       </div>

@@ -1,9 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
 import axios from 'axios';
 import { useLocation, useNavigate } from 'react-router-dom';
-import Header, { HEADER_HEIGHT } from './header';
-import SideNav from './sideNav';
-import Footer from './footer';
+import { HEADER_HEIGHT } from './header';
+import WebsiteLayout from './WebsiteLayout';
 
 import giveBanner from '../../assets/give/giveBanner.png';
 import giveText from '../../assets/give/giveText.png';
@@ -373,8 +372,6 @@ export default function GivePage({
         </div>
       </section>
 
-      <Footer />
-
       {successToastOpen ? (
         <div className="fixed inset-0 z-[120] flex items-center justify-center bg-black/40 px-4">
           <div className="w-full max-w-[520px] rounded-[18px] bg-white p-6 text-center shadow-xl">
@@ -401,54 +398,11 @@ export default function GivePage({
 
   if (isModal) {
     return (
-      <div
-        role="dialog"
-        aria-modal="true"
-        ref={containerRef}
-        tabIndex={-1}
-        className="fixed inset-0 z-60 flex flex-col bg-white"
-        style={{ outline: 'none' }}
-      >
-        <div className="absolute inset-0 bg-white pointer-events-none" />
-        <div className="relative z-10 w-full h-full overflow-auto">
-          <div className="sticky top-0 z-20 bg-white border-b">
-            <div className="max-w-6xl mx-auto px-6 py-3 flex items-center justify-between">
-              <div />
-              <button
-                onClick={() => (onClose ? onClose() : navigate(-1))}
-                className="px-3 py-1 rounded hover:bg-slate-100"
-                aria-label="Close"
-              >
-                Close
-              </button>
-            </div>
-          </div>
-          {PageInner}
-        </div>
-      </div>
+      <WebsiteLayout isModal onClose={() => (onClose ? onClose() : navigate(-1))}>
+        {PageInner}
+      </WebsiteLayout>
     );
   }
 
-  return (
-    <div>
-      <Header drawerOpen={drawerOpen} setDrawerOpen={setDrawerOpen} />
-      <div className="flex">
-        <SideNav
-          drawerOpen={drawerOpen}
-          setDrawerOpen={setDrawerOpen}
-          drawerWidth={DRAWER_W}
-          topOffset={HEADER_HEIGHT - 50}
-        />
-        <div
-          className="flex-1 transition-[margin-left,width] duration-300 ease-in-out"
-          style={{
-            marginLeft: drawerOpen ? DRAWER_W : 0,
-            paddingTop: HEADER_HEIGHT,
-          }}
-        >
-          {PageInner}
-        </div>
-      </div>
-    </div>
-  );
+  return <WebsiteLayout>{PageInner}</WebsiteLayout>;
 }

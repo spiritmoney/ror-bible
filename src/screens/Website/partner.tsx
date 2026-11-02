@@ -1,14 +1,12 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { motion } from 'framer-motion';
+import React, { useEffect, useState } from 'react';
 import PhoneInput from 'react-phone-input-2';
 // @ts-ignore - side-effect stylesheet import has no declaration in this setup
 import 'react-phone-input-2/lib/style.css';
 // @ts-ignore
 import './partnerPhoneInput.css';
 import { useLocation, useNavigate } from 'react-router-dom';
-import Header, { HEADER_HEIGHT } from './header';
-import SideNav from './sideNav';
-import Footer from './footer';
+import { HEADER_HEIGHT } from './header';
+import WebsiteLayout from './WebsiteLayout';
 import FeaturesSection, { ProductFeature } from './featureProduct';
 import { scrollToHash } from '../../utils/scrolToHash';
 
@@ -28,8 +26,6 @@ export default function PartnerPage({
   isModal = false,
   onClose,
 }: PartnerPageProps): JSX.Element {
-  const [drawerOpen, setDrawerOpen] = useState(false);
-  const [DRAWER_W, setDrawerW] = useState(50);
   const [isLg, setIsLg] = useState<boolean>(() =>
     typeof window !== 'undefined' ? window.innerWidth >= 1024 : false
   );
@@ -122,41 +118,11 @@ export default function PartnerPage({
   ];
 
   useEffect(() => {
-    const updateDrawerWidth = () => {
-      const width = window.innerWidth;
-      if (width < 640) setDrawerW(50);
-      else if (width < 768) setDrawerW(80);
-      else if (width < 1024) setDrawerW(80);
-      else setDrawerW(100);
-    };
-
-    updateDrawerWidth();
-    window.addEventListener('resize', updateDrawerWidth);
-    return () => window.removeEventListener('resize', updateDrawerWidth);
-  }, []);
-
-  useEffect(() => {
     const onResize = () => setIsLg(window.innerWidth >= 1024);
     onResize();
     window.addEventListener('resize', onResize);
     return () => window.removeEventListener('resize', onResize);
   }, []);
-
-  const containerRef = useRef<HTMLDivElement | null>(null);
-  useEffect(() => {
-    if (!isModal) return;
-    const prev = document.body.style.overflow;
-    document.body.style.overflow = 'hidden';
-    const prevFocused = document.activeElement as HTMLElement | null;
-    containerRef.current?.focus();
-    return () => {
-      document.body.style.overflow = prev;
-      if (prevFocused && typeof prevFocused.focus === 'function') {
-        prevFocused.focus();
-      }
-      if (onClose) onClose();
-    };
-  }, [isModal, onClose]);
 
   useEffect(() => {
     if (isModal) return;
@@ -206,12 +172,8 @@ export default function PartnerPage({
       </div>
 
       <div className="max-w-6xl mx-auto px-6 py-12">
-        <motion.section
+        <section
           id="be_a_translator"
-          initial={{ opacity: 0, x: -60 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true, amount: 0.2 }}
-          transition={{ duration: 0.55, ease: 'easeOut' }}
           className="grid grid-cols-1 lg:grid-cols-[469px_1fr] gap-6 items-start"
         >
           <div className="flex justify-center lg:justify-start">
@@ -346,7 +308,7 @@ export default function PartnerPage({
               </div>
             </div>
           </div>
-        </motion.section>
+        </section>
 
         <div className="mt-10">
           <FeaturesSection
@@ -357,12 +319,8 @@ export default function PartnerPage({
           />
         </div>
 
-        <motion.section
+        <section
           id="careers"
-          initial={{ opacity: 0, x: -60 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true, amount: 0.2 }}
-          transition={{ duration: 0.55, ease: 'easeOut' }}
           className="mt-10 grid grid-cols-1 lg:grid-cols-[469px_1fr] gap-6 items-start"
         >
           <div className="flex justify-center lg:justify-start">
@@ -453,67 +411,19 @@ export default function PartnerPage({
               </div>
             </div>
           </div>
-        </motion.section>
+        </section>
       </div>
 
-      <Footer />
     </div>
   );
 
   if (isModal) {
     return (
-      <div
-        role="dialog"
-        aria-modal="true"
-        ref={containerRef}
-        tabIndex={-1}
-        className="fixed inset-0 z-60 flex flex-col bg-white"
-        style={{ outline: 'none' }}
-      >
-        <div className="absolute inset-0 bg-slate-50 pointer-events-none" />
-
-        <div className="relative z-10 w-full h-full overflow-auto">
-          <div className="sticky top-0 z-20 bg-white border-b">
-            <div className="max-w-6xl mx-auto px-6 py-3 flex items-center justify-between">
-              <div />
-              <div className="flex items-center gap-3">
-                <button
-                  onClick={() => (onClose ? onClose() : navigate(-1))}
-                  className="px-3 py-1 rounded hover:bg-slate-100"
-                  aria-label="Close"
-                >
-                  Close
-                </button>
-              </div>
-            </div>
-          </div>
-
-          {PageInner}
-        </div>
-      </div>
+      <WebsiteLayout isModal onClose={() => (onClose ? onClose() : navigate(-1))}>
+        {PageInner}
+      </WebsiteLayout>
     );
   }
 
-  return (
-    <div>
-      <Header drawerOpen={drawerOpen} setDrawerOpen={setDrawerOpen} />
-      <div className="flex">
-        <SideNav
-          drawerOpen={drawerOpen}
-          setDrawerOpen={setDrawerOpen}
-          drawerWidth={DRAWER_W}
-          topOffset={HEADER_HEIGHT - 50}
-        />
-        <div
-          className="flex-1 transition-[margin-left,width] duration-300 ease-in-out"
-          style={{
-            marginLeft: drawerOpen ? DRAWER_W : 0,
-            paddingTop: HEADER_HEIGHT,
-          }}
-        >
-          {PageInner}
-        </div>
-      </div>
-    </div>
-  );
+  return <WebsiteLayout>{PageInner}</WebsiteLayout>;
 }

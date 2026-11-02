@@ -46,6 +46,10 @@ import About from 'screens/Website/about';
 import Product from 'screens/Website/product';
 import Give from 'screens/Website/give';
 import Partner from 'screens/Website/partner';
+import FeaturesPage from 'screens/Website/featuresPage';
+import PricingPage from 'screens/Website/pricingPage';
+import DownloadPage from 'screens/Website/downloadPage';
+import ProductPlatformPage from 'screens/Website/productPlatformPage';
 import SingleReader from 'components/SingleReaderArea';
 import AuthCallback from 'pages/AuthCallback';
 
@@ -152,6 +156,13 @@ const Main: React.FunctionComponent<IMain> = () => {
           <Route path="/read" element={<DashboardStore nav="read" />} />
           <Route path="/home" element={<Homepage />} />
           <Route path="/" element={<Homepage />} />
+          <Route path="/features" element={<FeaturesPage />} />
+          <Route path="/pricing" element={<PricingPage />} />
+          <Route path="/download" element={<DownloadPage />} />
+          <Route path="/products/web" element={<ProductPlatformPage platform="web" />} />
+          <Route path="/products/mobile" element={<ProductPlatformPage platform="mobile" />} />
+          <Route path="/products/desktop" element={<ProductPlatformPage platform="desktop" />} />
+          <Route path="/products/voice" element={<ProductPlatformPage platform="voice" />} />
 
           <Route
             path={DashboardRoute + '/:id'}

@@ -25,8 +25,8 @@ Last updated: 2026-11-01 (Stage 0 complete)
 | 0 Setup | Done | This file |
 | 1 Visual comparison | Done | `docs/ui/01-visual-comparison.md` |
 | 2 Code discrepancies | Done | `docs/ui/02-discrepancies.md` |
-| Gate 1 | **STOP — awaiting your approval** | — |
-| 3 Website implementation | Not started | `docs/ui/03-change-log.md` |
+| Gate 1 | **Approved** (see below) | — |
+| 3 Website implementation | **Complete — awaiting your review** | `docs/ui/03-change-log.md` |
 | 4 Design system + app analysis | Not started | `04-design-system.md`, `05-app-discrepancies.md` |
 | Gate 2 | Waiting | — |
 | 5 App implementation | Not started | `05-change-log.md` |
@@ -89,6 +89,10 @@ Styling: **Tailwind utility classes** in components (sample: `header.tsx` `#1866
 - NEW site served with `npx serve -l 5501` (Python missing on host).
 - OLD site: `npm run react` on 3400; webpack error overlay from TS2307 `product_Details.` — screenshots taken after temporary overlay removal in browser only.
 
+## Gate 1 reply (recorded)
+
+Approved U-001–U-028, U-032; KEEP U-029–U-031; git init + `ui-upgrade`; full NEW nav with Store/Contact in utility + footer; carousel unused; pricing placeholders; additive routes; all NEW imagery; CSS transitions in Website folder.
+
 ## Next step
 
-**Gate 1:** Review `docs/ui/02-discrepancies.md` and reply with approved/rejected IDs.
+**Stop — Stage 3 complete pending your review.** Stage 4 (design system + app analysis) starts only after you approve.

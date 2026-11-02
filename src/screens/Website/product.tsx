@@ -1,9 +1,8 @@
 // src/pages/productPage.tsx
 import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Header, { HEADER_HEIGHT } from './header';
-import SideNav from './sideNav';
-import Footer from './footer';
+import { HEADER_HEIGHT } from './header';
+import WebsiteLayout from './WebsiteLayout';
 import FeaturesSection from './featureProduct';
 import { scrollToHash } from '../../utils/scrolToHash';
 import { useLocation } from 'react-router-dom';
@@ -390,71 +389,16 @@ export default function ProductPage({
         />
       </div>
 
-      {/* Footer */}
-      <Footer />
     </div>
   );
 
-  // If modal: render full-screen overlay so user cannot tell it's a modal
   if (isModal) {
     return (
-      <div
-        role="dialog"
-        aria-modal="true"
-        ref={containerRef}
-        tabIndex={-1}
-        className="fixed inset-0 z-60 flex flex-col bg-white"
-        style={{ outline: 'none' }}
-      >
-        {/* backdrop */}
-        <div className="absolute inset-0 bg-slate-50 pointer-events-none" />
-
-        {/* content (full-screen) */}
-        <div className="relative z-10 w-full h-full overflow-auto">
-          {/* sticky top bar containing a close button */}
-          <div className="sticky top-0 z-20 bg-white border-b">
-            <div className="max-w-6xl mx-auto px-6 py-3 flex items-center justify-between">
-              <div />
-              <div className="flex items-center gap-3">
-                <button
-                  onClick={() => (onClose ? onClose() : navigate(-1))}
-                  className="px-3 py-1 rounded hover:bg-slate-100"
-                  aria-label="Close"
-                >
-                  Close
-                </button>
-              </div>
-            </div>
-          </div>
-
-          {/* the page inner content */}
-          {PageInner}
-        </div>
-      </div>
+      <WebsiteLayout isModal onClose={() => (onClose ? onClose() : navigate(-1))}>
+        {PageInner}
+      </WebsiteLayout>
     );
   }
 
-  // Normal full-page render (non-modal)
-  return (
-    <div className="">
-      <Header drawerOpen={drawerOpen} setDrawerOpen={setDrawerOpen} />
-      <div className="flex">
-        <SideNav
-          drawerOpen={drawerOpen}
-          setDrawerOpen={setDrawerOpen}
-          drawerWidth={DRAWER_W}
-          topOffset={HEADER_HEIGHT - 50}
-        />
-        <div
-          className="flex-1 transition-[margin-left,width] duration-300 ease-in-out"
-          style={{
-            marginLeft: drawerOpen ? DRAWER_W : 0,
-            paddingTop: HEADER_HEIGHT,
-          }}
-        >
-          {PageInner}
-        </div>
-      </div>
-    </div>
-  );
+  return <WebsiteLayout>{PageInner}</WebsiteLayout>;
 }
