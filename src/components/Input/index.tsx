@@ -79,8 +79,14 @@ const Input = React.forwardRef(
     // eslint-disable-next-line react-hooks/exhaustive-deps
     useMemo(() => setId(id + random(10000)), []);
 
+    const darkField =
+      DarkTheme === true
+        ? '!bg-[#071723] !border-[#5a606d] placeholder:!text-[#5a606d] !text-[#EDF1F3]'
+        : '';
+    const standardField = clsx('ds-input-field ds-focus-visible', darkField, inputClassName);
+
     return (
-      <div className={clsx('w-full font-raleway', className)}>
+      <div className={clsx('w-full font-montserrat', className)}>
         <div className="flex items-center gap-x-3">
           {type === 'checkbox' && (
             <input
@@ -137,9 +143,7 @@ const Input = React.forwardRef(
               pattern={pattern}
               formNoValidate={formNoValidate}
               readOnly={readonly}
-              className={
-                clsx('h-12 outline-none w-full px-8 rounded-lg border border-input-border placeholder:text-input-border', { '!bg-[#071723] !border-[#5a606d] placeholder:!text-[#5a606d] !text-[#EDF1F3]': DarkTheme === true }, inputClassName)
-              }
+              className={standardField}
               required={formNoValidate ? !formNoValidate : required}
             />
         )}
@@ -158,9 +162,7 @@ const Input = React.forwardRef(
               disabled={disabled}
               // autoComplete="on"
               placeholder={placeholder}
-              className={
-                'h-[10rem] outline-none w-full px-8 rounded-lg border border-input-border placeholder:text-input-border'
-              }
+              className={clsx(standardField, 'h-[10rem] py-3')}
               required={required}
             />
         )}
@@ -182,9 +184,7 @@ const Input = React.forwardRef(
               title={title}
               autoComplete={autoComplete}
               placeholder={placeholder}
-              className={
-                'h-12 outline-none w-full px-8 rounded-lg border border-input-border placeholder:text-input-border'
-              }
+              className={clsx(standardField, 'pr-14')}
               required={required}
             />
 
@@ -219,7 +219,7 @@ const Input = React.forwardRef(
               disabled={disabled}
               title={title}
               onBlur={onBlur ? onBlur : () => {}}
-              className="h-12 outline-none w-full px-8 rounded-lg border border-input-border placeholder:text-input-border appearance-none"
+              className={clsx(standardField, 'appearance-none pr-14')}
             >
               {placeholder && <option value="">{placeholder}</option>}
               {selectData &&
@@ -246,22 +246,10 @@ const Input = React.forwardRef(
           <div className="w-full">
             <input
               required={required}
-              className="form-control
-                block
-                w-full
-                px-3
-                py-1.5
-                text-base
-                font-normal
-                font-raleway
-                text-gray-700
-                bg-white bg-clip-padding
-                border border-solid border-gray-300
-                rounded
-                transition
-                ease-in-out
-                m-0
-                focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+              className={clsx(
+                'form-control block w-full ds-input-field ds-focus-visible font-montserrat text-brand-navy m-0',
+                'file:mr-4 file:rounded-full file:border-0 file:bg-brand-mist file:px-4 file:py-2 file:text-sm file:font-semibold file:text-brand-blue'
+              )}
               type="file"
               accept={accepts ?? 'image/*'}
               onChange={onChange ? onChange : e => { }}
@@ -329,9 +317,7 @@ const Input = React.forwardRef(
             onChange={
               onChange ? onChange : e => setValue && setValue(e.target.value)
             }
-            className={clsx
-              ('h-32 resize-none outline-none w-full px-8 py-2 rounded-lg border border-input-border placeholder:text-input-border', { '!bg-[#071723] !border-[#5a606d] !text-[#EDF1F3] placeholder:!text-[#5a606d]': DarkTheme === true }, inputClassName)
-            }
+            className={clsx(standardField, 'h-32 py-3 resize-none')}
           />
         )}
 

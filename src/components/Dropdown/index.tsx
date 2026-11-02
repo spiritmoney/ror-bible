@@ -53,15 +53,17 @@ const Dropdown: React.FunctionComponent<IDropdown> = ({ children, position = 'le
             absolute 
             text-base 
             list-none 
-            font-raleway 
+            font-montserrat 
             justify-center
             bg-white
+            text-brand-navy
             text-left 
-            shadow-lg 
+            shadow-brand-card 
             mt-1 
             hidden 
             m-0 
-            rounded-[5px]
+            rounded-[18px]
+            border border-brand-mist
             bg-clip-padding 
             `, 
             { ' Dark bg-[#071723] border-[#0F2230] text-[#EDF1F3]': DarkTheme === true },

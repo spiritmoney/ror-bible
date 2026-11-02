@@ -95,18 +95,18 @@ const Modal: React.FunctionComponent<IModal> = ({
         ></a>
 
         <div className="modal-dialog max-w-max modal-dialog-centered modal-dialog-scrollable relative pointer-events-none">
-          <div className={clsx('modal-content max-w-[100vw] border-none shadow-lg relative flex flex-col pointer-events-auto bg-white bg-clip-padding rounded-md outline-none text-current', { '!bg-[#071723] border-[#0F2230] !text-[#EDF1F3]': DarkTheme === true })}>
+          <div className={clsx('modal-content max-w-[100vw] border border-brand-mist shadow-brand-card relative flex flex-col pointer-events-auto bg-white bg-clip-padding rounded-3xl outline-none text-current font-montserrat', { '!bg-[#071723] !border-[#0F2230] !text-[#EDF1F3]': DarkTheme === true })}>
             {hasHeader && (
-              <div className="modal-header flex flex-shrink-0 items-center justify-between p-4 border-b border-gray-200 rounded-t-md">
+              <div className="modal-header flex flex-shrink-0 items-center justify-between p-4 border-b border-brand-mist rounded-t-3xl">
                 <h5
-                  className="text-xl font-medium leading-normal text-gray-800"
+                  className="text-xl font-bold leading-normal text-brand-blue font-montserrat"
                   id="exampleModalCenteredScrollableLabel"
                 >
                   {title ?? 'Modal title'}
                 </h5>
                 <button
                   type="button"
-                  className="btn-close box-content w-4 h-4 p-1 text-black border-none rounded-none opacity-50 focus:shadow-none focus:outline-none focus:opacity-100 hover:text-black hover:opacity-75 hover:no-underline"
+                  className="btn-close box-content w-4 h-4 p-1 border-none rounded-lg opacity-60 ds-focus-visible hover:opacity-100"
                   data-bs-dismiss="modal"
                   aria-label="Close"
                 ></button>

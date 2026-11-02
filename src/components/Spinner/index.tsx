@@ -14,7 +14,7 @@ const Spinner: React.FunctionComponent<ISpinner> = ({
     <svg
       className={clsx('animate-spin', className, {
         'h-5 w-5': !changeSize,
-        'text-white': !className
+        'text-brand-blue': !className,
       })}
       xmlns="http://www.w3.org/2000/svg"
       fill="none"

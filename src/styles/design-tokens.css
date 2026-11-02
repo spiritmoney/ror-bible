@@ -1,0 +1,159 @@
+/* ROR Bible+ app design tokens (aligned with Website reference.css) */
+
+@font-face {
+  font-family: 'Montserrat';
+  src: url('../assets/website/fonts/montserrat-regular.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Montserrat';
+  src: url('../assets/website/fonts/montserrat-medium.woff') format('woff');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Montserrat';
+  src: url('../assets/website/fonts/montserrat-semibold.woff') format('woff');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Montserrat';
+  src: url('../assets/website/fonts/montserrat-bold.woff') format('woff');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Montserrat';
+  src: url('../assets/website/fonts/montserrat-extrabold.woff') format('woff');
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  --ds-cyan: #07bdd2;
+  --ds-teal: #099db2;
+  --ds-blue: #19688b;
+  --ds-navy: #0b2f44;
+  --ds-orange: #ff5900;
+  --ds-pale: #f6fbfd;
+  --ds-mist: #eaf5f8;
+  --ds-ink: #3d5566;
+  --ds-white: #ffffff;
+  --ds-shadow-header: 0 10px 30px rgba(11, 47, 68, 0.1);
+  --ds-shadow-card: 0 30px 80px rgba(11, 47, 68, 0.18);
+  --ds-shadow-orange: 0 10px 24px rgba(255, 89, 0, 0.28);
+  --ds-radius-pill: 999px;
+  --ds-radius-card: 18px;
+  --ds-radius-modal: 24px;
+  --ds-radius-input: 20px;
+  --ds-input-border: rgba(11, 47, 68, 0.22);
+}
+
+/* App chrome typography (reader/editor may override locally). Marketing shell resets in .website-root */
+body {
+  font-family: 'Montserrat', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  color: var(--ds-navy);
+  -webkit-font-smoothing: antialiased;
+}
+
+.website-root {
+  color: var(--ds-navy);
+}
+
+/* Reduce Bootstrap Reboot link variable leakage outside .website-root */
+body a {
+  --bs-link-color-rgb: unset;
+  --bs-link-hover-color-rgb: unset;
+  --bs-link-opacity: unset;
+}
+
+.ds-focus-visible:focus-visible {
+  outline: 3px solid var(--ds-orange);
+  outline-offset: 3px;
+  border-radius: 8px;
+}
+
+.ds-btn-lift {
+  transition: transform 0.2s ease, filter 0.2s ease;
+}
+.ds-btn-lift:hover:not(:disabled) {
+  transform: translateY(-2px);
+  filter: brightness(1.04);
+}
+
+.ds-card-lift {
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+.ds-card-lift:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 26px 60px rgba(11, 47, 68, 0.16);
+}
+
+.ds-input-field {
+  box-sizing: border-box;
+  height: 3rem;
+  width: 100%;
+  padding: 0 1.25rem;
+  border-radius: var(--ds-radius-input);
+  border: 1px solid var(--ds-input-border);
+  background: var(--ds-white);
+  color: var(--ds-navy);
+  font-family: inherit;
+  font-size: 1rem;
+  outline: none;
+}
+.ds-input-field::placeholder {
+  color: rgba(61, 85, 102, 0.55);
+}
+.ds-input-field:focus-visible {
+  outline: 3px solid var(--ds-orange);
+  outline-offset: 3px;
+}
+
+.ds-container {
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 32px;
+  padding-right: 32px;
+  box-sizing: border-box;
+}
+@media (max-width: 720px) {
+  .ds-container {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+}
+
+/* tw-elements / Bootstrap modal restyle (keep library, align surfaces) */
+.modal .modal-content {
+  border-radius: var(--ds-radius-modal);
+  border: 1px solid rgba(220, 235, 240, 0.9);
+  box-shadow: var(--ds-shadow-card);
+  font-family: 'Montserrat', system-ui, sans-serif;
+}
+.modal .modal-header {
+  border-bottom-color: var(--ds-mist);
+}
+.modal .modal-header .modal-title,
+.modal .modal-header h5 {
+  color: var(--ds-blue);
+  font-weight: 700;
+}
+.modal .btn-close:focus {
+  box-shadow: 0 0 0 3px var(--ds-orange);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ds-btn-lift,
+  .ds-card-lift {
+    transition: none !important;
+  }
+}

@@ -63,8 +63,8 @@ const Table: React.FunctionComponent<ITable> = ({
       <div className="overflow-x-auto sm:-mx-6 lg:-mx-8">
         <div className="py-2 inline-block min-w-full sm:px-6 lg:px-8">
           <div className="overflow-hidden">
-            <table className={clsx('min-w-full', tableClassName)}>
-              <thead className={clsx('bg-white border-b', { 'bg-[#0F2230] border-[#0F2230] text-[#EDF1F3]': DarkTheme === true }, headClassName)}>
+            <table className={clsx('min-w-full font-montserrat text-brand-navy', tableClassName)}>
+              <thead className={clsx('bg-brand-mist border-b border-brand-mist', { 'bg-[#0F2230] border-[#0F2230] text-[#EDF1F3]': DarkTheme === true }, headClassName)}>
                 <tr>
                   {keys.map((key, i) => {
                     return (
@@ -72,7 +72,7 @@ const Table: React.FunctionComponent<ITable> = ({
                         key={i}
                         scope="col"
                         className={clsx(
-                          'text-sm font-medium px-6 py-4 text-left', { 'text-[#EDF1F3]': DarkTheme === true },
+                          'text-sm font-semibold px-6 py-4 text-left text-brand-blue', { 'text-[#EDF1F3]': DarkTheme === true },
                           headerClassName
                         )}
                       >
@@ -84,7 +84,7 @@ const Table: React.FunctionComponent<ITable> = ({
               </thead>
               <tbody className={bodyClassName}>
                 {tableData.map((rowObj, i) => (
-                  <tr key={i} className={clsx('bg-gray-100 border-b odd:bg-white', { 'dark !bg-[#0F2230] border-[#0F2230] odd:!bg-[#071723] text-[#EDF1F3]': DarkTheme === true }, rowClassName)}>
+                  <tr key={i} className={clsx('bg-brand-pale border-b border-brand-mist odd:bg-white', { 'dark !bg-[#0F2230] border-[#0F2230] odd:!bg-[#071723] text-[#EDF1F3]': DarkTheme === true }, rowClassName)}>
                     {keys.map((key, i) => (
                       <td key={i} className={clsx("px-6 py-4 whitespace-nowrap text-sm font-medium ", { 'text-[#EDF1F3]': DarkTheme === true }, cellClassName)}>
                         {handleEachCell(rowObj[key], rowObj, key)}

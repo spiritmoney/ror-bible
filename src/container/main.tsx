@@ -284,7 +284,7 @@ const Main: React.FunctionComponent<IMain> = () => {
   }
 
   return (
-    <main className="font-raleway">
+    <main className="font-montserrat">
       <Suspense fallback={<SuspenseLoader fullscreen />}>
         {isElectron() ? (
           <HashRouter>

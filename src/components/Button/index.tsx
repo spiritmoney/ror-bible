@@ -2,9 +2,6 @@ import clsx from 'clsx';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import Spinner from '../Spinner';
-// import style from './styles.module.scss';
-
-// import { ReactComponent as Spinner } from '../../assets/button-spinner.svg';
 
 export interface IButton {
   primary?: boolean;
@@ -24,6 +21,9 @@ export interface IButton {
   to?: string;
   onClick?: (event?: React.FormEvent<Element>) => void;
 }
+
+const baseClasses =
+  'inline-flex items-center justify-center font-montserrat font-extrabold ds-btn-lift ds-focus-visible disabled:opacity-60 disabled:pointer-events-none';
 
 const Button = React.forwardRef(
   (
@@ -47,78 +47,65 @@ const Button = React.forwardRef(
     }: IButton,
     ref
   ) => {
-    const inClassName = clsx(
-      'flex items-center justify-center rounded-lg px-3 h-12 font-raleway text-lg ',
-      { 'bg-primary text-white': primary },
+    const sizeClasses = small
+      ? 'min-h-[2.25rem] px-4 text-sm'
+      : 'min-h-[3.25rem] px-7 text-base';
+
+    const variantClasses = clsx(
       { 'w-full': fullWidth },
       {
-        'px-3 h-12  text-lg': !small,
-        'pt-[.5313rem] pb-[.4688rem] px-[.625rem]': small,
+        'rounded-full bg-brand-orange text-white shadow-brand-orange hover:text-white':
+          primary,
       },
       {
-        'shadow-[inset_0_0_0_1px_#BFBFBF] rounded-[5px] text-bf-grey': light,
+        'rounded-full bg-white text-brand-blue border-2 border-brand-blue hover:text-brand-blue':
+          secondary,
       },
-      { 'bg-dark-blue rounded-[5px] text-white': secondary },
-      { ' bg-danger text-white': danger },
-      className
+      {
+        'rounded-[5px] shadow-[inset_0_0_0_1px_#BFBFBF] text-brand-ink bg-white':
+          light,
+      },
+      { 'rounded-full bg-danger text-white': danger },
+      !primary && !secondary && !light && !danger && 'rounded-lg px-3 h-12'
     );
+
+    const inClassName = clsx(baseClasses, sizeClasses, variantClasses, className);
+
+    const content = (
+      <>
+        {loading && (
+          <Spinner
+            className={clsx('w-6 h-6', {
+              'mr-3 -ml-1': !removeSpinnerMargin,
+              'text-white': primary || danger,
+              'text-brand-blue': secondary,
+              'text-brand-ink': light,
+            })}
+          />
+        )}
+        {iconBefore && (
+          <div className={clsx('mr-5 empty:hidden', { 'mr-[.625rem]': small })}>
+            {iconBefore}
+          </div>
+        )}
+        {children}
+        {iconAfter && <div className={clsx('ml-2 empty:hidden')}>{iconAfter}</div>}
+      </>
+    );
+
     return type === 'link' && to ? (
       <Link to={to} className={inClassName}>
-        <>
-          {loading && <Spinner className={clsx(" w-6 h-6  ", { 'mr-3 -ml-1': !removeSpinnerMargin })} />}
-          {iconBefore && (
-            <div
-              className={clsx('mr-5 empty:hidden', { 'mr-[.625rem]': small })}
-            >
-              {iconBefore}
-            </div>
-          )}
-          {children}
-          {iconAfter && (
-            <div className={clsx('ml-2 empty:hidden')}>{iconAfter}</div>
-          )}
-        </>
+        {content}
       </Link>
     ) : (
       <button
         ref={ref as any}
-        type={type === 'submit' ? 'submit' : undefined}
-        disabled={disabled}
+        type={type === 'submit' ? 'submit' : 'button'}
+        disabled={disabled || loading}
         {...props}
-        // This is suppose to be = inClassName but my tailwind intellisense only works on actuall classNames not variable
-        className={clsx(
-          'flex items-center justify-center rounded-lg font-raleway  disabled:bg-gray-500',
-          { 'bg-primary text-white': primary },
-          { 'w-full': fullWidth },
-          {
-            'px-3 h-12 text-lg': !small,
-            'pt-[.5313rem] h-[1.875rem] pb-[.4688rem] px-[.625rem] text-sm font-medium':
-              small,
-          },
-          // { 'border border-bf-grey rounded-[5px] text-bf-grey': light },
-          {
-            'shadow-[inset_0_0_0_1px_#BFBFBF] rounded-[5px] text-bf-grey':
-              light,
-          },
-          { 'bg-dark-blue rounded-[5px] text-white': secondary },
-          { ' bg-danger text-white': danger },
-          className
-        )}
+        className={inClassName}
       >
-        <>
-          {loading && <Spinner className={clsx(" w-6 h-6 ", { 'mr-3 -ml-1': !removeSpinnerMargin })} />}
-          {iconBefore && (
-            <div
-              className={clsx('mr-5 empty:hidden', { 'mr-[.625rem]': small })}
-            >
-              {iconBefore}
-            </div>
-          )}
-          {children}
-          {iconAfter && (
-            <div className={clsx('ml-2 empty:hidden')}>{iconAfter}</div>
-          )}
-        </>
+        {content}
       </button>
     );
   }

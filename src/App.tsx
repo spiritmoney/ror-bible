@@ -1,29 +1,42 @@
-import React, { useState } from 'react';
-import { useEffectOnce } from 'usehooks-ts';
+import React, { useState, useCallback, useEffect } from 'react';
 import SplashScreen from './components/SplashScreen';
 import Main from './container/main';
 import 'theme/_scroll-bar.scss';
+
+const SPLASH_AUTO_MS = 2000;
 
 const isKingsChatCallback = () =>
   typeof window !== 'undefined' &&
   window.location.pathname.indexOf('/auth/callback') === 0;
 
 function App() {
-  //You can change this to false so the splash screen doesn't show on refresh. Remember to change back to true when pushing finally
-  // Skip the splash when landing back from the KingsChat OAuth redirect so the
-  // callback handler runs immediately instead of waiting for the splash timer.
   const [showingSplash, setshowingSplash] = useState(() => !isKingsChatCallback());
 
-  useEffectOnce(() => {
+  const dismissSplash = useCallback(() => {
+    setshowingSplash(false);
+  }, []);
+
+  useEffect(() => {
     if (!showingSplash) return;
-    setTimeout(() => {
-      setshowingSplash(false);
-    }, 7000);
-  });
+    const t = window.setTimeout(dismissSplash, SPLASH_AUTO_MS);
+    return () => window.clearTimeout(t);
+  }, [showingSplash, dismissSplash]);
+
+  useEffect(() => {
+    if (!showingSplash) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape' || e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        dismissSplash();
+      }
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [showingSplash, dismissSplash]);
 
   return (
     <>
-      {showingSplash && <SplashScreen />}
+      {showingSplash && <SplashScreen onDismiss={dismissSplash} />}
       {!showingSplash && <Main />}
       {/* <Toaster /> */}
     </>
