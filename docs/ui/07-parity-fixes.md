@@ -34,3 +34,9 @@ Collapsed **335** register rows → **8** root-cause groups (ignore image-filena
 - **Reference [grep styles.css]:** default `a:hover` → navy; `.btn-lift:hover` → lift + brightness; `focus-visible` → orange outline; utility/footer links stay readable on dark bars.
 - **Root cause:** Bootstrap Reboot (via global `tw-elements`) retargets `--bs-link-color-rgb` on `a:hover`, overriding Tailwind `text-*` on marketing links.
 - **Fix:** `.website-root` hover rules in `website.css`; explicit `hover:text-*` on `WebsiteButton`, utility bar, footer, CTA bands.
+
+## Link hover leak (commit TBD)
+
+- **Root cause:** Bootstrap Reboot `a:hover { --bs-link-color-rgb: var(--bs-link-hover-color-rgb) }` plus global `reference.css` `a:hover { navy }` overriding explicit token link colors in the React bundle only.
+- **Fix:** Unset `--bs-link-*` on `.website-root a`/`:hover` in `website-isolation.css`; restore token hover colors with higher-specificity selectors (utility, CTAs, cards, footer).
+- **Verify:** `C:/temp/parity/hover-measure.mjs` (CDP hover, 300ms settle); home/pricing compare gates unchanged @1440.

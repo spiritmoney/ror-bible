@@ -55,6 +55,42 @@ html:has(.website-root) #root {
 
 .website-root a {
   text-decoration: none;
+  /* Bootstrap Reboot (tw-elements) sets a{color:rgba(var(--bs-link-color-rgb))} and a:hover swaps
+     --bs-link-color-rgb to --bs-link-hover-color-rgb, which darkens labels on navy/blue surfaces. */
+  --bs-link-color-rgb: unset;
+  --bs-link-hover-color-rgb: unset;
+  --bs-link-opacity: unset;
+}
+
+.website-root a:hover {
+  --bs-link-color-rgb: unset;
+  --bs-link-hover-color-rgb: unset;
+}
+
+/* Win over reference.css .website-root a:hover { navy } where tokens set explicit link colors. */
+.website-root a.u2ee821:hover,
+.website-root a.u030a0a:hover,
+.website-root a.u5c4e6f:hover,
+.website-root a.u05f1f4:hover,
+.website-root a.getapp:hover,
+.website-root a.ubee0d4:hover,
+.website-root a.u466af7:hover,
+.website-root a.u873fb7:hover,
+.website-root a.u311bd0:hover,
+.website-root a.u9c2843:hover,
+.website-root a.u4a141a:hover,
+.website-root a.u67776a:hover,
+.website-root a.u74c5a0:hover {
+  color: #ffffff;
+}
+
+.website-root a.u8c9a26:hover,
+.website-root a.uc0e2c3:hover {
+  color: #cfe6ee;
+}
+
+.website-root a.uedde83:hover {
+  color: #0b2f44;
 }
 
 .website-root input,
