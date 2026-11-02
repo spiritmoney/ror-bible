@@ -41,7 +41,7 @@ Collapsed **335** register rows → **8** root-cause groups (ignore image-filena
 - **Fix:** Unset `--bs-link-*` on `.website-root a`/`:hover` in `website-isolation.css`; restore token hover colors with higher-specificity selectors (utility, CTAs, cards, footer).
 - **Verify:** `C:/temp/parity/hover-measure.mjs` (CDP hover, 300ms settle); home/pricing compare gates unchanged @1440.
 
-## Hover scope correction (commit TBD)
+## Hover scope correction (commit `4d68543`)
 
 - **Issue:** `93582e0` applied white/`#cfe6ee` hover to token classes globally, so light-surface controls (e.g. `ubee0d4`, mega `uedde83`) no longer matched reference `a:hover` navy.
 - **Fix:** Restrict overrides to dark sections (`.u9badc9`, `.ub9a234`, `.u1717c3`, footer, orange CTAs); keep Bootstrap unset on all `.website-root` links.
