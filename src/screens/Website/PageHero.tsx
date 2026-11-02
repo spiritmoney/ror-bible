@@ -71,7 +71,7 @@ export default function PageHero({
       <HeroWaves />
       <div className="relative z-[1] max-w-3xl">
         <Eyebrow>{eyebrow}</Eyebrow>
-        <h1 className="mt-4 text-[56px] website-sm:text-[42px] leading-[1.05] font-extrabold text-brand-navy tracking-tight">
+        <h1 className="mt-4 text-website-hero-page website-sm:text-[42px] font-extrabold text-brand-blue leading-[1.05] tracking-tight">
           {title}
         </h1>
         {subtitle ? (

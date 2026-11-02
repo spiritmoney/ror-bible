@@ -38,6 +38,10 @@ module.exports = {
         montserrat: ['Montserrat', 'system-ui', 'sans-serif'],
         raleway: 'Raleway, sans-serif',
       },
+      fontSize: {
+        'website-hero-home': ['68px', { lineHeight: '1.02', letterSpacing: '-0.02em' }],
+        'website-hero-page': ['60px', { lineHeight: '1.05', letterSpacing: '-0.02em' }],
+      },
       boxShadow: {
         'brand-header': '0 10px 30px rgba(11, 47, 68, 0.10)',
         'brand-card': '0 30px 80px rgba(11, 47, 68, 0.18)',
