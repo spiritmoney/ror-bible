@@ -132,7 +132,7 @@ const Workspace: React.FunctionComponent<IWorkspace> = ({
       >
         <div
           className={clsx(
-            'SideNav relative bg-[#18668D] w-[18%] text-[#F2F3F3] flex transition-width duration-500 ease-in-out animate-fadein',
+            'SideNav relative bg-[var(--ds-blue)] w-[18%] text-[#F2F3F3] flex transition-width duration-500 ease-in-out animate-fadein',
             { '!w-[6%]': sideNav === false }
           )}
         >
@@ -199,8 +199,8 @@ const Workspace: React.FunctionComponent<IWorkspace> = ({
             </li>
 
             <li
-              className={clsx('a-s-opt  hover:bg-[#1673A1] w-full', {
-                'bg-[#1673A1]': nav === 'library',
+              className={clsx('a-s-opt  hover:bg-[var(--ds-blue)] w-full', {
+                'bg-[var(--ds-blue)]': nav === 'library',
               })}
               // onClick={() => setNav('library')}
             >
@@ -266,8 +266,8 @@ const Workspace: React.FunctionComponent<IWorkspace> = ({
 
             {/* Favourite */}
             <li
-              className={clsx('a-s-opt  hover:bg-[#1673A1] w-full', {
-                'bg-[#1673A1]': nav === 'fav',
+              className={clsx('a-s-opt  hover:bg-[var(--ds-blue)] w-full', {
+                'bg-[var(--ds-blue)]': nav === 'fav',
               })}
               onClick={handleFav}
             >
@@ -313,7 +313,7 @@ const Workspace: React.FunctionComponent<IWorkspace> = ({
             {/* Cascaded Menu for Favourites */}
             <ul
               className={clsx(
-                'pl-10 w-full bg-[#1673A1] transition-all duration-500 ease-in-out',
+                'pl-10 w-full bg-[var(--ds-blue)] transition-all duration-500 ease-in-out',
                 { hidden: nav !== 'fav' || sideNav === false }
               )}
             >
@@ -475,8 +475,8 @@ const Workspace: React.FunctionComponent<IWorkspace> = ({
 
             {/* Store */}
             <li
-              className={clsx('a-s-opt  hover:bg-[#1673A1] w-full', {
-                'bg-[#1673A1]': nav === 'store' || nav === 'store_bible',
+              className={clsx('a-s-opt  hover:bg-[var(--ds-blue)] w-full', {
+                'bg-[var(--ds-blue)]': nav === 'store' || nav === 'store_bible',
               })}
               onClick={handleStore}
             >
@@ -549,7 +549,7 @@ const Workspace: React.FunctionComponent<IWorkspace> = ({
             </li>
             {/* Cascaded Menu for Store */}
             <ul
-              className={clsx('pl-10 w-full bg-[#1673A1]', {
+              className={clsx('pl-10 w-full bg-[var(--ds-blue)]', {
                 hidden:
                   (nav !== 'store' &&
                     nav !== 'store_bible' &&
@@ -744,8 +744,8 @@ const Workspace: React.FunctionComponent<IWorkspace> = ({
 
             {/* Download */}
             <li
-              className={clsx('a-s-opt  hover:bg-[#1673A1] w-full', {
-                'bg-[#1673A1]': nav === 'download',
+              className={clsx('a-s-opt  hover:bg-[var(--ds-blue)] w-full', {
+                'bg-[var(--ds-blue)]': nav === 'download',
               })}
             >
               <div className="left">
@@ -788,8 +788,8 @@ const Workspace: React.FunctionComponent<IWorkspace> = ({
 
             {/* Notification */}
             <li
-              className={clsx('a-s-opt  hover:bg-[#1673A1] w-full', {
-                'bg-[#1673A1]': nav === 'notification',
+              className={clsx('a-s-opt  hover:bg-[var(--ds-blue)] w-full', {
+                'bg-[var(--ds-blue)]': nav === 'notification',
               })}
             >
               <div className="left">
