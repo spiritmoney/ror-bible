@@ -235,7 +235,7 @@ const Header: React.FunctionComponent<IHeader> = ({ hidden, quill }) => {
   return (
     <header ref={ref} className="w-full select-none">
       {/* TOP BAR: dark. Added long thin border line under this bar. */}
-      <div className="w-full bg-[#18668D] text-white">
+      <div className="w-full bg-[var(--ds-blue)] text-white font-montserrat">
         <div className="maxw-[1400px] mx-auto flex items-center px-9 py-3">
           {/* logo left */}
           <div
@@ -250,7 +250,7 @@ const Header: React.FunctionComponent<IHeader> = ({ hidden, quill }) => {
             <ul
               ref={topNavContainerRef as any}
               className="flex items-center gap-x-8 text-sm font-normal relative pb-2"
-              style={{ borderBottom: '0.4px solid #3CF9FF' }}
+              style={{ borderBottom: '0.4px solid var(--ds-cyan)' }}
             >
               <li
                 ref={el => setTopItemRef(el, 0)}
@@ -342,7 +342,7 @@ const Header: React.FunctionComponent<IHeader> = ({ hidden, quill }) => {
                   bottom: -2,
                   height: 3,
                   width: topUnderlineStyle.width,
-                  background: '#3CF9FF',
+                  background: 'var(--ds-cyan)',
                   borderRadius: 2,
                   transition:
                     'left 220ms cubic-bezier(.2,.9,.2,1), width 220ms cubic-bezier(.2,.9,.2,1)',
@@ -401,11 +401,11 @@ const Header: React.FunctionComponent<IHeader> = ({ hidden, quill }) => {
 
         {/* small screen top links dropdown content */}
         {showTopLinksDropdown && (
-          <div className="md:hidden bg-[#145f76] px-4 py-3">
+          <div className="md:hidden bg-[var(--ds-teal)] px-4 py-3">
             <ul className="flex flex-col gap-y-2 text-sm text-white">
               <li className="py-1">About</li>
               <li className="py-1">Products</li>
-              <li className="py-1 border-b-2 border-[#2ac7d4]">Bible Online</li>
+              <li className="py-1 border-b-2 border-[var(--ds-cyan)]">Bible Online</li>
               <li className="py-1">Blog</li>
               <li className="py-1">Partner</li>
               <li className="py-1">Give</li>
