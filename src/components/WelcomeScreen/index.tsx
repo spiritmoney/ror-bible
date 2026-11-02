@@ -33,7 +33,7 @@ const WelcomeScreen: React.FunctionComponent = () => {
   };
 
   return (
-    <section className="min-h-screen w-full flex items-center justify-center bg-gradient-to-br from-[#18668D] to-[#0b3b52] px-6 py-12">
+    <section className="min-h-screen w-full flex items-center justify-center bg-gradient-to-br from-[var(--ds-blue)] to-[var(--ds-navy)] px-6 py-12 font-montserrat">
       <div className="w-full max-w-sm flex flex-col items-center text-center">
         {/* Profile picture with small logo badge overlapping bottom-right */}
         <div className="relative w-40 h-40">
@@ -70,7 +70,7 @@ const WelcomeScreen: React.FunctionComponent = () => {
         <button
           type="button"
           onClick={handleContinue}
-          className="animate-pulse mt-12 rounded-full bg-white text-[#18668D] font-semibold px-10 py-3.5 shadow-xl hover:bg-white/90 transition-colors"
+          className="animate-pulse mt-12 rounded-full bg-white text-[var(--ds-blue)] font-semibold px-10 py-3.5 shadow-brand-orange-sm hover:bg-white/90 transition-colors ds-focus-visible"
         >
           Start Reading
         </button>
