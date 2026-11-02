@@ -489,7 +489,7 @@ const SingleReader: React.FC<IReader> = ({ hidden }) => {
 
               {/* Reader Settings */}
               <Dropdown
-                dropdownClassName="border border-dropdown-border font-raleway overflow-auto ml-auto mr-auto bg-white !w-[50%] transition-all duration-500 ease-in-out"
+                dropdownClassName="border border-dropdown-border font-montserrat overflow-auto ml-auto mr-auto bg-white !w-[50%] transition-all duration-500 ease-in-out"
                 className={'transition-all duration-500 ease-in-out'}
                 content={
                   <div className="bg-[var(--ds-blue)] p-6 rounded-lg flex flex-wrap justify-center gap-6 max-w-lg mx-auto">

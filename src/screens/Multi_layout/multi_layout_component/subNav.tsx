@@ -223,7 +223,7 @@ const SubNav: React.FC<SubNavProps> = ({ nav, setNav, className }) => {
                     <div className='flex w-full items-center justify-center mr-auto ml-auto '>
                         {nav === 'multi_layout' &&
                             <Dropdown
-                                dropdownClassName="border border-dropdown-border font-raleway overflow-auto ml-auto mr-auto bg-white !w-[50%] transition-all duration-500 ease-in-out"
+                                dropdownClassName="border border-dropdown-border font-montserrat overflow-auto ml-auto mr-auto bg-white !w-[50%] transition-all duration-500 ease-in-out"
                                 className={clsx('w-full transition-all duration-500 ease-in-out', { '!bg-[#233040] !text-white': DarkTheme })}
                                 content={
                                     <ul className={clsx("flex flex-col gap-y-[2px] w-[100%", { '!bg-[#233040] !text-white': DarkTheme })}>
