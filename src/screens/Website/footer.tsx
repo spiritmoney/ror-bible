@@ -12,30 +12,30 @@ import icon from '../../assets/website/new/ror-bible-plus-icon.png';
 
 export default function Footer() {
   return (
-    <footer className="mt-16 bg-white">
+    <footer className="mt-16 bg-brand-navy text-white">
       <BrandStripe />
       <div className="max-w-website mx-auto px-8 website-sm:px-4 py-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10">
         <div className="lg:col-span-1">
           <Link to="/home" className="flex items-center gap-3" aria-label="ROR Bible+ home">
             <img src={icon} alt="" className="h-12 w-auto" />
             <span>
-              <span className="block text-xl font-extrabold text-brand-blue">ROR Bible+</span>
-              <span className="block text-sm font-medium text-brand-blue">Premium Bible Reader</span>
+              <span className="block text-xl font-extrabold text-white">ROR Bible+</span>
+              <span className="block text-sm font-medium text-white/80">Premium Bible Reader</span>
             </span>
           </Link>
-          <p className="mt-4 text-sm font-semibold text-brand-navy">Read. Study. Meditate. Triumph.</p>
-          <Link to={`${WebsiteDownloadRoute}#support`} className="block mt-3 text-sm text-brand-blue font-semibold">
+          <p className="mt-4 text-sm font-semibold text-white/90">Read. Study. Meditate. Triumph.</p>
+          <Link to={`${WebsiteDownloadRoute}#support`} className="block mt-3 text-sm text-brand-cyan font-semibold hover:underline">
             Technical support
           </Link>
-          <Link to={`${WebsiteDownloadRoute}#contact`} className="block mt-2 text-sm text-brand-blue font-semibold">
+          <Link to={`${WebsiteDownloadRoute}#contact`} className="block mt-2 text-sm text-brand-cyan font-semibold hover:underline">
             Contact us
           </Link>
-          <Link to="/store" className="block mt-2 text-sm text-brand-blue font-semibold">
+          <Link to="/store" className="block mt-2 text-sm text-brand-cyan font-semibold hover:underline">
             Store
           </Link>
         </div>
         <FooterCol
-          title="Products"
+          title="PRODUCTS"
           links={[
             ['ROR Bible+ Web (Bible Online & Lite)', WebsiteProductWebRoute],
             ['ROR Bible+ Mobile', WebsiteProductMobileRoute],
@@ -44,7 +44,7 @@ export default function Footer() {
           ]}
         />
         <FooterCol
-          title="About ROR Bible+"
+          title="ABOUT ROR BIBLE+"
           links={[
             ['Mission', '/about#mission'],
             ['Stories', '/about#stories'],
@@ -55,7 +55,7 @@ export default function Footer() {
           ]}
         />
         <FooterCol
-          title="Partners"
+          title="PARTNERS"
           links={[
             ['Content Partner', '/partner#content'],
             ['Bible Partner', '/partner#ror_bible_partners'],
@@ -65,7 +65,7 @@ export default function Footer() {
           ]}
         />
         <FooterCol
-          title="Follow us"
+          title="FOLLOW US"
           links={[
             ['KingsChat', 'https://www.kingchat.online'],
             ['CeFlix', '#'],
@@ -74,14 +74,14 @@ export default function Footer() {
           external
         />
       </div>
-      <div className="border-t border-brand-mist py-4">
-        <div className="max-w-website mx-auto px-8 website-sm:px-4 flex flex-wrap justify-between gap-2 text-sm text-brand-ink">
+      <div className="border-t border-white/15 py-4">
+        <div className="max-w-website mx-auto px-8 website-sm:px-4 flex flex-wrap justify-between gap-2 text-sm text-white/75">
           <span>© 2026 ROR Bible+. All rights reserved.</span>
           <span className="flex gap-4">
-            <a href="#" className="font-semibold text-brand-blue">
+            <a href="#" className="font-semibold text-brand-cyan hover:underline">
               Privacy
             </a>
-            <a href="#" className="font-semibold text-brand-blue">
+            <a href="#" className="font-semibold text-brand-cyan hover:underline">
               Terms of Use
             </a>
           </span>
@@ -102,15 +102,15 @@ function FooterCol({
 }) {
   return (
     <div>
-      <h3 className="text-base font-extrabold text-brand-navy mb-3">{title}</h3>
+      <h3 className="text-xs font-extrabold tracking-[0.12em] text-white mb-3">{title}</h3>
       <div className="flex flex-col gap-2">
         {links.map(([label, href]) =>
           external || href.startsWith('http') ? (
-            <a key={label} href={href} className="text-sm font-semibold text-brand-blue hover:underline">
+            <a key={label} href={href} className="text-sm font-semibold text-brand-cyan hover:underline">
               {label}
             </a>
           ) : (
-            <Link key={label} to={href} className="text-sm font-semibold text-brand-blue hover:underline">
+            <Link key={label} to={href} className="text-sm font-semibold text-brand-cyan hover:underline">
               {label}
             </Link>
           )
