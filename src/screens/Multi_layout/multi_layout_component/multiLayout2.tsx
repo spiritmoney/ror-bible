@@ -269,7 +269,7 @@ const Multilayout: React.FC<Props> = ({ hidden = false }) => {
               <div className="flex mb-2">
                 <button
                   className={clsx('flex-1 py-2 rounded text-sm', {
-                    'bg-[#1673A1] text-white': !selectTestament,
+                    'bg-[var(--ds-blue)] text-white': !selectTestament,
                   })}
                   onClick={() => handleTestamentChange(false)}
                 >
@@ -277,7 +277,7 @@ const Multilayout: React.FC<Props> = ({ hidden = false }) => {
                 </button>
                 <button
                   className={clsx('flex-1 py-2 rounded text-sm ml-2', {
-                    'bg-[#1673A1] text-white': selectTestament,
+                    'bg-[var(--ds-blue)] text-white': selectTestament,
                   })}
                   onClick={() => handleTestamentChange(true)}
                 >
@@ -298,7 +298,7 @@ const Multilayout: React.FC<Props> = ({ hidden = false }) => {
                       key={i}
                       className={clsx(
                         'py-1 text-center rounded mb-1 text-xs cursor-pointer',
-                        { 'bg-[#1673A1] text-white': i === currentBookIndex }
+                        { 'bg-[var(--ds-blue)] text-white': i === currentBookIndex }
                       )}
                       onClick={() => {
                         const safeIndex = clampBookIndex(
@@ -322,7 +322,7 @@ const Multilayout: React.FC<Props> = ({ hidden = false }) => {
                       key={idx}
                       className={clsx(
                         'py-1 text-center rounded mb-1 text-xs cursor-pointer',
-                        { 'bg-[#1673A1] text-white': idx === currentChapter }
+                        { 'bg-[var(--ds-blue)] text-white': idx === currentChapter }
                       )}
                       onClick={() => setCurrentChapter(idx)}
                     >
@@ -337,7 +337,7 @@ const Multilayout: React.FC<Props> = ({ hidden = false }) => {
                       key={idx}
                       className={clsx(
                         'py-1 text-center rounded mb-1 text-xs cursor-pointer',
-                        { 'bg-[#1673A1] text-white': selectedVerse === idx + 2 }
+                        { 'bg-[var(--ds-blue)] text-white': selectedVerse === idx + 2 }
                       )}
                       onClick={() => handleVerseClick(idx)}
                     >
@@ -370,7 +370,7 @@ const Multilayout: React.FC<Props> = ({ hidden = false }) => {
           <div className="flex bg-[#233040] text-[#a7a7a7]">
             <div
               className={clsx('w-1/4 text-center py-3 cursor-pointer', {
-                'bg-[#1673A1] text-white': Reader === 'bible',
+                'bg-[var(--ds-blue)] text-white': Reader === 'bible',
               })}
               onClick={() => setReader('bible')}
             >
@@ -378,7 +378,7 @@ const Multilayout: React.FC<Props> = ({ hidden = false }) => {
             </div>
             <div
               className={clsx('w-1/4 text-center py-3 cursor-pointer', {
-                'bg-[#1673A1] text-white': Reader === 'cross_refs',
+                'bg-[var(--ds-blue)] text-white': Reader === 'cross_refs',
               })}
               onClick={() => setReader('cross_refs')}
             >
@@ -386,7 +386,7 @@ const Multilayout: React.FC<Props> = ({ hidden = false }) => {
             </div>
             <div
               className={clsx('w-1/4 text-center py-3 cursor-pointer', {
-                'bg-[#1673A1] text-white': Reader === 'search',
+                'bg-[var(--ds-blue)] text-white': Reader === 'search',
               })}
               onClick={() => setReader('search')}
             >
@@ -394,7 +394,7 @@ const Multilayout: React.FC<Props> = ({ hidden = false }) => {
             </div>
             <div
               className={clsx('w-1/4 text-center py-3 cursor-pointer', {
-                'bg-[#1673A1] text-white': Reader === 'history',
+                'bg-[var(--ds-blue)] text-white': Reader === 'history',
               })}
               onClick={() => setReader('history')}
             >

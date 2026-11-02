@@ -376,7 +376,7 @@ const Multilayout = ({ hidden }: storeFavouritesTypes) => {
                 style={{ borderTopLeftRadius: 8, borderTopRightRadius: 8 }}
               >
                 <div
-                  className={`multi_layout_main_bible_top_inactive ${!selectTestament ? 'bg-[#1673A1]' : 'bg-[#02C6D9]'}`}
+                  className={`multi_layout_main_bible_top_inactive ${!selectTestament ? 'bg-[var(--ds-blue)]' : 'bg-[var(--ds-cyan)]'}`}
                   onClick={() => {
                     setTestament(false);
                     setCurrentBookIndex(
@@ -391,7 +391,7 @@ const Multilayout = ({ hidden }: storeFavouritesTypes) => {
                   OT
                 </div>
                 <div
-                  className={`multi_layout_main_bible_top_inactive2 ${selectTestament ? 'bg-[#1673A1]' : 'bg-[#02C6D9]'}`}
+                  className={`multi_layout_main_bible_top_inactive2 ${selectTestament ? 'bg-[var(--ds-blue)]' : 'bg-[var(--ds-cyan)]'}`}
                   onClick={() => {
                     setTestament(true);
                     setCurrentBookIndex(
@@ -452,7 +452,7 @@ const Multilayout = ({ hidden }: storeFavouritesTypes) => {
                           style={{
                             backgroundColor:
                               index === currentBookIndex
-                                ? '#1673A1'
+                                ? '#19688B'
                                 : 'transparent',
                             color:
                               index === currentBookIndex ? 'white' : 'black',
@@ -477,7 +477,7 @@ const Multilayout = ({ hidden }: storeFavouritesTypes) => {
                       onClick={() => setCurrentChapter(index)}
                       style={{
                         backgroundColor:
-                          index === currentChapter ? '#1673A1' : 'transparent',
+                          index === currentChapter ? '#19688B' : 'transparent',
                         color: index === currentChapter ? 'white' : 'black',
                       }}
                     >
@@ -500,7 +500,7 @@ const Multilayout = ({ hidden }: storeFavouritesTypes) => {
                       style={{
                         backgroundColor:
                           selectedVerse === index + 2
-                            ? '#1673A1'
+                            ? '#19688B'
                             : 'transparent',
                         color: selectedVerse === index + 2 ? 'white' : 'black',
                       }}
@@ -523,19 +523,19 @@ const Multilayout = ({ hidden }: storeFavouritesTypes) => {
             <div className="multi_layout_main_reader_top !h-[2rem]">
               {/* <div> */}
               <div
-                className={`multi_layout_main_reader_top_tabs ${Reader === 'bible' ? 'bg-[#1673A1] !text-[#ffffff]' : ''}`}
+                className={`multi_layout_main_reader_top_tabs ${Reader === 'bible' ? 'bg-[var(--ds-blue)] !text-[#ffffff]' : ''}`}
                 onClick={() => setReader('bible')}
               >
                 Bible
               </div>
               <div
-                className={`multi_layout_main_reader_top_tabs ${Reader === 'compare' ? 'bg-[#1673A1] !text-[#ffffff]' : ''}`}
+                className={`multi_layout_main_reader_top_tabs ${Reader === 'compare' ? 'bg-[var(--ds-blue)] !text-[#ffffff]' : ''}`}
                 onClick={() => setReader('compare')}
               >
                 Compare
               </div>
               <div
-                className={`multi_layout_main_reader_top_tabs ${Reader === 'parallel' ? 'bg-[#1673A1] !text-[#ffffff]' : ''}`}
+                className={`multi_layout_main_reader_top_tabs ${Reader === 'parallel' ? 'bg-[var(--ds-blue)] !text-[#ffffff]' : ''}`}
                 onClick={() => setReader('parallel')}
               >
                 Parallel
@@ -567,7 +567,7 @@ const Multilayout = ({ hidden }: storeFavouritesTypes) => {
                   dropdownClassName="border border-dropdown-border font-raleway overflow-auto ml-auto mr-auto bg-white !w-[50%] transition-all duration-500 ease-in-out"
                   className={' transition-all duration-500 ease-in-out'}
                   content={
-                    <div className="bg-[#1673A1] p-6 rounded-lg flex flex-wrap justify-center gap-6 max-w-lg mx-auto">
+                    <div className="bg-[var(--ds-blue)] p-6 rounded-lg flex flex-wrap justify-center gap-6 max-w-lg mx-auto">
                       {/* Setting Items */}
                       {[
                         {

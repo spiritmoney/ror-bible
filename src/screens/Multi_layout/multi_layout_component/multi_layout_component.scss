@@ -185,7 +185,7 @@
                     transition: all .5s;
                     border-top-left-radius: 5px;
                     // &:hover {
-                    //     background-color: #1673A1;
+                    //     background-color: var(--ds-blue);
                     //     color: white;
                     // }
 
@@ -245,7 +245,7 @@
 
 
                         &_button {
-                            background-color: #1673A1;
+                            background-color: var(--ds-blue);
                             padding: .2rem;
                             cursor: pointer;
                             color: white;
@@ -258,7 +258,7 @@
 
                             &_ic {
                                 // 
-                                // background-color: #1673A1;
+                                // background-color: var(--ds-blue);
 
                             }
 
@@ -475,7 +475,7 @@
                         font-size: .6rem;
 
                         &:hover {
-                            background-color: #1673A1;
+                            background-color: var(--ds-blue);
                             color: white;
                         }
 
@@ -495,7 +495,7 @@
                 }
 
                 &_right {
-                    background-color: #1673A1;
+                    background-color: var(--ds-blue);
                     display: flex;
                     padding: .3rem;
 
@@ -513,7 +513,7 @@
 
                         &:hover {
                             background-color: white;
-                            color: #1673A1;
+                            color: var(--ds-blue);
                         }
 
                         &_ic {

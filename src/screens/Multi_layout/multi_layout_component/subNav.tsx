@@ -110,8 +110,8 @@ const SubNav: React.FC<SubNavProps> = ({ nav, setNav, className }) => {
 
     // render
     return (
-        <div className={clsx("w-full bg-[#18668D]  ", className)}>
-            <div className="maxw-[1400px] px-8 bg-[#0299B4] mx-auto "
+        <div className={clsx("w-full bg-[var(--ds-blue)]  ", className)}>
+            <div className="maxw-[1400px] px-8 bg-[var(--ds-teal)] mx-auto "
                 style={
                     {
                         borderTopLeftRadius: 10,

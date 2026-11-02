@@ -253,7 +253,7 @@
 .simple_reader {
     --sr-gap: 0.85rem;
     --sr-radius: 10px;
-    --sr-accent: #1673A1;
+    --sr-accent: var(--ds-blue);
 
     box-sizing: border-box;
 

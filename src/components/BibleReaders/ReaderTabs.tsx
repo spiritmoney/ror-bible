@@ -18,7 +18,7 @@ const ReaderTabs = ({ activeTab, onTabChange }: ReaderTabsProps) => {
       {tabs.map(tab => (
         <div 
           key={tab.id}
-          className={clsx({ 'bg-[#1673A1] !text-[#ffffff]': activeTab === tab.id })}
+          className={clsx({ 'bg-[var(--ds-blue)] !text-[#ffffff]': activeTab === tab.id })}
           onClick={() => onTabChange(tab.id)}
         >
           {tab.label}

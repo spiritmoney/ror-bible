@@ -68,13 +68,13 @@ const BibleSelector = ({ visible, height }: BibleSelectorProps) => {
       {/* Testament Selector */}
       <div className="multi_layout_main_bible_top !h-[2rem]">
         <div
-          className={`multi_layout_main_bible_top_inactive ${!selectTestament ? 'bg-[#1673A1]' : 'bg-[#233040]'}`}
+          className={`multi_layout_main_bible_top_inactive ${!selectTestament ? 'bg-[var(--ds-blue)]' : 'bg-[#233040]'}`}
           onClick={() => handleTestamentChange(false)}
         >
           OT
         </div>
         <div
-          className={`multi_layout_main_bible_top_inactive ${selectTestament ? 'bg-[#1673A1]' : 'bg-[#233040]'}`}
+          className={`multi_layout_main_bible_top_inactive ${selectTestament ? 'bg-[var(--ds-blue)]' : 'bg-[#233040]'}`}
           onClick={() => handleTestamentChange(true)}
         >
           NT
@@ -117,7 +117,7 @@ const BibleSelector = ({ visible, height }: BibleSelectorProps) => {
                 }}
                 style={{
                   backgroundColor:
-                    index === currentBookIndex ? '#1673A1' : 'transparent',
+                    index === currentBookIndex ? 'var(--ds-blue)' : 'transparent',
                   color: index === currentBookIndex ? 'white' : 'black',
                 }}
               >
@@ -138,7 +138,7 @@ const BibleSelector = ({ visible, height }: BibleSelectorProps) => {
               onClick={() => setCurrentChapter(index)}
               style={{
                 backgroundColor:
-                  index === currentChapter ? '#1673A1' : 'transparent',
+                  index === currentChapter ? 'var(--ds-blue)' : 'transparent',
                 color: index === currentChapter ? 'white' : 'black',
               }}
             >
@@ -158,7 +158,7 @@ const BibleSelector = ({ visible, height }: BibleSelectorProps) => {
               onClick={() => handleVerseClick(index)}
               style={{
                 backgroundColor:
-                  selectedVerse === index + 2 ? '#1673A1' : 'transparent',
+                  selectedVerse === index + 2 ? 'var(--ds-blue)' : 'transparent',
                 color: selectedVerse === index + 2 ? 'white' : 'black',
               }}
             >
