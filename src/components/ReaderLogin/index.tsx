@@ -20,7 +20,7 @@ const ReaderLogin: React.FunctionComponent = () => {
   return (
     <section className="min-h-screen w-full flex flex-col lg:flex-row bg-white">
       {/* Reader showcase panel */}
-      <div className="relative flex-1 lg:min-h-screen bg-gradient-to-br from-[#18668D] to-[#0b3b52] flex flex-col items-center justify-center px-8 py-12 text-white overflow-hidden">
+      <div className="relative flex-1 lg:min-h-screen bg-gradient-to-br from-[var(--ds-blue)] to-[var(--ds-navy)] flex flex-col items-center justify-center px-8 py-12 text-white overflow-hidden font-montserrat">
         <img src={logo} alt="Rhapsody Bible" className="w-32 md:w-36 mb-6" />
         <img
           src={appLogo}
@@ -42,7 +42,7 @@ const ReaderLogin: React.FunctionComponent = () => {
       {/* Login panel */}
       <div className="flex-1 flex items-center justify-center px-8 py-12">
         <div className="w-full max-w-sm">
-          <h2 className="text-2xl font-semibold text-[#18668D] text-center">
+          <h2 className="text-2xl font-semibold text-[var(--ds-blue)] text-center font-montserrat">
             Welcome
           </h2>
           <p className="mt-2 text-sm text-slate-500 text-center">
@@ -53,7 +53,7 @@ const ReaderLogin: React.FunctionComponent = () => {
             type="button"
             onClick={handleKingsChatLogin}
             disabled={loading}
-            className="mt-10 w-full flex items-center justify-center gap-3 rounded-xl bg-[#18668D] hover:bg-[#145676] disabled:opacity-60 text-white font-medium py-3.5 px-6 transition-colors"
+            className="mt-10 w-full flex items-center justify-center gap-3 rounded-full bg-[var(--ds-blue)] hover:brightness-110 disabled:opacity-60 text-white font-semibold py-3.5 px-6 transition-[filter] ds-btn-lift ds-focus-visible font-montserrat"
           >
             {loading ? (
               <span className="h-5 w-5 rounded-full border-2 border-white/40 border-t-white animate-spin" />

@@ -105,7 +105,7 @@ export default function AuthCallback() {
 
   return (
     <section className="min-h-screen w-full flex flex-col lg:flex-row bg-white">
-      <div className="relative flex-1 lg:min-h-screen bg-gradient-to-br from-[#18668D] to-[#0b3b52] flex flex-col items-center justify-center px-8 py-12 text-white overflow-hidden">
+      <div className="relative flex-1 lg:min-h-screen bg-gradient-to-br from-[var(--ds-blue)] to-[var(--ds-navy)] flex flex-col items-center justify-center px-8 py-12 text-white overflow-hidden">
         <img src={logo} alt="Rhapsody Bible" className="w-32 md:w-36 mb-6" />
         <img
           src={appLogo}
@@ -125,12 +125,12 @@ export default function AuthCallback() {
 
       <div className="flex-1 flex items-center justify-center px-8 py-12">
         <div className="w-full max-w-sm text-center">
-          <div className="flex items-center justify-center gap-3 text-[#18668D]">
+          <div className="flex items-center justify-center gap-3 text-[var(--ds-blue)]">
             <KingschatIcon className="w-6 h-6" />
             <span className="text-xl font-semibold">Logging you in…</span>
           </div>
           <div className="mt-6 flex justify-center">
-            <span className="h-10 w-10 rounded-full border-4 border-[#18668D]/25 border-t-[#18668D] animate-spin" />
+            <span className="h-10 w-10 rounded-full border-4 border-[var(--ds-blue)]/25 border-t-[var(--ds-blue)] animate-spin" />
           </div>
           <p className="mt-5 text-sm text-slate-500">
             Please wait while we finish the secure KingsChat handshake.
