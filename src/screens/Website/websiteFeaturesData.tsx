@@ -103,7 +103,7 @@ export const WEBSITE_FEATURES: WebsiteFeature[] = [
         Discover the depth of <span className="text-brand-orange">every word.</span>
       </>
     ),
-    description: 'Hebrew, Greek, Strong’s and LoveWorld study resources integrated with Scripture.',
+    description: 'Explore Hebrew and Greek with Strong’s and dictionary resources integrated with Scripture.',
     bullets: [
       'Hebrew Greek KJV Bible and dictionaries',
       'Enhanced Strong’s Concordance',
@@ -121,7 +121,7 @@ export const WEBSITE_FEATURES: WebsiteFeature[] = [
         See Scripture <span className="text-brand-orange">side by side.</span>
       </>
     ),
-    description: 'Compare translations and follow cross-references in context.',
+    description: 'Compare translations and follow the meaning in context.',
     bullets: [
       'Side-by-side Bible versions',
       'Split-view parallel study',
@@ -139,7 +139,7 @@ export const WEBSITE_FEATURES: WebsiteFeature[] = [
         Keep every insight <span className="text-brand-orange">close.</span>
       </>
     ),
-    description: 'Highlights, notes, bookmarks and voice notes in one workspace.',
+    description: 'Highlight precisely. Add notes. Record your reflections.',
     bullets: [
       'Precise highlighting and colour search',
       'Notes and voice notes',
