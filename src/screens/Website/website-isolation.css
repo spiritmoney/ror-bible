@@ -67,23 +67,21 @@ html:has(.website-root) #root {
   --bs-link-hover-color-rgb: unset;
 }
 
-/* Dark-surface hover only: preserve token text (beats reference.css global a:hover navy). */
+/* Light link text on dark/colored surfaces only (allowed deviation from reference a:hover navy). */
 .website-root .u9badc9 a.u2ee821:hover,
 .website-root .u9badc9 a.u030a0a:hover {
   color: #ffffff;
 }
 
-.website-root a.u5c4e6f:hover,
-.website-root a.u05f1f4:hover,
-.website-root a.getapp.u05f1f4:hover,
-.website-root a.getapp:hover {
+.website-root .uddc867 a.u05f1f4:hover,
+.website-root .uddc867 a.getapp:hover {
   color: #ffffff;
 }
 
-.website-root .ub9a234 a.u466af7:hover,
-.website-root .ub9a234 a.u873fb7:hover,
-.website-root .ub9a234 a.u311bd0:hover,
-.website-root .ub9a234 a.u9c2843:hover,
+.website-root a.u466af7:hover {
+  color: #ffffff;
+}
+
 .website-root .ub9a234 a.u74c5a0:hover {
   color: #ffffff;
 }
@@ -92,19 +90,13 @@ html:has(.website-root) #root {
   color: #ffffff;
 }
 
-.website-root .u374c05 a.u67776a:hover,
 .website-root a.u67776a:hover {
   color: #ffffff;
 }
 
-.website-root footer.u6971eb a.u8c9a26:hover,
-.website-root footer.u6971eb a.uc0e2c3:hover {
+.website-root .u6971eb a.u8c9a26:hover,
+.website-root .u6971eb a.uc0e2c3:hover {
   color: #cfe6ee;
-}
-
-/* Light-surface token links: match reference global a:hover (class color otherwise wins in React bundle). */
-.website-root a.ufc8380:hover {
-  color: var(--navy);
 }
 
 .website-root input,

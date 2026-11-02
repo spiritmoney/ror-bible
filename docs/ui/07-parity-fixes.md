@@ -35,14 +35,9 @@ Collapsed **335** register rows → **8** root-cause groups (ignore image-filena
 - **Root cause:** Bootstrap Reboot (via global `tw-elements`) retargets `--bs-link-color-rgb` on `a:hover`, overriding Tailwind `text-*` on marketing links.
 - **Fix:** `.website-root` hover rules in `website.css`; explicit `hover:text-*` on `WebsiteButton`, utility bar, footer, CTA bands.
 
-## Link hover leak (commit `93582e0`, scoped `TBD`)
+## Link hover leak (commit `93582e0`, tightened in follow-up)
 
 - **Root cause:** Bootstrap Reboot `a:hover { --bs-link-color-rgb: var(--bs-link-hover-color-rgb) }` plus global `reference.css` `a:hover { navy }` overriding explicit token link colors in the React bundle only.
-- **Fix:** Unset `--bs-link-*` on `.website-root a`/`:hover` in `website-isolation.css`; restore token hover colors with higher-specificity selectors (utility, CTAs, cards, footer).
+- **Fix:** Unset `--bs-link-*` on `.website-root a`/`:hover` in `website-isolation.css`; scoped hover color restores only on dark/colored regions (utility bar, header Get the app, navy store chips, closing band, platform strip, mega promo, footer).
+- **Allowed deviation:** Light link text stays on hover on dark/colored surfaces (reference static HTML still flips those links to navy via global `a:hover`).
 - **Verify:** `C:/temp/parity/hover-measure.mjs` (CDP hover, 300ms settle); home/pricing compare gates unchanged @1440.
-
-## Hover scope correction (commit `4d68543`)
-
-- **Issue:** `93582e0` applied white/`#cfe6ee` hover to token classes globally, so light-surface controls (e.g. `ubee0d4`, mega `uedde83`) no longer matched reference `a:hover` navy.
-- **Fix:** Restrict overrides to dark sections (`.u9badc9`, `.ub9a234`, `.u1717c3`, footer, orange CTAs); keep Bootstrap unset on all `.website-root` links.
-- **Verify:** `C:/temp/parity/hover-bg-audit.mjs` (effective-bg LIGHT/DARK groups); spot probes `ubee0d4`/`u8c9a26`/`uedde83` ref=react @300ms.
