@@ -458,14 +458,14 @@ const BibleDisplay: React.FC<BibleDisplayProps> = ({ data, column }) => {
           >
             {/* Arrow Placement Based on Position */}
             {arrowDirection === 'top' ? (
-              <div className="absolute -top-2 left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-8 border-l-transparent border-r-8 border-r-transparent border-b-8 border-b-[#1673A1]"></div>
+              <div className="absolute -top-2 left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-8 border-l-transparent border-r-8 border-r-transparent border-b-8 border-b-[var(--ds-blue)]"></div>
             ) : (
-              <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-8 border-l-transparent border-r-8 border-r-transparent border-t-8 border-b-[#1673A1]"></div>
+              <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-8 border-l-transparent border-r-8 border-r-transparent border-t-8 border-b-[var(--ds-blue)]"></div>
             )}
             {/* Section 2: Sub-header */}
             <div
               className={clsx(
-                'flex bg-[#1673A1] absolute rounded top-0 right-[-4.1rem] shadow-[1px_3.52514px_18.9385px_rgba(12,28,49,0.1)]'
+                'flex bg-[var(--ds-blue)] absolute rounded top-0 right-[-4.1rem] shadow-[1px_3.52514px_18.9385px_rgba(12,28,49,0.1)]'
               )}
             >
               {/* Copy */}

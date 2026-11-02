@@ -421,10 +421,10 @@ export default function StrongDictionaryPopup({
     >
       {/* arrow */}
       <div className="absolute -top-2 left-1/2 transform -translate-x-1/2 w-0 h-0
-        border-l-8 border-l-transparent border-r-8 border-r-transparent border-b-8 border-b-[#1673A1]" />
+        border-l-8 border-l-transparent border-r-8 border-r-transparent border-b-8 border-b-[var(--ds-blue)]" />
 
       {/* header */}
-      <div className="bg-[#1673A1] text-white flex justify-between items-center px-4 py-2 rounded-t-lg">
+      <div className="bg-[var(--ds-blue)] text-white flex justify-between items-center px-4 py-2 rounded-t-lg font-montserrat">
         {showConcordance ?
           (<span className="font-semibold">ROR Bible+ Concordance</span>)
           :
@@ -465,7 +465,7 @@ export default function StrongDictionaryPopup({
                   onClick={handlePlayAudio}
                   aria-label="Play pronunciation"
                   title="Play pronunciation"
-                  className={`inline-flex items-center gap-2 ml-3 px-2 py-1 rounded-full focus:outline-none ${isPlayingAudio && currentAudioSrc ? "text-[#1673A1] bg-[#E6F6FF]" : "text-black bg-transparent"
+                  className={`inline-flex items-center gap-2 ml-3 px-2 py-1 rounded-full ds-focus-visible focus:outline-none ${isPlayingAudio && currentAudioSrc ? "text-[var(--ds-blue)] bg-brand-mist" : "text-black bg-transparent"
                     }`}
                 >
                   <svg width="18" height="17" viewBox="0 0 24 20" fill="none" xmlns="http://www.w3.org/2000/svg">
