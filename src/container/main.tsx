@@ -36,7 +36,7 @@ import {
   WelcomeRoute,
 } from '../navigation/routes';
 import Notification from 'components/Notification';
-import ProductDetails from 'screens/Store/product_Details';
+import ProductDetails from 'screens/Store/product_Details/index';
 import StoreBible from 'screens/Store/store_translations';
 import Workspace from 'components/Workspace';
 import DashboardAudio from 'screens/DashboardAudio';

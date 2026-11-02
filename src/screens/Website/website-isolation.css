@@ -1,0 +1,83 @@
+/* Neutralize app-global Tailwind preflight, Bootstrap Reboot, MUI, etc. inside the marketing shell only. */
+
+html:has(.website-root) {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+html:has(.website-root) body {
+  margin: 0;
+  background: #f6fbfd;
+  line-height: normal;
+}
+
+html:has(.website-root) #root {
+  margin: 0;
+  padding: 0;
+  min-height: 0;
+  background: #f6fbfd;
+}
+
+.website-root {
+  width: 100%;
+  min-height: 100vh;
+  line-height: normal;
+}
+
+.website-root *,
+.website-root *::before,
+.website-root *::after {
+  line-height: unset;
+  border-width: unset;
+  border-style: unset;
+  border-color: unset;
+}
+
+.website-root img,
+.website-root svg,
+.website-root video,
+.website-root canvas {
+  display: revert;
+  vertical-align: revert;
+}
+
+.website-root button {
+  appearance: revert;
+  text-transform: revert;
+  letter-spacing: revert;
+  padding: revert;
+  font-size: revert;
+  color: revert;
+  background: revert;
+  border: revert;
+  margin: revert;
+}
+
+.website-root a {
+  text-decoration: none;
+}
+
+.website-root input,
+.website-root textarea,
+.website-root select {
+  font: inherit;
+}
+
+.website-root ul,
+.website-root ol {
+  list-style: unset;
+  margin: unset;
+  padding: unset;
+}
+
+.website-root h1,
+.website-root h2,
+.website-root h3,
+.website-root h4,
+.website-root h5,
+.website-root h6,
+.website-root p {
+  margin: unset;
+  font-size: unset;
+  font-weight: unset;
+}

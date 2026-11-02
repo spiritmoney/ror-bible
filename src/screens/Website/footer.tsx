@@ -1,6 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import BrandStripe from './BrandStripe';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import {
   WebsiteDownloadRoute,
   WebsiteProductDesktopRoute,
@@ -11,111 +10,135 @@ import {
 import icon from '../../assets/website/new/ror-bible-plus-icon.png';
 
 export default function Footer() {
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  const openModal = (path: string) => {
+    navigate(path, { state: { backgroundLocation: location } });
+  };
+
   return (
-    <footer className="mt-16 bg-brand-navy text-white">
-      <BrandStripe />
-      <div className="max-w-website mx-auto px-8 website-sm:px-4 py-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10">
-        <div className="lg:col-span-1">
-          <Link to="/home" className="flex items-center gap-3" aria-label="ROR Bible+ home">
-            <img src={icon} alt="" className="h-12 w-auto" />
-            <span>
-              <span className="block text-xl font-extrabold text-white">ROR Bible+</span>
-              <span className="block text-sm font-medium text-white/80">Premium Bible Reader</span>
+    <footer className="u6971eb">
+      <div className="uad67f1" aria-hidden="true">
+        <div className="u3e339b" />
+        <div className="u1584b2" />
+        <div className="u7c48ed" />
+      </div>
+      <div className="wrap uf37b3e">
+        <div className="u1fd187">
+          <Link className="lockup u8092d7" to="/home" aria-label="ROR Bible+ home">
+            <img className="u2ab49f" src={icon} alt="" />
+            <span className="u55f5af">
+              <span className="ub6a52a">ROR Bible+</span>
+              <span className="u329d23">Premium Bible Reader</span>
             </span>
           </Link>
-          <p className="mt-4 text-sm font-semibold text-white/90">Read. Study. Meditate. Triumph.</p>
-          <Link to={`${WebsiteDownloadRoute}#support`} className="block mt-3 text-sm text-brand-cyan font-semibold hover:text-brand-cyan hover:underline">
+          <p className="u5fe755">Read. Study. Meditate. Triumph.</p>
+          <Link className="u8c9a26" to={`${WebsiteDownloadRoute}#support`}>
             Technical support
           </Link>
-          <Link to={`${WebsiteDownloadRoute}#contact`} className="block mt-2 text-sm text-brand-cyan font-semibold hover:text-brand-cyan hover:underline">
+          <Link className="u8c9a26" to={`${WebsiteDownloadRoute}#contact`}>
             Contact us
           </Link>
-          <Link to="/store" className="block mt-2 text-sm text-brand-cyan font-semibold hover:text-brand-cyan hover:underline">
+          <Link className="u8c9a26" to="/store" data-allowed="1">
             Store
           </Link>
         </div>
-        <FooterCol
-          title="PRODUCTS"
-          links={[
-            ['ROR Bible+ Web (Bible Online & Lite)', WebsiteProductWebRoute],
-            ['ROR Bible+ Mobile', WebsiteProductMobileRoute],
-            ['ROR Bible+ Desktop', WebsiteProductDesktopRoute],
-            ['ROR Bible+ Voice', WebsiteProductVoiceRoute],
-          ]}
-        />
-        <FooterCol
-          title="ABOUT ROR BIBLE+"
-          links={[
+        <div className="uc56752">
+          <h3 className="u902935">Products</h3>
+          <Link className="u8c9a26" to={WebsiteProductWebRoute}>
+            ROR Bible+ Web (Bible Online &amp; Lite)
+          </Link>
+          <Link className="u8c9a26" to={WebsiteProductMobileRoute}>
+            ROR Bible+ Mobile
+          </Link>
+          <Link className="u8c9a26" to={WebsiteProductDesktopRoute}>
+            ROR Bible+ Desktop
+          </Link>
+          <Link className="u8c9a26" to={WebsiteProductVoiceRoute}>
+            ROR Bible+ Voice
+          </Link>
+          <a className="u8c9a26" href="#" onClick={(e) => e.preventDefault()}>
+            @MySpot: Digital Evangelism
+          </a>
+          <a className="u8c9a26" href="#" onClick={(e) => e.preventDefault()}>
+            RORK Bible for Kids
+          </a>
+          <a className="u8c9a26" href="#" onClick={(e) => e.preventDefault()}>
+            Teevo Bible for Teens
+          </a>
+        </div>
+        <div className="uc56752">
+          <h3 className="u902935">About ROR Bible+</h3>
+          {[
             ['Mission', '/about#mission'],
             ['Stories', '/about#stories'],
             ['Careers', '/about#careers'],
             ['Global Hubs', '/about#hub'],
             ['Bible Translation', '/about#bible'],
             ['Press', '/about#press'],
-          ]}
-        />
-        <FooterCol
-          title="PARTNERS"
-          links={[
+          ].map(([label, path]) => (
+            <a
+              key={path}
+              className="u8c9a26"
+              href="#"
+              onClick={(e) => {
+                e.preventDefault();
+                openModal(path);
+              }}
+            >
+              {label}
+            </a>
+          ))}
+        </div>
+        <div className="uc56752">
+          <h3 className="u902935">Partners</h3>
+          {[
             ['Content Partner', '/partner#content'],
             ['Bible Partner', '/partner#ror_bible_partners'],
             ['Churches', '/partner#churches'],
             ['Volunteers', '/partner#volunteers'],
             ['Give', '/give'],
-          ]}
-        />
-        <FooterCol
-          title="FOLLOW US"
-          links={[
-            ['KingsChat', 'https://www.kingchat.online'],
-            ['CeFlix', '#'],
-            ['Blog', 'https://blog.rorbible.plus'],
-          ]}
-          external
-        />
+          ].map(([label, path]) => (
+            <a
+              key={path}
+              className="u8c9a26"
+              href="#"
+              onClick={(e) => {
+                e.preventDefault();
+                openModal(path);
+              }}
+            >
+              {label}
+            </a>
+          ))}
+        </div>
+        <div className="uc56752">
+          <h3 className="u902935">Follow us</h3>
+          <a className="u8c9a26" href="https://www.kingchat.online">
+            KingsChat
+          </a>
+          <a className="u8c9a26" href="#" onClick={(e) => e.preventDefault()}>
+            CeFlix
+          </a>
+          <a className="u8c9a26" href="https://blog.rorbible.plus">
+            Blog
+          </a>
+        </div>
       </div>
-      <div className="border-t border-white/15 py-4">
-        <div className="max-w-website mx-auto px-8 website-sm:px-4 flex flex-wrap justify-between gap-2 text-sm text-white/75">
+      <div className="ua95fd4">
+        <div className="wrap u94c3c2">
           <span>© 2026 ROR Bible+. All rights reserved.</span>
-          <span className="flex gap-4">
-            <a href="#" className="font-semibold text-brand-cyan hover:underline">
+          <span className="ub77529">
+            <a className="uc0e2c3" href="#" onClick={(e) => e.preventDefault()}>
               Privacy
             </a>
-            <a href="#" className="font-semibold text-brand-cyan hover:underline">
+            <a className="uc0e2c3" href="#" onClick={(e) => e.preventDefault()}>
               Terms of Use
             </a>
           </span>
         </div>
       </div>
     </footer>
-  );
-}
-
-function FooterCol({
-  title,
-  links,
-  external,
-}: {
-  title: string;
-  links: [string, string][];
-  external?: boolean;
-}) {
-  return (
-    <div>
-      <h3 className="text-xs font-extrabold tracking-[0.12em] text-white mb-3">{title}</h3>
-      <div className="flex flex-col gap-2">
-        {links.map(([label, href]) =>
-          external || href.startsWith('http') ? (
-            <a key={label} href={href} className="text-sm font-semibold text-brand-cyan hover:text-brand-cyan hover:underline">
-              {label}
-            </a>
-          ) : (
-            <Link key={label} to={href} className="text-sm font-semibold text-brand-cyan hover:text-brand-cyan hover:underline">
-              {label}
-            </Link>
-          )
-        )}
-      </div>
-    </div>
   );
 }
