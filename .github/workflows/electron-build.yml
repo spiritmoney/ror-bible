@@ -5,16 +5,23 @@ on:
   push:
     branches:
       - electron-wrap
+      - electron-icon
+      - electron-open-bible
+      - pwa-icons
+      - app-routing
     paths:
       - 'electron/**'
       - 'src/**'
       - 'public/**'
+      - 'build-resources/**'
       - 'package.json'
       - 'yarn.lock'
 
 jobs:
   build-windows:
     runs-on: windows-latest
+    env:
+      CSC_IDENTITY_AUTO_DISCOVERY: false
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -29,15 +36,19 @@ jobs:
         env:
           CSC_LINK: ${{ secrets.WIN_CSC_LINK }}
           CSC_KEY_PASSWORD: ${{ secrets.WIN_CSC_KEY_PASSWORD }}
+          WIN_CSC_LINK: ${{ secrets.WIN_CSC_LINK }}
+          WIN_CSC_KEY_PASSWORD: ${{ secrets.WIN_CSC_KEY_PASSWORD }}
       - uses: actions/upload-artifact@v4
         with:
           name: rhapsody-bible-windows
           path: |
             dist/*.exe
-            dist/*.yml
+            dist/*.blockmap
 
   build-macos:
     runs-on: macos-latest
+    env:
+      CSC_IDENTITY_AUTO_DISCOVERY: false
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -48,7 +59,7 @@ jobs:
       - run: npm run electron:compile
       - run: npm test -- --watchAll=false --passWithNoTests
       - run: npm run build-electron
-      - run: npx electron-builder --mac --x64 --arm64 --publish never
+      - run: npx electron-builder --mac dmg --x64 --arm64 --publish never
         env:
           CSC_LINK: ${{ secrets.APPLE_CSC_LINK }}
           CSC_KEY_PASSWORD: ${{ secrets.APPLE_CSC_KEY_PASSWORD }}
@@ -60,8 +71,7 @@ jobs:
           name: rhapsody-bible-macos
           path: |
             dist/*.dmg
-            dist/*.zip
-            dist/*.yml
+            dist/mac/*.dmg
 
   release:
     if: false

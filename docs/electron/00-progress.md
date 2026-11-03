@@ -1,46 +1,31 @@
-# Electron open Bible — progress log
+# Electron / PWA app routing — progress
 
-**Branch:** `electron-open-bible` (from `electron-wrap`)  
+**Branch:** `app-routing` (from `pwa-icons`)  
 **Last updated:** 2026-11-03
 
-## Step 1 — Root cause (login-first)
+## Routing
 
-| Source | File:line | Behavior |
-|--------|-----------|----------|
-| Packaged load URL | `electron/main.ts` | Loads `app://…/index.html` with **no hash** → HashRouter pathname `/` |
-| Desktop bootstrap | `src/container/main.tsx` `ElectronBootstrapRedirect` | On `/` and marketing paths, **formerly** `Navigate` to `LoginRoute` when logged out or `DashboardRoute` when logged in |
-| Splash | `src/App.tsx` | Does not choose auth route |
-| Protected routes | `src/components/Protected` | Unchanged — `/dash` etc. still redirect logged-out users to `/login` |
+| Surface | Entry behavior |
+|---------|----------------|
+| Normal browser | `/` and `/home` show marketing website (unchanged) |
+| Installed PWA | `manifest.json` `start_url` → `/bible-online?source=pwa`; `AppShellEntryRedirect` guards marketing URLs |
+| Electron | HashRouter `#/` → `/bible-online`; marketing paths redirect; `ElectronRoutePersistence` for reader routes |
 
-## Step 3 — Reader actions vs account
-
-| Location | Action | Logged-out OK? | Behavior |
-|----------|--------|----------------|----------|
-| `subNav.tsx` Read | `/read`, `setNav('read')` | yes | unchanged |
-| `subNav.tsx` Home | `setNav('store')` | no | `useRequireLogin` → `/login` with return path |
-| `BibleDisplay.tsx` bookmark/highlight | verse utilities | no | existing `useRequireAuth` / `useRequireLogin` |
-| `subNav.tsx` Bookmark/Note tabs | UI only (no handler) | n/a | unchanged |
-| `Workspace/index.tsx` | `PROTECTED_NAVS` | no | `Navigate` `/login` + `saveAuthReturnPath` (reader path preserved) |
-| `Header/index.tsx` | Profile vs Sign in (Electron) | Sign in → login with return | Electron only |
-| Chapter nav, copy, Strong's | reader | yes | unchanged |
-
-## Verification (Step 5)
-
-| Check | Result |
-|-------|--------|
-| Jest `useRequireLogin` | PASS |
-| `tsc --noEmit` | PASS |
-| Web `compare.mjs` 8 pages | not re-run this session — prior gate 0/0/&lt;0.5% on `electron-wrap` |
-| Packaged fresh userData → `#/bible-online` | manual |
-| Post-login return to reader | **UNVERIFIED** (owner sign-in) |
-
-Manual post-login: open packaged app logged out → `#/bible-online` → **Sign in** or **Home** → KingsChat → welcome → should land on stored path (default `#/bible-online`).
+Helper: `src/utils/appShell.ts` (`isAppShell()`).
 
 ## Commits (this branch)
 
-| Step | Commit | Message |
-|------|--------|---------|
-| 2 | `8577f01` | feat(electron): open on Bible reader |
-| 3 | `c4573da` | docs(electron): audit reader auth actions |
-| 4 | `21d39dd` | feat(auth): login on demand helper |
-| 5 | `beea0e7` | test(auth): useRequireLogin and verification notes |
+| Message | Scope |
+|---------|--------|
+| `feat(pwa): open installed app on Bible reader` | manifest, `isAppShell`, `AppShellEntryRedirect`, tests |
+| `feat(electron): block website routes in app shell` | website header/footer/mobile menu |
+| `ci: unsigned mac and windows artifacts` | workflow, `DOWNLOADS.md` |
+
+## Downloads
+
+See **`docs/electron/DOWNLOADS.md`**.
+
+## UNVERIFIED
+
+- macOS `.dmg` from CI until workflow runs on pushed branch
+- CDP standalone emulation smoke (manual)
