@@ -11,6 +11,7 @@ import bcrypt from 'bcryptjs';
 import { IProject } from 'interface/project';
 import { projectAtom } from '../store/atoms/workspace';
 import { kingschatLoginConfig } from 'config/kingschat';
+import { isElectron } from 'utils/general';
 import { IKingschatTokens } from 'interface/auth';
 import kingsChatWebSdk from 'kingschat-web-sdk';
 
@@ -77,6 +78,11 @@ const useKingsChat = () => {
     const url = new URL(kingschatLoginConfig.loginUrl);
     url.searchParams.set('clientId', kingschatLoginConfig.clientId);
     url.searchParams.set('origin', encoded);
+
+    if (isElectron() && window.electronAPI?.openExternal) {
+      void window.electronAPI.openExternal(url.toString());
+      return;
+    }
 
     window.location.assign(url.toString());
   };

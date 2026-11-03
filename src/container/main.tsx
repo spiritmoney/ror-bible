@@ -4,6 +4,7 @@ import React, { lazy, Suspense } from 'react';
 import {
   BrowserRouter,
   HashRouter,
+  Navigate,
   Route,
   Routes,
   useLocation,
@@ -28,7 +29,6 @@ import {
   EmailSentRoute,
   ForgetPasswordRoute,
   HomeRoute,
-  KingsChatCallbackRoute,
   LoginRoute,
   RegisterRoute,
   ResetPasswordRoute,
@@ -36,6 +36,7 @@ import {
   WelcomeRoute,
 } from '../navigation/routes';
 import Notification from 'components/Notification';
+import { useUser } from 'hooks/useUser';
 import ProductDetails from 'screens/Store/product_Details/index';
 import StoreBible from 'screens/Store/store_translations';
 import Workspace from 'components/Workspace';
@@ -72,6 +73,49 @@ const Users = lazy(() => import('../screens/Admin/Users'));
 
 const Lock = lazy(() => import('../screens/LockScreen'));
 
+const OAuthCallbackScreen: React.FunctionComponent = () => {
+  if (isElectron()) {
+    return (
+      <Suspense fallback={<SuspenseLoader fullscreen />}>
+        <KingsChatCallback />
+      </Suspense>
+    );
+  }
+  return <AuthCallback />;
+};
+
+const ElectronBootstrapRedirect: React.FunctionComponent = () => {
+  const location = useLocation();
+  const { isLoggedIn } = useUser();
+
+  if (!isElectron()) {
+    return null;
+  }
+
+  const marketingEntryPaths = new Set([
+    '/',
+    HomeRoute,
+    '/features',
+    '/pricing',
+    '/download',
+    '/about',
+    '/product',
+    '/give',
+    '/partner',
+    '/products/web',
+    '/products/mobile',
+    '/products/desktop',
+    '/products/voice',
+  ]);
+
+  if (!marketingEntryPaths.has(location.pathname)) {
+    return null;
+  }
+
+  const target = isLoggedIn === 'true' ? DashboardRoute : LoginRoute;
+  return <Navigate to={target} replace />;
+};
+
 // SimpleSuspense must be a real component (not a plain helper function) so its
 // hook calls (useRecoilValue) are tracked per-instance, independent of how many
 // times it's used in the tree or whether the enclosing AppRoutes render returns
@@ -103,15 +147,12 @@ const Main: React.FunctionComponent<IMain> = () => {
     // Also include '/about' route among the main routes (normal page render if no background)
     return (
       <>
+        <ElectronBootstrapRedirect />
         <Routes location={backgroundLocation ?? location}>
           {/* Put your existing routes here (unchanged) */}
           <Route path={LoginRoute} element={<ReaderLogin />} />
           <Route path={WelcomeRoute} element={<WelcomeScreen />} />
-          <Route path="/auth/callback" element={<AuthCallback />} />
-          <Route
-            path={KingsChatCallbackRoute}
-            element={<KingsChatCallback />}
-          />
+          <Route path="/auth/callback" element={<OAuthCallbackScreen />} />
           <Route
             path={DashboardRoute}
             element={

@@ -2,18 +2,28 @@ import React, { useState, useCallback, useEffect } from 'react';
 import SplashScreen from './components/SplashScreen';
 import Main from './container/main';
 import 'theme/_scroll-bar.scss';
+import { isElectron } from 'utils/general';
 
 const SPLASH_AUTO_MS = 2000;
 
-const isKingsChatCallback = () =>
-  typeof window !== 'undefined' &&
-  window.location.pathname.indexOf('/auth/callback') === 0;
+const isKingsChatCallback = () => {
+  if (typeof window === 'undefined') return false;
+  const hashPath = window.location.hash.replace(/^#/, '');
+  if (hashPath.startsWith('/auth/callback')) return true;
+  return window.location.pathname.indexOf('/auth/callback') === 0;
+};
 
 function App() {
   const [showingSplash, setshowingSplash] = useState(() => !isKingsChatCallback());
 
   const dismissSplash = useCallback(() => {
     setshowingSplash(false);
+  }, []);
+
+  useEffect(() => {
+    if (!isElectron()) return;
+    document.documentElement.classList.add('is-electron');
+    return () => document.documentElement.classList.remove('is-electron');
   }, []);
 
   useEffect(() => {
