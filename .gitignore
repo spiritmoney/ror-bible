@@ -7,3 +7,7 @@ firebase-debug.log
 backup/**/.env
 .DS_Store
 *.log
+docs/*
+!docs/electron/
+!docs/electron/**
+ROR_Bible_Plus_Website/
