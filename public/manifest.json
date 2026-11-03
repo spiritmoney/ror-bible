@@ -24,7 +24,8 @@
       "purpose": "maskable"
     }
   ],
-  "start_url": "/",
+  "start_url": "/bible-online?source=pwa",
+  "scope": "/",
   "display": "standalone",
   "theme_color": "#04557d",
   "background_color": "#ffffff"

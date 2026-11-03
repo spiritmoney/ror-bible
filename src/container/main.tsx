@@ -17,10 +17,8 @@ import IsAuth from '../components/isAuth/index';
 import ReaderLogin from '../components/ReaderLogin';
 import WelcomeScreen from '../components/WelcomeScreen';
 import { isElectron } from '../utils/general';
-import {
-  getElectronBootstrapRoute,
-  persistElectronLastRoute,
-} from '../utils/authReturnPath';
+import { persistElectronLastRoute } from '../utils/authReturnPath';
+import AppShellEntryRedirect from '../components/AppShellEntryRedirect';
 import {
   AnnotateRoute,
   FavouritesRoute,
@@ -99,36 +97,6 @@ const ElectronRoutePersistence: React.FunctionComponent = () => {
   return null;
 };
 
-const ElectronBootstrapRedirect: React.FunctionComponent = () => {
-  const location = useLocation();
-
-  if (!isElectron()) {
-    return null;
-  }
-
-  const marketingEntryPaths = new Set([
-    '/',
-    HomeRoute,
-    '/features',
-    '/pricing',
-    '/download',
-    '/about',
-    '/product',
-    '/give',
-    '/partner',
-    '/products/web',
-    '/products/mobile',
-    '/products/desktop',
-    '/products/voice',
-  ]);
-
-  if (!marketingEntryPaths.has(location.pathname)) {
-    return null;
-  }
-
-  return <Navigate to={getElectronBootstrapRoute()} replace />;
-};
-
 // SimpleSuspense must be a real component (not a plain helper function) so its
 // hook calls (useRecoilValue) are tracked per-instance, independent of how many
 // times it's used in the tree or whether the enclosing AppRoutes render returns
@@ -160,7 +128,7 @@ const Main: React.FunctionComponent<IMain> = () => {
     // Also include '/about' route among the main routes (normal page render if no background)
     return (
       <>
-        <ElectronBootstrapRedirect />
+        <AppShellEntryRedirect />
         <ElectronRoutePersistence />
         <Routes location={backgroundLocation ?? location}>
           {/* Put your existing routes here (unchanged) */}
