@@ -2,27 +2,69 @@ import {
   app,
   BrowserWindow,
   ipcMain,
+  net,
+  protocol,
   screen as electronScreen,
   session,
   shell,
 } from 'electron';
 import isDev from 'electron-is-dev';
 import path from 'path';
+import { pathToFileURL } from 'url';
 
 const PROTOCOL = 'rhapsody-bible';
+const APP_SCHEME = 'app';
 const LOOPBACK_AUTH_PORT = 47823;
+
+protocol.registerSchemesAsPrivileged([
+  {
+    scheme: APP_SCHEME,
+    privileges: {
+      standard: true,
+      secure: true,
+      supportFetchAPI: true,
+      corsEnabled: true,
+    },
+  },
+]);
 
 let mainWindow: BrowserWindow | null = null;
 
 const getPreloadPath = () => path.join(__dirname, 'preload.js');
 
-const getIndexHtmlPath = () =>
-  path.join(__dirname, '..', 'build', 'index.html');
+const getBuildRoot = () => path.join(__dirname, '..', 'build');
+
+const getIndexHtmlPath = () => path.join(getBuildRoot(), 'index.html');
 
 const getDevUrl = () => 'http://localhost:3400';
 
 const getAppLoadUrl = () =>
-  isDev ? getDevUrl() : `file://${getIndexHtmlPath()}`;
+  isDev ? getDevUrl() : `${APP_SCHEME}://rhapsody/index.html`;
+
+const resolveBuildFilePath = (pathname: string) => {
+  let relPath = decodeURIComponent(pathname);
+  if (relPath === '/' || relPath === '') {
+    relPath = '/index.html';
+  }
+  const normalized = path.normalize(
+    path.join(getBuildRoot(), relPath.replace(/^\//, ''))
+  );
+  const buildRoot = path.normalize(getBuildRoot());
+  if (!normalized.startsWith(buildRoot)) {
+    return null;
+  }
+  return normalized;
+};
+
+const registerAppProtocol = () => {
+  protocol.handle(APP_SCHEME, request => {
+    const filePath = resolveBuildFilePath(new URL(request.url).pathname);
+    if (!filePath) {
+      return new Response('Forbidden', { status: 403 });
+    }
+    return net.fetch(pathToFileURL(filePath).href);
+  });
+};
 
 const isAllowedInAppNavigation = (targetUrl: string): boolean => {
   try {
@@ -33,7 +75,7 @@ const isAllowedInAppNavigation = (targetUrl: string): boolean => {
         parsed.origin === 'http://127.0.0.1:3400'
       );
     }
-    return parsed.protocol === 'file:';
+    return parsed.protocol === `${APP_SCHEME}:`;
   } catch {
     return false;
   }
@@ -76,7 +118,7 @@ const wireNavigationHandlers = (win: BrowserWindow) => {
 
 const applyContentSecurityPolicy = () => {
   const csp = [
-    "default-src 'self'",
+    "default-src 'self' app:",
     "script-src 'self' 'unsafe-inline' 'unsafe-eval'",
     "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
     "font-src 'self' https://fonts.gstatic.com data:",
@@ -160,7 +202,10 @@ if (process.platform === 'darwin') {
   });
 }
 
-app.whenReady().then(() => {
+app.whenReady().then(async () => {
+  if (!isDev) {
+    registerAppProtocol();
+  }
   applyContentSecurityPolicy();
   createMainWindow();
 

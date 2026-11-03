@@ -107,7 +107,7 @@
     "server": "node src/server.js",
     "dev:payments": "concurrently \"npm run server\" \"npm run react\"",
     "build": "PUBLIC_URL=/ sh build.sh",
-    "build-electron": "sh build.sh",
+    "build-electron": "cross-env REACT_APP_IS_ELECTRON=true REACT_APP_KINGSCHAT_REDIRECT_URL=rhapsody-bible://auth/callback sh build.sh",
     "test": "craco test",
     "eject": "react-scripts eject",
     "electron:compile": "tsc -p electron/tsconfig.json",
