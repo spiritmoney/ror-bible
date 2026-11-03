@@ -23,6 +23,13 @@ npm run electron:start
 
 - UI dev server: **http://localhost:3400**
 - Main process: `electron/main.ts` → compile with `npm run electron:compile` → `dist-electron/main.js`
+- Window/taskbar icon: `electron/main.ts` → `getWindowIconPath()` (`build-resources/icon.png` in dev; `resources/app-icon.png` when packaged via `extraResources`)
+
+## App icons
+
+Desktop icons live in **`build-resources/`** (generated from `public/logo512.png`). See **`build-resources/README.md`** for the padding/downscale pipeline and the scratch Python regen command (`C:/temp/rhapsody-icon-scratch/generate_icons.py` + Pillow in that folder only).
+
+electron-builder uses `build-resources/icon.ico` (Windows/NSIS), `icon.icns` (macOS/DMG), and `icon.png` (Linux). Legacy assets under `public/icon/` are unused.
 
 ## Environment
 
@@ -82,8 +89,7 @@ npm run electron:build:mac
 ## Known limits
 
 - Espees store payments deferred; runtime URLs exist for future enablement
-- Marketing website routes remain in bundle but redirect to `/login` or `/dash` in desktop
-+ Marketing website routes remain in bundle; on desktop, `/` and marketing paths bootstrap to **`/bible-online`** (or last reader route). Sign-in is on demand for store, bookmarks/highlights, etc.
+- Marketing website routes remain in bundle; on desktop, `/` and marketing paths bootstrap to **`/bible-online`** (or last reader route). Sign-in is on demand for store, bookmarks/highlights, etc.
 - Service worker disabled in Electron; web PWA unchanged
 
 ## Troubleshooting

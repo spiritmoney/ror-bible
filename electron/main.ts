@@ -171,13 +171,20 @@ const installApplicationMenu = () => {
   Menu.setApplicationMenu(Menu.buildFromTemplate(template));
 };
 
+const getWindowIconPath = (): string => {
+  if (app.isPackaged) {
+    return path.join(process.resourcesPath, 'app-icon.png');
+  }
+  return path.join(__dirname, '..', 'build-resources', 'icon.png');
+};
+
 const createMainWindow = () => {
   mainWindow = new BrowserWindow({
     width: electronScreen.getPrimaryDisplay().workArea.width,
     height: electronScreen.getPrimaryDisplay().workArea.height,
     minWidth: 1024,
     minHeight: 720,
-    icon: path.join(__dirname, '..', 'public', 'icon', 'icon_512x512.png'),
+    icon: getWindowIconPath(),
     show: false,
     backgroundColor: 'white',
     webPreferences: {

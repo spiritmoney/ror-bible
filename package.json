@@ -141,8 +141,14 @@
     "asar": true,
     "directories": {
       "output": "dist",
-      "buildResources": "public/icon"
+      "buildResources": "build-resources"
     },
+    "extraResources": [
+      {
+        "from": "build-resources/icon.png",
+        "to": "app-icon.png"
+      }
+    ],
     "files": [
       "!**/*",
       "dist-electron/**/*",
@@ -157,7 +163,7 @@
     },
     "npmRebuild": false,
     "generateUpdatesFilesForAllChannels": false,
-    "icon": "public/icon/icon_512x512.png",
+    "icon": "build-resources/icon.png",
     "win": {
       "target": [
         {
@@ -165,20 +171,29 @@
           "arch": ["x64"]
         }
       ],
-      "signAndEditExecutable": false
+      "icon": "build-resources/icon.ico",
+      "signExecutable": false
     },
     "nsis": {
       "oneClick": false,
       "perMachine": false,
-      "allowToChangeInstallationDirectory": true
+      "allowToChangeInstallationDirectory": true,
+      "installerIcon": "build-resources/icon.ico",
+      "uninstallerIcon": "build-resources/icon.ico",
+      "installerHeaderIcon": "build-resources/icon.ico"
     },
     "mac": {
       "category": "public.app-category.reference",
       "target": ["dmg", "zip"],
+      "icon": "build-resources/icon.icns",
       "hardenedRuntime": true,
       "entitlements": "electron/entitlements.mac.plist",
       "entitlementsInherit": "electron/entitlements.mac.plist",
       "notarize": false
+    },
+    "linux": {
+      "icon": "build-resources/icon.png",
+      "target": ["AppImage"]
     },
     "publish": [
       {
