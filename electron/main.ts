@@ -1,19 +1,20 @@
-const { app, BrowserWindow, screen: electronScreen } = require('electron');
-const isDev = require('electron-is-dev');
-const path = require('path');
+import { app, BrowserWindow, screen as electronScreen } from 'electron';
+import isDev from 'electron-is-dev';
+import path from 'path';
 
 const createMainWindow = () => {
   let mainWindow = new BrowserWindow({
     width: electronScreen.getPrimaryDisplay().workArea.width,
     height: electronScreen.getPrimaryDisplay().workArea.height,
-    icon: 'icon/scribbblerIcon.icns',
+    icon: path.join(__dirname, '../public/icon/icon_512x512.png'),
     show: false,
     backgroundColor: 'white',
     webPreferences: {
       nodeIntegration: false,
-      devTools: isDev
-    }
+      devTools: isDev,
+    },
   });
+
   const startURL = isDev
     ? 'http://localhost:3400'
     : `file://${path.join(__dirname, '../build/index.html')}`;
@@ -23,13 +24,12 @@ const createMainWindow = () => {
   mainWindow.once('ready-to-show', () => mainWindow.show());
 
   mainWindow.on('closed', () => {
-    //@ts-ignore
-    mainWindow = null;
+    mainWindow = null as unknown as BrowserWindow;
   });
 
-  mainWindow.webContents.on('new-window', (event, url) => {
-    event.preventDefault();
+  mainWindow.webContents.setWindowOpenHandler(({ url }) => {
     mainWindow.loadURL(url);
+    return { action: 'deny' };
   });
 };
 

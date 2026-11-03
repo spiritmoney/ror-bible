@@ -1,65 +1,59 @@
 # Electron wrap — progress log
 
-**Branch:** `electron-wrap` (created from `fix-protected` @ `c5041a2`)  
+**Branch:** `electron-wrap`  
 **Last updated:** 2026-11-03
 
 ## Stage checklist
 
 | Stage | Status | Notes |
 |-------|--------|-------|
-| 0 Preconditions | **Done** | See below |
-| 1 Audit → `01-audit.md` | **Done** | Gate 3 pending your reply |
-| 2 Implement | Blocked | After Gate 3 approval |
-| 3 Verification → `03-verification.md` | Blocked | |
+| 0 Preconditions | Done | `ba50c61` |
+| 1 Audit | Done | `8a538ff` |
+| 2 Implement | In progress | See commits below |
+| 3 Verification | Blocked | |
 
-## Stage 0 — Preconditions (2026-11-03)
+## Gate 3 — recorded reply (2026-11-03)
 
-### Git [CONFIRMED]
+- **APPROVE:** all CHANGE rows + ASK resolved via answers below  
+- **REJECT:** none  
+- **DO-NOT-TOUCH:** website redesign, Protected, Firestore rules, payments logic, Cloud Functions, Worker token exchange logic, Bible content, secrets/.env, UI redesign  
+- **Packages:** yes — `electron@45.2.1`, `electron-builder@26.18.0`, `electron-updater@6.8.11`
 
-- Branch: `electron-wrap` from `fix-protected`.
-- **Not clean:** modified `.gitignore`, `docs/ui/00-progress.md` (pre-existing on branch before electron work).
-- Base commit: `c5041a2` — fix(auth): type-safe mock in Protected test.
+### Decisions
 
-### React dev compile [CONFIRMED]
+| Topic | Decision |
+|-------|----------|
+| productName | **Rhapsody Bible** |
+| appId | `com.appsloveworld.scribbbler` (unchanged) |
+| OAuth redirect | **Primary:** `rhapsody-bible://auth/callback` · **Fallback:** `http://127.0.0.1:<port>/auth/callback` |
+| Offline | Bundle **BibleJson**; **HebrewGreekRes** from Hosting → cache `userData` |
+| Shell | App-only nav; routes `/login`, `/dash`, `/bible-online`, `/read`; marketing code stays, hidden from desktop nav |
+| Updates | GitHub Releases; checks **off** until publish URL set |
+| Espees | Deferred; still ship **runtime.ts** base URLs |
 
-- `npm run react` (PORT 3400): port already bound; `http://localhost:3400/` → HTTP 200.
-- Fresh compile on PORT 3401 via `npx cross-env PORT=3401 craco start`: **Compiled with warnings** (eslint in `pricingMain.tsx`); **No issues found** (TS); **no webpack error overlay**.
-- `npm run build` on this Windows shell **failed** (`PUBLIC_URL=/ sh build.sh` — Windows env syntax). Electron packaging normally uses `build-electron` / `build.sh` from Git Bash; not re-run in Stage 0.
+## Stage 2 commits
 
-### Environment [CONFIRMED]
+| # | Item | Commit | Verified |
+|---|------|--------|----------|
+| 1 | Electron upgrade + compile | _(this commit)_ | Dev launch: `electron` + `:3400` HTTP 200, no immediate crash |
+| 2 | Security | | |
+| 3 | runtime.ts | | |
+| 4 | Service worker | | |
+| 5 | Routing/assets | | |
+| 6 | Desktop auth | | |
+| 7 | Desktop UX | | |
+| 8 | Strong's cache | | |
+| 9 | Packaging | | |
+| 10 | CI | | |
+| 11 | Docs | | |
 
-| Item | Value |
-|------|--------|
-| OS | Windows 10 (10.0.26200), Git Bash MINGW64 |
-| Node | v24.14.0 |
-| npm | 11.9.0 |
-| `npx electron-builder --version` | 23.6.0 (project devDependency `^23.3.3`) |
-| macOS packaging | **Cannot run locally** on this machine |
+## Redirect URI to register (KingsChat dashboard)
 
-### Things only you can provide (later)
+1. **`rhapsody-bible://auth/callback`** (preferred)  
+2. If HTTP only: **`http://127.0.0.1:47823/auth/callback`** (port fixed in implementation)
 
-1. **Windows code signing** — EV/OV certificate + `CSC_LINK` / `CSC_KEY_PASSWORD` (or store cert in CI secrets).
-2. **Apple Developer** account — Developer ID Application cert, notarization Apple ID + app-specific password (`APPLE_ID`, `APPLE_APP_SPECIFIC_PASSWORD`, `APPLE_TEAM_ID`).
-3. **KingsChat OAuth** — Register desktop redirect URI(s) we choose (custom protocol and/or loopback); confirm KingsChat allows non-HTTPS redirect if using custom scheme.
-4. **Cloudflare Worker CORS** — Add Electron/desktop origins if browser exchange from `file://` or custom protocol is blocked (`workers/kingschat-callback/src/index.js` allowedOrigins list).
-5. **Auto-update host** — Generic update URL or GitHub Releases + `GH_TOKEN`; bucket/CDN for `latest.yml` / blockmaps.
-6. **Espees / payment secrets** — Production keys belong in env/CI only (not in repo); confirm whether desktop store payments must hit Firebase Functions vs current Vercel proxy.
-
-## Gate 3 — your reply
-
-*(Record approval here after you respond.)*
-
-```
-Reply template:
-APPROVE: E-001, ... | REJECT: ... | DO-NOT-TOUCH additions: ... | answers | package approval yes/no
-```
-
-**Your reply:** _(pending)_
-
-## Decisions log
-
-_(Empty until Gate 3.)_
+Set `REACT_APP_KINGSCHAT_REDIRECT_URL` to the registered value for desktop builds.
 
 ## Next step
 
-Wait for Gate 3 approval, then Stage 2 item 1 (Electron upgrade + compiled main process).
+Stage 2 item 2 — security hardening (preload, sandbox, navigation, CSP).
