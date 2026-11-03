@@ -1,70 +1,41 @@
-# Electron wrap — progress log
+# Electron open Bible — progress log
 
-**Branch:** `electron-wrap`  
+**Branch:** `electron-open-bible` (from `electron-wrap`)  
 **Last updated:** 2026-11-03
 
-## Stage checklist
+## Step 1 — Root cause (login-first)
 
-| Stage | Status | Notes |
-|-------|--------|-------|
-| 0 Preconditions | Done | `ba50c61` |
-| 1 Audit | Done | `8a538ff` |
-| 2 Implement | Done | 11 commits below |
-| 3 Verification | Partial | `docs/electron/03-verification.md` |
+| Source | File:line | Behavior |
+|--------|-----------|----------|
+| Packaged load URL | `electron/main.ts` | Loads `app://…/index.html` with **no hash** → HashRouter pathname `/` |
+| Desktop bootstrap | `src/container/main.tsx` `ElectronBootstrapRedirect` | On `/` and marketing paths, **formerly** `Navigate` to `LoginRoute` when logged out or `DashboardRoute` when logged in |
+| Splash | `src/App.tsx` | Does not choose auth route |
+| Protected routes | `src/components/Protected` | Unchanged — `/dash` etc. still redirect logged-out users to `/login` |
 
-## Gate 3 — recorded reply
+## Step 3 — Reader actions vs account
 
-- **APPROVE:** all CHANGE + ASK resolved via answers · **REJECT:** none  
-- **Packages:** `electron@45.2.1`, `electron-builder@26.18.0`, `electron-updater@6.8.11`  
-- **productName:** Rhapsody Bible · **appId:** `com.appsloveworld.scribbbler`  
-- **OAuth:** `rhapsody-bible://auth/callback` (fallback loopback port **47823**)  
-- **Offline:** BibleJson bundled; HebrewGreekRes → Hosting + `userData` cache  
-- **Updates:** GitHub provider; checks off until `ELECTRON_UPDATE_URL`
+| Location | Action | Logged-out OK? | Behavior |
+|----------|--------|----------------|----------|
+| `subNav.tsx` Read | `/read`, `setNav('read')` | yes | unchanged |
+| `subNav.tsx` Home | `setNav('store')` | no | `useRequireLogin` → `/login` with return path |
+| `BibleDisplay.tsx` bookmark/highlight | verse utilities | no | existing `useRequireAuth` / `useRequireLogin` |
+| `subNav.tsx` Bookmark/Note tabs | UI only (no handler) | n/a | unchanged |
+| `Workspace/index.tsx` | `PROTECTED_NAVS` | no | `Navigate` `/login` + `saveAuthReturnPath` (reader path preserved) |
+| `Header/index.tsx` | Profile vs Sign in (Electron) | Sign in → login with return | Electron only |
+| Chapter nav, copy, Strong's | reader | yes | unchanged |
 
-## Stage 2 commits
+## Verification (Step 5)
 
-| # | Item | Commit |
-|---|------|--------|
-| 1 | Upgrade + compile | `f32b99f` |
-| 2 | Security | `c0e302c` |
-| 3 | runtime.ts | `7fbdd56` |
-| 4 | Service worker | `0c6fbca` |
-| 5 | app:// routing | `31b2f38` |
-| 6 | Desktop auth | `f7d207c` |
-| 7 | Desktop UX | `50cde44` |
-| 8 | Strong's cache | `2fed712` |
-| 9 | Packaging | `c66f01f` |
-| 10 | CI | `9f70484` |
-| 11 | Docs | `7ed20ea` (+ verification doc pending commit) |
+| Check | Result |
+|-------|--------|
+| Jest `useRequireLogin` | PASS |
+| `tsc --noEmit` | PASS |
+| Web `compare.mjs` 8 pages | not re-run this session — prior gate 0/0/&lt;0.5% on `electron-wrap` |
+| Packaged fresh userData → `#/bible-online` | manual |
+| Post-login return to reader | **UNVERIFIED** (owner sign-in) |
 
-## Installer size (measured)
+Manual post-login: open packaged app logged out → `#/bible-online` → **Sign in** or **Home** → KingsChat → welcome → should land on stored path (default `#/bible-online`).
 
-- **`dist/win-unpacked/`:** ~**357 MB** (unsigned, HebrewGreekRes not in bundle)  
-- **NSIS installer `.exe`:** build was still running when recorded; re-run `npm run electron:build:win` to produce `dist/*.exe`
+## Commits (this branch)
 
-## Redirect URI to register (KingsChat)
-
-1. `rhapsody-bible://auth/callback`  
-2. Fallback: `http://127.0.0.1:47823/auth/callback`
-
-Desktop builds set `REACT_APP_KINGSCHAT_REDIRECT_URL=rhapsody-bible://auth/callback` via `build-electron`.
-
-## macOS (UNVERIFIED locally)
-
-```bash
-npm run electron:build:mac
-```
-
-Or push to `electron-wrap` and run GitHub Actions job **build-macos**.
-
-## Your action items
-
-1. KingsChat dashboard — register redirect URI above  
-2. Worker CORS — add desktop/null origin if exchange fails (token logic unchanged)  
-3. Windows signing — `WIN_CSC_LINK`, `WIN_CSC_KEY_PASSWORD`  
-4. Apple — Developer ID + notarization secrets in CI  
-5. `ELECTRON_UPDATE_URL` / GitHub release when ready  
-
-## Next step
-
-Complete Stage 3 manual checks (OAuth, signed-in UI, `compare.mjs`, NSIS artifact size).
+Recorded after commits land — see `git log electron-open-bible --oneline`.
