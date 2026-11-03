@@ -83,6 +83,7 @@ npm run electron:build:mac
 
 - Espees store payments deferred; runtime URLs exist for future enablement
 - Marketing website routes remain in bundle but redirect to `/login` or `/dash` in desktop
++ Marketing website routes remain in bundle; on desktop, `/` and marketing paths bootstrap to **`/bible-online`** (or last reader route). Sign-in is on demand for store, bookmarks/highlights, etc.
 - Service worker disabled in Electron; web PWA unchanged
 
 ## Troubleshooting
@@ -94,4 +95,4 @@ npm run electron:build:mac
 | OAuth loop | Protocol registered? `rhapsody-bible://auth/callback` matches env + KingsChat dashboard |
 | `electron:start` hangs | Port 3400 free; `wait-on http://localhost:3400` |
 
-See also `docs/electron/00-progress.md` and `docs/electron/01-audit.md`.
+See also `docs/electron/00-progress.md`, `docs/electron/03-verification.md`, and `docs/electron/01-audit.md`.
