@@ -2,6 +2,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useRecoilState, useSetRecoilState } from "recoil";
 import { condordanceResultAtom, selectedStrongsMeaning } from "store/atoms/general";
+import { fetchPublicJson } from "utils/strongsAssetLoader";
 
 type DictEntry = {
   strongNumber: string;
@@ -47,9 +48,7 @@ const fetchJsonCached = (() => {
   const cache = new Map<string, any>();
   return async (url: string) => {
     if (cache.has(url)) return cache.get(url);
-    const res = await fetch(url);
-    if (!res.ok) throw new Error(`Fetch ${url} failed ${res.status}`);
-    const j = await res.json();
+    const j = await fetchPublicJson(url);
     cache.set(url, j);
     return j;
   };
@@ -63,8 +62,7 @@ const useDictionary = (filePath?: string) => {
   useEffect(() => {
     if (!filePath) return;
     let mounted = true;
-    fetch(filePath)
-      .then((r) => r.json())
+    fetchPublicJson(filePath)
       .then((data) => {
         const names = data.dictionary?.name || [];
         const allKeynums: any[] = [];
@@ -111,8 +109,7 @@ const useAudioMap = (jsonPath = "/HebrewGreekRes/json/audioPronunciation.json") 
   const [map, setMap] = useState<any>({});
   useEffect(() => {
     let mounted = true;
-    fetch(jsonPath)
-      .then((r) => r.json())
+    fetchPublicJson(jsonPath)
       .then((m) => {
         if (!mounted) return;
         setMap(m || {});
