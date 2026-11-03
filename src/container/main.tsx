@@ -18,6 +18,10 @@ import ReaderLogin from '../components/ReaderLogin';
 import WelcomeScreen from '../components/WelcomeScreen';
 import { isElectron } from '../utils/general';
 import {
+  getElectronBootstrapRoute,
+  persistElectronLastRoute,
+} from '../utils/authReturnPath';
+import {
   AnnotateRoute,
   FavouritesRoute,
   VoiceNoteRoute,
@@ -84,9 +88,19 @@ const OAuthCallbackScreen: React.FunctionComponent = () => {
   return <AuthCallback />;
 };
 
+const ElectronRoutePersistence: React.FunctionComponent = () => {
+  const location = useLocation();
+
+  React.useEffect(() => {
+    if (!isElectron()) return;
+    persistElectronLastRoute(location.pathname);
+  }, [location.pathname]);
+
+  return null;
+};
+
 const ElectronBootstrapRedirect: React.FunctionComponent = () => {
   const location = useLocation();
-  const { isLoggedIn } = useUser();
 
   if (!isElectron()) {
     return null;
@@ -112,8 +126,7 @@ const ElectronBootstrapRedirect: React.FunctionComponent = () => {
     return null;
   }
 
-  const target = isLoggedIn === 'true' ? DashboardRoute : LoginRoute;
-  return <Navigate to={target} replace />;
+  return <Navigate to={getElectronBootstrapRoute()} replace />;
 };
 
 // SimpleSuspense must be a real component (not a plain helper function) so its
@@ -148,6 +161,7 @@ const Main: React.FunctionComponent<IMain> = () => {
     return (
       <>
         <ElectronBootstrapRedirect />
+        <ElectronRoutePersistence />
         <Routes location={backgroundLocation ?? location}>
           {/* Put your existing routes here (unchanged) */}
           <Route path={LoginRoute} element={<ReaderLogin />} />
