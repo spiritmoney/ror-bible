@@ -23,7 +23,7 @@ describe('Protected', () => {
       isLoggedIn: 'false',
       user: {} as any,
       updateUserInfo: jest.fn(),
-    } as ReturnType<typeof useUser>);
+    } as unknown as ReturnType<typeof useUser>);
 
     render(
       <MemoryRouter initialEntries={['/dash']}>
@@ -50,7 +50,7 @@ describe('Protected', () => {
       isLoggedIn: 'true',
       user: { id: 'user-1' } as any,
       updateUserInfo: jest.fn(),
-    } as ReturnType<typeof useUser>);
+    } as unknown as ReturnType<typeof useUser>);
 
     render(
       <MemoryRouter initialEntries={['/dash']}>
