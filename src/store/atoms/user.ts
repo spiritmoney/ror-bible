@@ -15,7 +15,7 @@ export const kingschatTokensAtom = atom({
 
 export const isLoggedInAtom = atom({
   key: 'isLoggedInAtom',
-  default: 'true' as 'loading' | 'false' | 'true', //changed default from loading to true (revert change if neccesary)
+  default: 'false' as 'loading' | 'false' | 'true',
   // effects_UNSTABLE: [persistAtom],
 });
 

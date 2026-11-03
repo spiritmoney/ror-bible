@@ -2,9 +2,10 @@ import SuspenseLoader from 'components/SuspenseLoader';
 import { useFirebase } from 'hooks/useFirebase';
 import { useUser } from 'hooks/useUser';
 import { IUser } from 'interface/user';
-import { AuthRoute } from 'navigation/routes';
+import { LoginRoute } from 'navigation/routes';
 import React, { useEffect } from 'react';
-import { Navigate } from 'react-router-dom';
+import { Navigate, useLocation } from 'react-router-dom';
+import { LOCAL_STORAGE_USER_EMAIL } from 'store/constant';
 
 export interface IProtected {
   children: any;
@@ -13,6 +14,7 @@ export interface IProtected {
 const Protected: React.FunctionComponent<IProtected> = ({ children }) => {
   const { isLoggedIn, updateUserInfo, user } = useUser();
   const { getOnSnapshot } = useFirebase();
+  const location = useLocation();
 
   useEffect(() => {
     if (isLoggedIn !== 'true') return;
@@ -36,15 +38,29 @@ const Protected: React.FunctionComponent<IProtected> = ({ children }) => {
     return <>{children}</>;
   }
 
-  // if (isLoggedIn === 'false') {
-  //   return <Navigate to={AuthRoute} />;
-  // }
-  // Replaced the condition for isLoggedIn = false
-  if (isLoggedIn === 'false') {
-    return <>{children}</>;
+  if (isLoggedIn === 'loading') {
+    return <SuspenseLoader fullscreen />;
   }
 
-  return <SuspenseLoader fullscreen />;
+  const storedEmail =
+    typeof window !== 'undefined'
+      ? localStorage.getItem(LOCAL_STORAGE_USER_EMAIL)
+      : null;
+  const hasSessionHint = !!(user?.id || storedEmail);
+
+  if (hasSessionHint) {
+    return <SuspenseLoader fullscreen />;
+  }
+
+  return (
+    <Navigate
+      to={LoginRoute}
+      replace
+      state={{
+        from: location.pathname + location.search + location.hash,
+      }}
+    />
+  );
 };
 
 export default Protected;
