@@ -46,7 +46,7 @@ export default function Footer() {
         </div>
         <div className="uc56752">
           <h3 className="u902935">Products</h3>
-          <Link className="u8c9a26" to={WebsiteProductWebRoute}>
+          <Link className="u8c9a26" to="/bible-online">
             ROR Bible+ Web (Bible Online &amp; Lite)
           </Link>
           <Link className="u8c9a26" to={WebsiteProductMobileRoute}>

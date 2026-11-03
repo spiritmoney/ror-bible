@@ -41,7 +41,7 @@ export default function ProductWebMain() {
 <h1 className="u0288f9">Open your browser. Open <span className="ub8bc62">the Word.</span></h1>
 <p className="u742aa7">“The Word, just a click away”</p>
 <p className="u62020b">Bible Online brings the full Premium Bible Reader 2.0 experience right to your browser: no downloads, no installations. At work, in church or on the go, the Word is always one tab away.</p>
-<div className="u35d18b"><a className="u5c4e6f" href="#">Open Bible Online</a><span className="u59de19">rhapsodybible.web.app</span></div>
+<div className="u35d18b"><Link className="u5c4e6f" to="/bible-online">Open Bible Online</Link><span className="u59de19">rhapsodybible.web.app</span></div>
 </div>
 <div className="u1c0f7c"><div className="u852f09"><div className="u4fb701">
 <div className="u0e98fb">

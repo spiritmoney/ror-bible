@@ -43,7 +43,7 @@ export default function HomeMain() {
 <p className="u9a3d6a">A premium digital Bible experience for personal revelation, deeper study and inspired ministry: your Bible, study resources and personal insights in one workspace.</p>
 <div className="uba2fef">
 <Link className="u5c4e6f" to={WebsiteDownloadRoute}>Get the app</Link>
-<Link className="ubee0d4" to={WebsiteProductWebRoute}>Open Bible Online</Link>
+<Link className="ubee0d4" to="/bible-online">Open Bible Online</Link>
 <a className="ufc8380" href="#promo"><span className="u7c01c9"><svg width="14" height="14" viewBox="0 0 24 24" fill="#FFFFFF" aria-hidden="true"><path d="M7 4.5v15l13-7.5z"/></svg></span>Watch the TV promo</a>
 </div>
 <div className="u316a78">
