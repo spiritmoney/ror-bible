@@ -1,0 +1,16 @@
+{
+  "splashSeen": false,
+  "splashSkipped": true,
+  "font404": 0,
+  "chapterNav": false,
+  "chapterBefore": "Genesis 2",
+  "chapterAfter": "Genesis 2",
+  "translationLabel": "KJV",
+  "strongsClick": "h8064",
+  "strongsUrlPrefix": "https://rhapsodybible.web.app/HebrewGreekRes/",
+  "strongsCached": false,
+  "strongsCacheSample": [],
+  "strongsOfflineNoCrash": true,
+  "openExternal": true,
+  "consoleErrors": []
+}
