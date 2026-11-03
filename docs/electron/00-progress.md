@@ -38,4 +38,9 @@ Manual post-login: open packaged app logged out → `#/bible-online` → **Sign 
 
 ## Commits (this branch)
 
-Recorded after commits land — see `git log electron-open-bible --oneline`.
+| Step | Commit | Message |
+|------|--------|---------|
+| 2 | `8577f01` | feat(electron): open on Bible reader |
+| 3 | `c4573da` | docs(electron): audit reader auth actions |
+| 4 | `21d39dd` | feat(auth): login on demand helper |
+| 5 | `beea0e7` | test(auth): useRequireLogin and verification notes |
