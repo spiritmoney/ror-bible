@@ -51,6 +51,8 @@ import Submit from 'components/Submit';
 import CollabMode from 'components/CollabPopup';
 import ProfileMenu from 'components/ProfileMenu';
 import { useNavigate } from 'react-router-dom';
+import { useRequireLogin } from 'hooks/useRequireLogin';
+import { isElectron } from 'utils/general';
 
 export interface IHeader {
   hidden?: boolean;
@@ -61,6 +63,8 @@ const Header: React.FunctionComponent<IHeader> = ({ hidden, quill }) => {
   const setHeaderHeight = useSetRecoilState(headerHeightAtom);
   const { height, ref } = useGetSize();
   const { user: authUser } = useUser();
+  const navigate = useNavigate();
+  const { requireLogin } = useRequireLogin();
   const [files, setFiles] = useState(false);
   const [search, setSearch] = useState('');
   const [books] = useState(false);
@@ -83,7 +87,6 @@ const Header: React.FunctionComponent<IHeader> = ({ hidden, quill }) => {
   const [back, setBack] = useRecoilState(storeBackAtom);
   const [storeCart, setStoreCart] = useRecoilState(storeCartAtom);
   const [showSubmit, setShowSubmit] = useState(false);
-  const navigate = useNavigate();
 
   // local state for responsive top menu
   const [showTopLinksDropdown, setShowTopLinksDropdown] = useState(false);
@@ -393,7 +396,17 @@ const Header: React.FunctionComponent<IHeader> = ({ hidden, quill }) => {
             </div>
 
             {/* profile avatar — shown once the user is logged in */}
-            {authUser?.id && <ProfileMenu />}
+            {authUser?.id ? (
+              <ProfileMenu />
+            ) : isElectron() ? (
+              <button
+                type="button"
+                onClick={() => requireLogin()}
+                className="rounded-full bg-white/15 hover:bg-white/25 text-white text-xs font-semibold px-4 py-2 transition-colors ds-focus-visible font-montserrat"
+              >
+                Sign in
+              </button>
+            ) : null}
           </div>
         </div>
 

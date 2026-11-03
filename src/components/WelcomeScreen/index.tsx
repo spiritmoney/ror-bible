@@ -3,13 +3,15 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { useUser } from 'hooks/useUser';
 import appLogo from 'assets/logo.png.png';
 import { HomeRoute } from 'navigation/routes';
+import { isElectron } from 'utils/general';
+import {
+  clearAuthReturnPath,
+  getSafeReturnPath,
+} from 'utils/authReturnPath';
 
 const getSafeReturnTo = (path?: string | null): string => {
-  if (!path) return HomeRoute;
-  if (!path.startsWith('/') || path.startsWith('//') || path.includes('://')) {
-    return HomeRoute;
-  }
-  return path;
+  const fallback = isElectron() ? '/bible-online' : HomeRoute;
+  return getSafeReturnPath(path, fallback);
 };
 
 const WelcomeScreen: React.FunctionComponent = () => {
@@ -29,6 +31,7 @@ const WelcomeScreen: React.FunctionComponent = () => {
   const handleContinue = () => {
     const target = getSafeReturnTo(from);
     sessionStorage.removeItem('kingschat_last_return_to');
+    clearAuthReturnPath();
     navigate(target, { replace: true });
   };
 

@@ -3,18 +3,35 @@ import useKingsChat from 'hooks/useKingsChat';
 import logo from 'assets/website/logo.png';
 import appLogo from 'assets/logo.png.png';
 import { ReactComponent as KingschatIcon } from 'assets/kingschat.svg';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { HomeRoute } from 'navigation/routes';
+import { isElectron } from 'utils/general';
+import {
+  clearAuthReturnPath,
+  getSafeReturnPath,
+  readAuthReturnPath,
+} from 'utils/authReturnPath';
 
 const ReaderLogin: React.FunctionComponent = () => {
   const [loading, setLoading] = useState(false);
   const { login } = useKingsChat();
   const location = useLocation();
-  const from = (location.state as any)?.from;
+  const navigate = useNavigate();
+  const stateFrom = (location.state as { from?: string } | null)?.from;
+  const readerFallback = isElectron() ? '/bible-online' : HomeRoute;
+  const returnTo = getSafeReturnPath(
+    stateFrom || readAuthReturnPath(readerFallback),
+    readerFallback
+  );
 
   const handleKingsChatLogin = () => {
     setLoading(true);
-    login(setLoading, from || HomeRoute);
+    login(setLoading, returnTo);
+  };
+
+  const handleContinueWithoutSignIn = () => {
+    clearAuthReturnPath();
+    navigate(getSafeReturnPath(returnTo, readerFallback), { replace: true });
   };
 
   return (
@@ -61,6 +78,14 @@ const ReaderLogin: React.FunctionComponent = () => {
               <KingschatIcon className="w-6 h-6" />
             )}
             {loading ? 'Signing in…' : 'Login with KingsChat'}
+          </button>
+
+          <button
+            type="button"
+            onClick={handleContinueWithoutSignIn}
+            className="mt-4 w-full rounded-full border border-[var(--ds-blue)] text-[var(--ds-blue)] font-semibold py-3 px-6 transition-colors hover:bg-slate-50 ds-focus-visible font-montserrat"
+          >
+            Continue without signing in
           </button>
 
           <p className="mt-6 text-center text-xs text-slate-400">

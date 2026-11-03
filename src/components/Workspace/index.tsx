@@ -16,6 +16,7 @@ import { SetNavAtom, SideNavAtom, readModeAtom } from 'store/atoms/general';
 import { Navigate, useLocation } from 'react-router-dom';
 import { useUser } from 'hooks/useUser';
 import { LoginRoute } from 'navigation/routes';
+import { saveAuthReturnPath } from 'utils/authReturnPath';
 import lang from 'assets/Frame-Lang.png';
 import { ReactComponent as Speaker } from '../../assets/speaker.svg';
 import { ReactComponent as ParalStudy } from '../../assets/paralStudy.svg';
@@ -95,7 +96,11 @@ const Workspace: React.FunctionComponent<IWorkspace> = ({
   // Protect store / bible-online / favourites (and product details) behind
   // login. Browsing, reading and audio remain public.
   if (PROTECTED_NAVS.includes(nav) && !isAuthenticated) {
-    const from = NAV_ROUTE[nav] || location.pathname + location.search;
+    const from =
+      location.pathname + location.search + location.hash ||
+      NAV_ROUTE[nav] ||
+      '/bible-online';
+    saveAuthReturnPath(from);
     return <Navigate to={LoginRoute} state={{ from }} replace />;
   }
 

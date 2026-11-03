@@ -17,6 +17,7 @@ import { DarkThemeAtom, SideNavAtom, layoutViewAtom, readModeAtom } from 'store/
 import Dropdown from 'components/Dropdown';
 import { FaCaretDown } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
+import { useRequireLogin } from 'hooks/useRequireLogin';
 
 
 export type SubNavProps = {
@@ -39,6 +40,7 @@ const SubNav: React.FC<SubNavProps> = ({ nav, setNav, className }) => {
     const [layoutView, setLayoutView] = useRecoilState(layoutViewAtom);
     const DarkTheme = useRecoilValue(DarkThemeAtom)
     const navigate = useNavigate();
+    const { requireLogin } = useRequireLogin();
 
 
 
@@ -100,7 +102,9 @@ const SubNav: React.FC<SubNavProps> = ({ nav, setNav, className }) => {
         setNav('multi_layout');
     };
     const handleHome = () => {
-        setNav('store');
+        requireLogin(() => {
+            setNav('store');
+        });
     };
 
     const handleReadView = () => {
@@ -152,7 +156,9 @@ const SubNav: React.FC<SubNavProps> = ({ nav, setNav, className }) => {
                                 {/* Home */}
                                 <button
                                     ref={(el) => setItemRef(el, 0)}
-                                    onClick={() => { setNav('store'); handleHome && handleHome(); }}
+                                    onClick={() => {
+                                        handleHome();
+                                    }}
                                     className={clsx("flex flex-col items-center text-[10px] px-3 py-1 rounded transition-all duration-200 focus:outline-none relative", {
                                         "text-[#0f2230]": nav === 'store', "text-white": nav !== 'store'
                                     })}
