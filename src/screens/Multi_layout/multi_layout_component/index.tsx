@@ -68,6 +68,7 @@ import { ReactComponent as Notes } from 'assets/notes.svg';
 import { ConcordanceItem } from 'screens/JsonBibleDisplay/StrongsDictionary';
 import audioBibleData from 'BibleJson/audioBible.json';
 import { getBibleData, isValidBibleData } from 'utils/bibleStorage';
+import { isElectron } from 'utils/general';
 import SubNav from './subNav';
 
 type storeFavouritesTypes = {
@@ -265,8 +266,10 @@ const Multilayout = ({ hidden }: storeFavouritesTypes) => {
 
   // Fetch & Update xmldisplay with the Bible
   useEffect(() => {
-    // Fetch the XML file when the component mounts
-    fetch('/Bible_English_AMP.xml') // Path to your XML file from the public folder
+    if (isElectron()) {
+      return;
+    }
+    fetch('/Bible_English_AMP.xml')
       .then(response => response.text())
       .then(data => setMLXmlContent(data))
       .catch(error => console.error('Error fetching XML:', error));
