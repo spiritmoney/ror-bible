@@ -45,7 +45,7 @@ Security (unchanged from Stage 2): `contextIsolation`, `sandbox`, `nodeIntegrati
 
 | Commit | Change |
 |--------|--------|
-| *(pending)* | Skip `/Bible_English_AMP.xml` fetch when `isElectron()` (BibleJson bundle; file pruned from desktop build) |
+| `067fb7a` | Skip `/Bible_English_AMP.xml` fetch when `isElectron()` (BibleJson bundle; file pruned from desktop build) |
 
 Prior packaging: `345ca16`, `cc5a225`.
 
