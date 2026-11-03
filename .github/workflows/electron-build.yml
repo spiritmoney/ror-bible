@@ -1,0 +1,71 @@
+name: Electron build
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - electron-wrap
+    paths:
+      - 'electron/**'
+      - 'src/**'
+      - 'public/**'
+      - 'package.json'
+      - 'yarn.lock'
+
+jobs:
+  build-windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: yarn
+      - run: yarn install --frozen-lockfile
+      - run: npm run electron:compile
+      - run: npm test -- --watchAll=false --passWithNoTests
+      - run: npm run build-electron
+      - run: npx electron-builder --win --x64 --publish never
+        env:
+          CSC_LINK: ${{ secrets.WIN_CSC_LINK }}
+          CSC_KEY_PASSWORD: ${{ secrets.WIN_CSC_KEY_PASSWORD }}
+      - uses: actions/upload-artifact@v4
+        with:
+          name: rhapsody-bible-windows
+          path: |
+            dist/*.exe
+            dist/*.yml
+
+  build-macos:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: yarn
+      - run: yarn install --frozen-lockfile
+      - run: npm run electron:compile
+      - run: npm test -- --watchAll=false --passWithNoTests
+      - run: npm run build-electron
+      - run: npx electron-builder --mac --x64 --arm64 --publish never
+        env:
+          CSC_LINK: ${{ secrets.APPLE_CSC_LINK }}
+          CSC_KEY_PASSWORD: ${{ secrets.APPLE_CSC_KEY_PASSWORD }}
+          APPLE_ID: ${{ secrets.APPLE_ID }}
+          APPLE_APP_SPECIFIC_PASSWORD: ${{ secrets.APPLE_APP_SPECIFIC_PASSWORD }}
+          APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
+      - uses: actions/upload-artifact@v4
+        with:
+          name: rhapsody-bible-macos
+          path: |
+            dist/*.dmg
+            dist/*.zip
+            dist/*.yml
+
+  release:
+    if: false
+    needs: [build-windows, build-macos]
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Enable when GH_TOKEN and publish URL are configured"
