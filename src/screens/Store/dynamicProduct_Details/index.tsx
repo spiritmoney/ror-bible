@@ -17,6 +17,7 @@ import SharePopup from 'screens/Store/Share';
 import { IStoreProduct } from 'interface/storeProducts';
 import { getBibleData, saveBibleData } from 'utils/bibleStorage';
 import { normalizeCdnDownloadUrl } from 'utils/cdnUrl';
+import { getProxyUrl } from 'config/runtime';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import SubNav from 'screens/Multi_layout/multi_layout_component/subNav';
@@ -145,7 +146,7 @@ const ProductDetails: React.FC<IStore> = ({ hidden }) => {
     const isZipLike =
       /\.(zip)$/i.test(normalizedUrl) || normalizedUrl.includes('.zip');
 
-    const proxiedUrl = `/proxy?url=${encodeURIComponent(normalizedUrl)}`;
+    const proxiedUrl = getProxyUrl(normalizedUrl);
 
     try {
       const response = await axios.get(proxiedUrl, {
