@@ -8,8 +8,10 @@ import {
   WebsiteProductWebRoute,
 } from './websitePaths';
 import icon from '../../assets/website/new/ror-bible-plus-icon.png';
+import { isAppShell } from 'utils/appShell';
 
 export default function Footer() {
+  const appShell = isAppShell();
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -26,7 +28,7 @@ export default function Footer() {
       </div>
       <div className="wrap uf37b3e">
         <div className="u1fd187">
-          <Link className="lockup u8092d7" to="/home" aria-label="ROR Bible+ home">
+          <Link className="lockup u8092d7" to={appShell ? '/bible-online' : '/home'} aria-label="ROR Bible+ home">
             <img className="u2ab49f" src={icon} alt="" />
             <span className="u55f5af">
               <span className="ub6a52a">ROR Bible+</span>
@@ -34,16 +36,21 @@ export default function Footer() {
             </span>
           </Link>
           <p className="u5fe755">Read. Study. Meditate. Triumph.</p>
+          {!appShell && (
+          <>
           <Link className="u8c9a26" to={`${WebsiteDownloadRoute}#support`}>
             Technical support
           </Link>
           <Link className="u8c9a26" to={`${WebsiteDownloadRoute}#contact`}>
             Contact us
           </Link>
+          </>
+          )}
           <Link className="u8c9a26" to="/store" data-allowed="1">
             Store
           </Link>
         </div>
+        {!appShell && (
         <div className="uc56752">
           <h3 className="u902935">Products</h3>
           <Link className="u8c9a26" to="/bible-online">
@@ -68,6 +75,9 @@ export default function Footer() {
             Teevo Bible for Teens
           </a>
         </div>
+        )}
+        {!appShell && (
+        <>
         <div className="uc56752">
           <h3 className="u902935">About ROR Bible+</h3>
           {[
@@ -125,6 +135,8 @@ export default function Footer() {
             Blog
           </a>
         </div>
+        </>
+        )}
       </div>
       <div className="ua95fd4">
         <div className="wrap u94c3c2">

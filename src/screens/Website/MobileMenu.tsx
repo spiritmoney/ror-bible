@@ -12,8 +12,10 @@ import {
   WebsiteProductWebRoute,
 } from './websitePaths';
 import icon from '../../assets/website/new/ror-bible-plus-icon.png';
+import { isAppShell } from 'utils/appShell';
 
 export default function MobileMenu() {
+  const appShell = isAppShell();
   const { mobileOpen, setMobileOpen } = useWebsiteMenu();
   const closeRef = useRef<HTMLButtonElement>(null);
   const location = useLocation();
@@ -36,6 +38,10 @@ export default function MobileMenu() {
     closeMenu();
     navigate(path, { state: { backgroundLocation: location } });
   };
+
+  if (appShell) {
+    return null;
+  }
 
   return (
     <div

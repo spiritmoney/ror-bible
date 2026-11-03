@@ -14,8 +14,10 @@ import {
   WebsiteProductWebRoute,
 } from './websitePaths';
 import icon from '../../assets/website/new/ror-bible-plus-icon.png';
+import { isAppShell } from 'utils/appShell';
 
 export default function Header() {
+  const appShell = isAppShell();
   const { mobileOpen, setMobileOpen, megaOpen, setMegaOpen } = useWebsiteMenu();
   const headerRef = useRef<HTMLElement>(null);
   const megaRef = useRef<HTMLDivElement>(null);
@@ -97,6 +99,8 @@ export default function Header() {
             <Link className="u2ee821" to="/bible-online">
               Bible Online
             </Link>
+            {!appShell && (
+              <>
             <a className="u2ee821" href="https://blog.rorbible.plus">
               Blog
             </a>
@@ -123,6 +127,8 @@ export default function Header() {
             <Link className="u2ee821" to={`${WebsiteDownloadRoute}#support`}>
               Support
             </Link>
+              </>
+            )}
             <span className="u07d673" aria-hidden="true" />
             <Link className="u030a0a" to={LoginRoute}>
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
@@ -141,13 +147,14 @@ export default function Header() {
       </div>
       <div className="main-bar uddc867">
         <div className="wrap u253ea9">
-          <Link className="lockup u0eefb8" to="/home" aria-label="ROR Bible+ home">
+          <Link className="lockup u0eefb8" to={appShell ? '/bible-online' : '/home'} aria-label="ROR Bible+ home">
             <img className="u8abd8c" src={icon} alt="" />
             <span className="u1a913d">
               <span className="u55add1">ROR Bible+</span>
               <span className="u775481">Premium Bible Reader</span>
             </span>
           </Link>
+          {!appShell && (
           <nav className="navlinks u807e2d" aria-label="Main">
             <Link className={navClass(navActive.features)} to={WebsiteFeaturesRoute}>
               Features
@@ -191,6 +198,7 @@ export default function Header() {
               </svg>
             </a>
           </nav>
+          )}
           <div className="u133d27">
             <button className="hidesm u421e53" type="button" aria-label="Search">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#19688B" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
@@ -198,9 +206,11 @@ export default function Header() {
                 <path d="M20 20l-4.3-4.3" />
               </svg>
             </button>
+            {!appShell && (
             <Link className="getapp btn-lift u05f1f4" to={WebsiteDownloadRoute}>
               Get the app
             </Link>
+            )}
             {user?.id ? (
               <span data-allowed="1">
                 <ProfileMenu />
@@ -227,6 +237,7 @@ export default function Header() {
         <div className="u1584b2" />
         <div className="u7c48ed" />
       </div>
+      {!appShell && (
       <div
         id="products-menu"
         ref={megaRef}
@@ -325,6 +336,7 @@ export default function Header() {
           </div>
         </div>
       </div>
+      )}
     </header>
   );
 }
