@@ -1,0 +1,18 @@
+html.is-electron,
+html.is-electron body {
+  user-select: text;
+}
+
+html.is-electron ::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+html.is-electron ::-webkit-scrollbar-thumb {
+  background-color: rgba(25, 104, 139, 0.45);
+  border-radius: 8px;
+}
+
+html.is-electron ::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.04);
+}

@@ -2,6 +2,7 @@ import {
   app,
   BrowserWindow,
   ipcMain,
+  Menu,
   net,
   protocol,
   screen as electronScreen,
@@ -11,10 +12,13 @@ import {
 import isDev from 'electron-is-dev';
 import path from 'path';
 import { pathToFileURL } from 'url';
+import fs from 'fs';
+import { mkdir, readFile, writeFile } from 'fs/promises';
 
 const PROTOCOL = 'rhapsody-bible';
 const APP_SCHEME = 'app';
 const LOOPBACK_AUTH_PORT = 47823;
+const HOSTING_ORIGIN = 'https://rhapsodybible.web.app';
 
 protocol.registerSchemesAsPrivileged([
   {
@@ -140,6 +144,32 @@ const applyContentSecurityPolicy = () => {
   });
 };
 
+const installApplicationMenu = () => {
+  const template: Electron.MenuItemConstructorOptions[] = [
+    ...(process.platform === 'darwin'
+      ? [{ role: 'appMenu' as const }]
+      : []),
+    { role: 'fileMenu' },
+    { role: 'editMenu' },
+    {
+      label: 'View',
+      submenu: [
+        { role: 'reload' },
+        { role: 'forceReload' },
+        { role: 'toggleDevTools' },
+        { type: 'separator' },
+        { role: 'resetZoom' },
+        { role: 'zoomIn' },
+        { role: 'zoomOut' },
+        { type: 'separator' },
+        { role: 'togglefullscreen' },
+      ],
+    },
+    { role: 'windowMenu' },
+  ];
+  Menu.setApplicationMenu(Menu.buildFromTemplate(template));
+};
+
 const createMainWindow = () => {
   mainWindow = new BrowserWindow({
     width: electronScreen.getPrimaryDisplay().workArea.width,
@@ -193,6 +223,39 @@ ipcMain.handle('shell:open-external', async (_event, url: string) => {
   await shell.openExternal(url);
 });
 
+ipcMain.handle('strongs:load-json', async (_event, relativePath: string) => {
+  if (typeof relativePath !== 'string') {
+    throw new Error('Invalid Strong\'s asset path');
+  }
+  const safeRelative = relativePath.replace(/\\/g, '/').replace(/\.\./g, '');
+  const localFile = path.join(
+    app.getPath('userData'),
+    'HebrewGreekRes',
+    ...safeRelative.split('/')
+  );
+  const cacheRoot = path.normalize(
+    path.join(app.getPath('userData'), 'HebrewGreekRes')
+  );
+  const normalizedLocal = path.normalize(localFile);
+  if (!normalizedLocal.startsWith(cacheRoot)) {
+    throw new Error('Strong\'s path escapes cache directory');
+  }
+
+  if (fs.existsSync(normalizedLocal)) {
+    return readFile(normalizedLocal, 'utf8');
+  }
+
+  const remoteUrl = `${HOSTING_ORIGIN}/HebrewGreekRes/${safeRelative}`;
+  const response = await fetch(remoteUrl);
+  if (!response.ok) {
+    throw new Error(`Strong's download failed (${response.status})`);
+  }
+  const text = await response.text();
+  await mkdir(path.dirname(normalizedLocal), { recursive: true });
+  await writeFile(normalizedLocal, text, 'utf8');
+  return text;
+});
+
 app.setAsDefaultProtocolClient(PROTOCOL);
 
 if (process.platform === 'darwin') {
@@ -206,6 +269,7 @@ app.whenReady().then(async () => {
   if (!isDev) {
     registerAppProtocol();
   }
+  installApplicationMenu();
   applyContentSecurityPolicy();
   createMainWindow();
 

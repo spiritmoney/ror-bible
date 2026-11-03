@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import './styles/design-tokens.css';
+import './styles/electron-shell.css';
 import App from './App';
 import 'tw-elements';
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';
