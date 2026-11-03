@@ -107,12 +107,14 @@
     "server": "node src/server.js",
     "dev:payments": "concurrently \"npm run server\" \"npm run react\"",
     "build": "PUBLIC_URL=/ sh build.sh",
-    "build-electron": "cross-env REACT_APP_IS_ELECTRON=true REACT_APP_KINGSCHAT_REDIRECT_URL=rhapsody-bible://auth/callback sh build.sh",
+    "build-electron": "cross-env REACT_APP_IS_ELECTRON=true REACT_APP_KINGSCHAT_REDIRECT_URL=rhapsody-bible://auth/callback sh build.sh && sh scripts/prune-electron-build.sh",
     "test": "craco test",
     "eject": "react-scripts eject",
     "electron:compile": "tsc -p electron/tsconfig.json",
     "electron:start": "npm run electron:compile && concurrently \"npm run react\" \"wait-on http://localhost:3400 && electron .\"",
-    "electron:build:all": "yarn build-electron && electron-builder build --publish never -mwl"
+    "electron:build:win": "npm run electron:compile && npm run build-electron && electron-builder --win --x64 --publish never",
+    "electron:build:mac": "npm run electron:compile && npm run build-electron && electron-builder --mac --x64 --arm64 --publish never",
+    "electron:build:all": "npm run electron:compile && npm run build-electron && electron-builder -mwl --publish never"
   },
   "eslintConfig": {
     "extends": [
@@ -134,16 +136,47 @@
   },
   "build": {
     "appId": "com.appsloveworld.scribbbler",
-    "productName": "Scribbbler",
+    "productName": "Rhapsody Bible",
+    "asar": true,
+    "directories": {
+      "output": "dist",
+      "buildResources": "public/icon"
+    },
     "files": [
+      "dist-electron/**/*",
       "build/**/*",
-      "public/electron.ts",
-      "package.json"
+      "package.json",
+      "!backup/**",
+      "!workers/**",
+      "!functions/**",
+      "!docs/**"
     ],
     "icon": "public/icon/icon_512x512.png",
-    "extends": null,
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": ["x64"]
+        }
+      ],
+      "signAndEditExecutable": false
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": false,
+      "allowToChangeInstallationDirectory": true
+    },
     "mac": {
-      "type": "distribution"
+      "category": "public.app-category.reference",
+      "target": ["dmg", "zip"],
+      "hardenedRuntime": true,
+      "entitlements": "electron/entitlements.mac.plist",
+      "entitlementsInherit": "electron/entitlements.mac.plist",
+      "notarize": false
+    },
+    "publish": {
+      "provider": "github",
+      "releaseType": "release"
     }
   },
   "devDependencies": {

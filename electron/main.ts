@@ -10,6 +10,7 @@ import {
   shell,
 } from 'electron';
 import isDev from 'electron-is-dev';
+import { autoUpdater } from 'electron-updater';
 import path from 'path';
 import { pathToFileURL } from 'url';
 import fs from 'fs';
@@ -266,6 +267,15 @@ if (process.platform === 'darwin') {
 }
 
 app.whenReady().then(async () => {
+  autoUpdater.autoDownload = false;
+  autoUpdater.autoInstallOnAppQuit = false;
+  if (process.env.ELECTRON_UPDATE_URL) {
+    autoUpdater.setFeedURL({
+      provider: 'generic',
+      url: process.env.ELECTRON_UPDATE_URL,
+    });
+  }
+
   if (!isDev) {
     registerAppProtocol();
   }
