@@ -144,14 +144,19 @@
       "buildResources": "public/icon"
     },
     "files": [
+      "!**/*",
       "dist-electron/**/*",
       "build/**/*",
-      "package.json",
-      "!backup/**",
-      "!workers/**",
-      "!functions/**",
-      "!docs/**"
+      "!build/**/*.map",
+      "!build/HebrewGreekRes/**",
+      "package.json"
     ],
+    "extraMetadata": {
+      "main": "dist-electron/main.js",
+      "dependencies": {}
+    },
+    "npmRebuild": false,
+    "generateUpdatesFilesForAllChannels": false,
     "icon": "public/icon/icon_512x512.png",
     "win": {
       "target": [
@@ -175,10 +180,12 @@
       "entitlementsInherit": "electron/entitlements.mac.plist",
       "notarize": false
     },
-    "publish": {
-      "provider": "github",
-      "releaseType": "release"
-    }
+    "publish": [
+      {
+        "provider": "github",
+        "releaseType": "release"
+      }
+    ]
   },
   "devDependencies": {
     "@babel/plugin-proposal-private-property-in-object": "7.21.11",

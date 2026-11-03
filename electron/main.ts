@@ -9,12 +9,12 @@ import {
   session,
   shell,
 } from 'electron';
-import isDev from 'electron-is-dev';
-import { autoUpdater } from 'electron-updater';
 import path from 'path';
 import { pathToFileURL } from 'url';
 import fs from 'fs';
 import { mkdir, readFile, writeFile } from 'fs/promises';
+
+const isDev = !app.isPackaged;
 
 const PROTOCOL = 'rhapsody-bible';
 const APP_SCHEME = 'app';
@@ -267,9 +267,10 @@ if (process.platform === 'darwin') {
 }
 
 app.whenReady().then(async () => {
-  autoUpdater.autoDownload = false;
-  autoUpdater.autoInstallOnAppQuit = false;
   if (process.env.ELECTRON_UPDATE_URL) {
+    const { autoUpdater } = await import('electron-updater');
+    autoUpdater.autoDownload = false;
+    autoUpdater.autoInstallOnAppQuit = false;
     autoUpdater.setFeedURL({
       provider: 'generic',
       url: process.env.ELECTRON_UPDATE_URL,
