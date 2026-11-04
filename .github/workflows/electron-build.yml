@@ -32,8 +32,9 @@ jobs:
       - run: npm run electron:compile
       - run: npm test -- --watchAll=false --passWithNoTests
       - run: npm run build-electron
-      env:
-        NODE_OPTIONS: --max-old-space-size=6144
+        env:
+          NODE_OPTIONS: --max-old-space-size=6144
+          GENERATE_SOURCEMAP: "false"
       - run: npx electron-builder --win --x64 --publish never
         env:
           CSC_LINK: ${{ secrets.WIN_CSC_LINK }}
@@ -59,10 +60,11 @@ jobs:
           cache: yarn
       - run: yarn install --frozen-lockfile
       - run: npm run electron:compile
-        env:
-          NODE_OPTIONS: --max-old-space-size=6144
       - run: npm test -- --watchAll=false --passWithNoTests
       - run: npm run build-electron
+        env:
+          NODE_OPTIONS: --max-old-space-size=6144
+          GENERATE_SOURCEMAP: "false"
       - run: npx electron-builder --mac dmg --x64 --arm64 --publish never
         env:
           CSC_LINK: ${{ secrets.APPLE_CSC_LINK }}
