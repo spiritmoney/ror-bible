@@ -33,6 +33,7 @@ jobs:
       - run: npm test -- --watchAll=false --passWithNoTests
       - run: npm run build-electron
         env:
+          CI: "false"
           NODE_OPTIONS: --max-old-space-size=6144
           GENERATE_SOURCEMAP: "false"
       - run: npx electron-builder --win --x64 --publish never
@@ -63,6 +64,7 @@ jobs:
       - run: npm test -- --watchAll=false --passWithNoTests
       - run: npm run build-electron
         env:
+          CI: "false"
           NODE_OPTIONS: --max-old-space-size=6144
           GENERATE_SOURCEMAP: "false"
       - run: npx electron-builder --mac dmg --x64 --arm64 --publish never
