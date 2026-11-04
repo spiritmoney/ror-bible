@@ -1,6 +1,6 @@
 {
   "hosting": {
-    "site": "rhapsodybible",
+    "site": "rhapsodybiblestaging",
     "public": "build",
     "ignore": [
       "firebase.json",

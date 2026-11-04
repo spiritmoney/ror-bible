@@ -1,96 +1,95 @@
 # Firebase Hosting (web + PWA)
 
-Hosting-only deploys for the CRA web build in `build/`. Do **not** run full `firebase deploy` without `--only hosting` (or channel deploy), or you risk shipping Firestore rules, Cloud Functions, or Storage.
+Hosting-only deploys for the CRA web build in `build/`. Do **not** run full `firebase deploy` without `--only hosting`, or you risk shipping Firestore rules, Cloud Functions, or Storage.
 
-## Project and site
+## Projects and sites
 
-| Item | Value |
-|------|--------|
-| Firebase project (app config) | `kjv-strongs-reader` |
-| Hosting site id | `rhapsodybible` |
-| Live URL | https://rhapsodybible.web.app |
-| `public` directory | `build` |
+| Role | Firebase project | Hosting site id | URL |
+|------|------------------|-----------------|-----|
+| **App backend (unchanged)** | `kjv-strongs-reader` | (not deployed from this branch) | Auth/Firestore/Storage stay on existing web config in `src/config/firebase.ts` |
+| **Staging (current target)** | `ror-premium-bible-reader` | `rhapsodybiblestaging` | https://rhapsodybiblestaging.web.app |
+| **Production (later)** | `ror-premium-bible-reader` | `ror-premium-bible-reader` | https://ror-premium-bible-reader.web.app |
+| **Legacy live (do not touch)** | `kjv-strongs-reader` | `rhapsodybible` | https://rhapsodybible.web.app |
 
-Ensure `.firebaserc` points at `kjv-strongs-reader` (file is local; not always committed). Log in with `firebase login` before any deploy.
+`.firebaserc` default project: **`ror-premium-bible-reader`**.  
+`firebase.json` `"site"`: **`rhapsodybiblestaging`** (change to `ror-premium-bible-reader` only when promoting production hosting).
+
+Log in with `firebase login`. In Cursor/VS Code terminals, if the CLI errors on missing `lib/templates/hosting/init.js`, run with `env -u VSCODE_CWD firebase …`.
 
 ## Build (web / PWA)
 
-From the repo root, on branch `deploy-web` (or your release branch):
+From repo root (branch `hosting-new-project` or release branch):
 
 ```bash
+export MSYS_NO_PATHCONV=1
 export CI=false
 export NODE_OPTIONS=--max-old-space-size=6144
 export GENERATE_SOURCEMAP=false
-npm run build
+export PUBLIC_URL=/
+# then run craco build via build.sh env (see deploy-web) or:
+./node_modules/.bin/craco build
 ```
 
-- Uses `PUBLIC_URL=/` via `package.json` (`npm run build` → `sh build.sh`).
-- Do **not** set `REACT_APP_IS_ELECTRON` (that is for `npm run build-electron` only).
-- `build.sh` sets KingsChat and API env vars; production redirect is `https://rhapsodybible.web.app/auth/callback`.
+**Windows Git Bash:** `MSYS_NO_PATHCONV=1` is required so `PUBLIC_URL=/` is not rewritten to `C:/Program Files/Git/` (which breaks asset URLs on Hosting).
 
-After build, confirm `build/` contains at least: `index.html`, `manifest.json`, `service-worker.js`, icons, `HebrewGreekRes/json/`, `bibleXML/`, fonts.
+- Do **not** set `REACT_APP_IS_ELECTRON` (Electron uses `npm run build-electron`).
+- KingsChat redirect in `build.sh` still points at **legacy** `https://rhapsodybible.web.app/auth/callback` until you register staging/production callbacks separately.
 
-## Preview channel
+Confirm `build/index.html` references `/static/js/...`, not `file://` or `C:/Program Files/Git/`.
+
+## Deploy staging
 
 ```bash
-firebase hosting:channel:deploy preview-YYYYMMDD --expires 7d --only hosting
+export FIREBASE_HOSTING_UPLOAD_CONCURRENCY=1   # optional; avoids flaky parallel uploads on some networks
+env -u VSCODE_CWD firebase deploy --only hosting:rhapsodybiblestaging --project ror-premium-bible-reader
 ```
 
-If the CLI asks for a site, add:
+Hosting-only. Never deploy to `kjv-strongs-reader`. Never deploy to site `ror-premium-bible-reader` until promotion is approved.
+
+Espees rewrites in `firebase.json` point at Cloud Functions that are **not** in `ror-premium-bible-reader`; CLI warns but static hosting still ships. `/proxy` is **not** wired in hosting—see audit notes in verification.
+
+## Promote to production site (later)
+
+After staging QA:
+
+1. Set `firebase.json` → `"site": "ror-premium-bible-reader"`.
+2. Deploy:
 
 ```bash
-firebase hosting:channel:deploy preview-YYYYMMDD --expires 7d --only hosting --site rhapsodybible
+env -u VSCODE_CWD firebase deploy --only hosting:ror-premium-bible-reader --project ror-premium-bible-reader
 ```
 
-Use the preview URL from CLI output for QA (routes, PWA, Strong's JSON, `/dash` → `/login` when logged out).
-
-## Live deploy
-
-**Only after preview QA and explicit approval:**
-
-```bash
-firebase deploy --only hosting
-```
-
-Or target the site explicitly:
-
-```bash
-firebase deploy --only hosting:rhapsodybible
-```
-
-This replaces the current **live** release on site `rhapsodybible` (https://rhapsodybible.web.app).
+3. Register KingsChat redirect for the production Hosting URL if needed.
 
 ## Rollback
 
-- CLI: `firebase hosting:rollback` (interactive; selects previous release).
-- Console: Firebase → Hosting → Release history → Roll back.
+```bash
+env -u VSCODE_CWD firebase hosting:rollback --site rhapsodybiblestaging --project ror-premium-bible-reader
+```
 
-Rollback only affects Hosting static assets and headers/rewrites for that site—not Functions or Firestore.
+Or Firebase console → Hosting → Release history → Roll back (per site).
 
-## Cache and headers (firebase.json)
+## Cache and headers
 
-| Asset | Policy |
-|-------|--------|
-| `index.html`, `service-worker.js` | `Cache-Control: no-cache` |
-| `/static/**` (hashed JS/CSS) | `public, max-age=31536000, immutable` |
-| `manifest.json` | `public, max-age=3600` |
-| `/HebrewGreekRes/**` | `Access-Control-Allow-Origin: *` (desktop Strong's fetches) |
+See `firebase.json`: `index.html` / `service-worker.js` no-cache; `/static/**` immutable; `manifest.json` short cache; `/HebrewGreekRes/**` CORS `*`.
 
-Clients may keep old service workers until hard refresh or SW update; bump SW cache version in app code when changing offline behavior (outside this doc).
+## Rewrites (order)
 
-## Rewrites (order matters)
+1. `/espees/create-product` → function name (no endpoint in this project yet)
+2. `/espees/confirm-payment` → function name (same)
+3. `**` → `/index.html` (last)
 
-1. `/espees/create-product` → `espeesCreateProduct`
-2. `/espees/confirm-payment` → `espeesConfirmPayment`
-3. `**` → `/index.html` (SPA fallback; must stay **last**)
+## Follow-ups
 
-## Post go-live checklist
+- [ ] Register KingsChat OAuth redirect for `https://rhapsodybiblestaging.web.app/auth/callback` (and prod URL when promoted)
+- [ ] Decide Espees + `/proxy` strategy on new project (Functions or absolute URLs to `kjv-strongs-reader`)
+- [ ] Cut DNS/custom domain when moving off `rhapsodybible.web.app`
+- [ ] Re-run parity (`C:/temp/parity/compare.mjs`) after visual changes
 
-- [ ] `/`, `/pricing`, `/features`, `/download`, `/products/web` load on hard refresh
-- [ ] `/bible-online`, `/read` work logged out; chapter nav OK
-- [ ] `/HebrewGreekRes/json/...` returns 200
+## Post deploy checklist
+
+- [ ] Website routes hard-refresh on staging URL
+- [ ] `/bible-online`, `/read`, Strong's JSON 200 + CORS
 - [ ] `/dash` logged out → `/login`
-- [ ] `manifest.json`, icons, service worker register; PWA installability
-- [ ] No unexpected console errors or 404s on critical paths
-- [ ] KingsChat login redirect registered for production callback URL
-- [ ] Espees payment paths still hit Functions (smoke test if used)
+- [ ] PWA manifest, SW, installability
+- [ ] No unexpected Firestore/Auth console errors beyond known SDK warnings
