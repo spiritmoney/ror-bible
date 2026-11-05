@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { useSetRecoilState, useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import { footerHeightAtom, headerHeightAtom } from '../../store/atoms/size';
 import Anotations from '../Anotations';
 import AvailableBooks from '../AvailableBooks';
@@ -12,7 +12,12 @@ import useContextMenu from '../../hooks/useContextMenu';
 import AdminSideMenu from 'components/AdminSideMenu';
 // import style from './styles.module.scss';
 import './styles.scss';
-import { SetNavAtom, SideNavAtom, libraryAtom, readModeAtom } from 'store/atoms/general';
+import {
+  SetNavAtom,
+  SideNavAtom,
+  libraryAtom,
+  readModeAtom,
+} from 'store/atoms/general';
 import { notificationsModalAtom } from 'store/atoms/workspace';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useUser } from 'hooks/useUser';
@@ -23,7 +28,6 @@ import {
   SidebarDownloadsIcon,
   SidebarFavouritesIcon,
   SidebarLibraryIcon,
-  SidebarMenuIcon,
   SidebarStoreIcon,
 } from './AppSidebarIcons';
 import lang from 'assets/Frame-Lang.png';
@@ -60,6 +64,36 @@ const PROTECTED_NAVS = [
   'fav',
 ];
 
+const AppSidebarRailButton: React.FC<{
+  label: string;
+  active?: boolean;
+  disabled?: boolean;
+  comingSoon?: boolean;
+  onClick?: () => void;
+  icon: React.ReactNode;
+}> = ({ label, active, disabled, comingSoon, onClick, icon }) => (
+  <li className="w-full">
+    <button
+      type="button"
+      className={clsx('a-s-opt app-sidebar-item w-full', {
+        'app-sidebar-item--active': Boolean(active) && !disabled,
+        'app-sidebar-item--disabled': disabled,
+        'app-sidebar-item--coming-soon': disabled && comingSoon,
+      })}
+      disabled={disabled}
+      aria-disabled={disabled ? true : undefined}
+      aria-label={label}
+      title={disabled && comingSoon ? 'Coming soon' : label}
+      onClick={disabled ? undefined : onClick}
+    >
+      <div className="left">
+        <div className="a-s-logo app-sidebar-icon-wrap">{icon}</div>
+        <div className="a-s-label app-sidebar-menu-label">{label}</div>
+      </div>
+    </button>
+  </li>
+);
+
 export interface IWorkspace {
   setQuill?: React.Dispatch<any>;
   quill?: any;
@@ -88,8 +122,6 @@ const Workspace: React.FunctionComponent<IWorkspace> = ({
   const headerHeight = useRecoilValue(headerHeightAtom);
   const [sideNav, setSideNav] = useRecoilState(SideNavAtom);
   const [nav, setNav] = useRecoilState(SetNavAtom);
-  const setShowLibrary = useSetRecoilState(libraryAtom);
-  const setShowNotificationsModal = useSetRecoilState(notificationsModalAtom);
   const navigate = useNavigate();
   const location = useLocation();
   const { isAuthenticated, user } = useUser();
@@ -111,16 +143,6 @@ const Workspace: React.FunctionComponent<IWorkspace> = ({
     }
   }, [isAuthenticated, nav, setNav]);
 
-  const handleSideNav = () => {
-    setSideNav((prev: boolean) => !prev);
-  };
-
-  const handleLibrary = () => {
-    setSideNav(true);
-    navigate('/bible-online');
-    setShowLibrary(true);
-  };
-
   const handleFav = () => {
     if (redirectToLoginIfNeeded()) return;
     setSideNav(true);
@@ -133,15 +155,18 @@ const Workspace: React.FunctionComponent<IWorkspace> = ({
     setNav('store');
   };
 
-  const handleDownloads = () => {
-    if (redirectToLoginIfNeeded()) return;
-    setSideNav(true);
-    navigate('/bible-online');
+  const setShowLibrary = useSetRecoilState(libraryAtom);
+  const setShowNotificationsModal = useSetRecoilState(notificationsModalAtom);
+
+  const handleLibrary = () => {
     setShowLibrary(true);
   };
 
-  const handleNotifications = () => {
-    if (redirectToLoginIfNeeded()) return;
+  const handleDownloads = () => {
+    setShowLibrary(true);
+  };
+
+  const handleAlerts = () => {
     setShowNotificationsModal(true);
   };
 
@@ -164,100 +189,21 @@ const Workspace: React.FunctionComponent<IWorkspace> = ({
           maxHeight: `calc(100vh - ${footerHeight + headerHeight}px)`,
         }}
       >
-        <div
-          className={clsx(
-            'SideNav app-sidebar relative text-[var(--ds-navy)] flex transition-width duration-500 ease-in-out animate-fadein',
-            sideNav === false ? 'app-sidebar--rail' : 'app-sidebar--expanded w-[18%]'
-          )}
-        >
-          <ul
-            className={clsx('mt-3 w-full', {
-              // 'w-full' : sideNav === true, 'w-[20%]' : sideNav === false
-            })}
-          >
-            <li
-              className={clsx('a-s-opt app-sidebar-item w-full')}
-              onClick={handleSideNav}
-              aria-label="Toggle sidebar"
-              title="Menu"
-            >
-              <div className="left">
-                <div className="a-s-logo app-sidebar-icon-wrap">
-                  <SidebarMenuIcon />
-                </div>
-                <div
-                  className={clsx('a-s-label app-sidebar-menu-label', {
-                    hidden: sideNav === true,
-                  })}
-                >
-                  Menu
-                </div>
-              </div>
-            </li>
-            <li
-              className={clsx('a-s-opt app-sidebar-item w-full', {
-                'app-sidebar-item--active': nav === 'library',
-              })}
+        <div className="SideNav app-sidebar app-sidebar--rail relative text-[var(--ds-navy)] flex animate-fadein">
+          <ul className="app-sidebar-rail-list mt-3 w-full">
+            <AppSidebarRailButton
+              label="Library"
               onClick={handleLibrary}
-              aria-label="Library"
-              title="Library"
-            >
-              {/* Library */}
-              <div className="left">
-                <div className="a-s-logo app-sidebar-icon-wrap">
-                  <SidebarLibraryIcon />
-                </div>
-                <div
-                  className={clsx('a-s-label app-sidebar-menu-label', {
-                    'hidden opacity-0 transform -translate-y-full':
-                      sideNav === false,
-                  })}
-                >
-                  Library
-                </div>
-              </div>
-              {nav === 'library' ? (
-                <ToggOn
-                  className={clsx('ml-auto w-4', { hidden: sideNav === false })}
-                />
-              ) : (
-                <Toggle
-                  className={clsx('ml-auto w-4', { hidden: sideNav === false })}
-                />
-              )}
-            </li>
+              icon={<SidebarLibraryIcon />}
+            />
 
             {/* Favourite */}
-            <li
-              className={clsx('a-s-opt app-sidebar-item w-full', {
-                'app-sidebar-item--active': nav === 'fav',
-              })}
+            <AppSidebarRailButton
+              label="Favourites"
+              active={nav === 'fav'}
               onClick={handleFav}
-              aria-label="Favourites"
-              title="Favourites"
-            >
-              <div className="left">
-                <div className="a-s-logo app-sidebar-icon-wrap">
-                  <SidebarFavouritesIcon />
-                </div>
-                <div
-                  className={clsx('a-s-label app-sidebar-menu-label', {
-                    hidden: sideNav === false,
-                  })}
-                >
-                  Favourites
-                </div>
-              </div>
-              {nav === 'fav' ? (
-                <ToggOn
-                  className={clsx('ml-auto w-4', { hidden: sideNav === false })}
-                />
-              ) : (
-                <Toggle
-                  className={clsx('ml-auto w-4', { hidden: sideNav === false })}
-                />
-              )}
-            </li>
+              icon={<SidebarFavouritesIcon />}
+            />
             {/* Cascaded Menu for Favourites */}
             <ul
               className={clsx(
@@ -422,37 +368,12 @@ const Workspace: React.FunctionComponent<IWorkspace> = ({
             </ul>
 
             {/* Store */}
-            <li
-              className={clsx('a-s-opt app-sidebar-item w-full', {
-                'app-sidebar-item--active':
-                  nav === 'store' || nav === 'store_bible',
-              })}
+            <AppSidebarRailButton
+              label="Store"
+              active={nav === 'store' || nav === 'store_bible'}
               onClick={handleStore}
-              aria-label="Store"
-              title="Store"
-            >
-              <div className="left">
-                <div className="a-s-logo app-sidebar-icon-wrap">
-                  <SidebarStoreIcon />
-                </div>
-                <div
-                  className={clsx('a-s-label app-sidebar-menu-label', {
-                    hidden: sideNav === false,
-                  })}
-                >
-                  Store
-                </div>
-              </div>
-              {nav === 'store' || nav === 'store_bible' ? (
-                <ToggOn
-                  className={clsx('ml-auto w-4', { hidden: sideNav === false })}
-                />
-              ) : (
-                <Toggle
-                  className={clsx('ml-auto w-4', { hidden: sideNav === false })}
-                />
-              )}
-            </li>
+              icon={<SidebarStoreIcon />}
+            />
             {/* Cascaded Menu for Store */}
             <ul
               className={clsx('pl-10 w-full bg-[var(--ds-blue)]', {
@@ -649,85 +570,22 @@ const Workspace: React.FunctionComponent<IWorkspace> = ({
             </ul>
 
             {/* Download */}
-            <li
-              className={clsx('a-s-opt app-sidebar-item w-full', {
-                'app-sidebar-item--active': nav === 'download',
-              })}
+            <AppSidebarRailButton
+              label="Downloads"
               onClick={handleDownloads}
-              aria-label="Downloads"
-              title="Downloads"
-            >
-              <div className="left">
-                <div className="a-s-logo app-sidebar-icon-wrap">
-                  <SidebarDownloadsIcon />
-                </div>
-                <div
-                  className={clsx('a-s-label app-sidebar-menu-label', {
-                    hidden: sideNav === false,
-                  })}
-                >
-                  Downloads
-                </div>
-              </div>
-              {nav === 'download' ? (
-                <ToggOn
-                  className={clsx('ml-auto w-4', { hidden: sideNav === false })}
-                />
-              ) : (
-                <Toggle
-                  className={clsx('ml-auto w-4', { hidden: sideNav === false })}
-                />
-              )}
-            </li>
+              icon={<SidebarDownloadsIcon />}
+            />
 
             {/* Notification */}
-            <li
-              className={clsx('a-s-opt app-sidebar-item w-full', {
-                'app-sidebar-item--active': nav === 'notification',
-              })}
-              onClick={handleNotifications}
-              aria-label="Notifications"
-              title="Notifications"
-            >
-              <div className="left">
-                <div className="a-s-logo app-sidebar-icon-wrap">
-                  <SidebarAlertsIcon />
-                </div>
-                <div
-                  className={clsx('a-s-label app-sidebar-menu-label', { hidden: sideNav === false })}
-                >
-                  Alerts
-                </div>
-              </div>
-              {nav === 'notification' ? (
-                <ToggOn
-                  className={clsx('ml-auto w-4', { hidden: sideNav === false })}
-                />
-              ) : (
-                <Toggle
-                  className={clsx('ml-auto w-4', { hidden: sideNav === false })}
-                />
-              )}
-            </li>
+            <AppSidebarRailButton
+              label="Alerts"
+              onClick={handleAlerts}
+              icon={<SidebarAlertsIcon />}
+            />
           </ul>
-
-          <div
-            className={clsx(
-              'absolute top-[50%] right-[0%] h-[28px] cursor-pointer',
-              { '!right-[-25%]': sideNav === false }
-            )}
-            onClick={handleSideNav}
-          >
-            <>
-              {sideNav === false ? (
-                <NavarrowOut className={clsx(' w-4 shadow-xl h-[28px]')} />
-              ) : (
-                <Navarrow className={clsx('ml-auto w-4 h-[28px]')} />
-              )}
-            </>
-          </div>
         </div>
 
+        <div className="app-workspace-pane flex flex-col">
         <SingleReader hidden={nav !== 'read'} />
 
         <StoreHomePage hidden={nav !== 'store'} />
@@ -751,6 +609,7 @@ const Workspace: React.FunctionComponent<IWorkspace> = ({
         <Multilayout hidden={nav !== 'multi_layout'} />
 
         <XmlToJsonConverter hidden={nav !== 'xml'} />
+        </div>
       </div>
     </section>
   );

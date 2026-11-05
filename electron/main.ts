@@ -20,6 +20,8 @@ const PROTOCOL = 'rhapsody-bible';
 const APP_SCHEME = 'app';
 const LOOPBACK_AUTH_PORT = 47823;
 const HOSTING_ORIGIN = 'https://rhapsodybible.web.app';
+const logExternalOpens = process.argv.includes('--log-external-opens');
+const externalOpenLog: string[] = [];
 
 protocol.registerSchemesAsPrivileged([
   {
@@ -238,8 +240,17 @@ ipcMain.handle('shell:open-external', async (_event, url: string) => {
   if (typeof url !== 'string' || !isHttpUrl(url)) {
     return;
   }
+  if (logExternalOpens) {
+    externalOpenLog.push(url);
+  }
   await shell.openExternal(url);
 });
+
+ipcMain.handle('shell:clear-external-open-log', () => {
+  externalOpenLog.length = 0;
+});
+
+ipcMain.handle('shell:get-external-open-log', () => [...externalOpenLog]);
 
 ipcMain.handle('strongs:load-json', async (_event, relativePath: string) => {
   if (typeof relativePath !== 'string') {

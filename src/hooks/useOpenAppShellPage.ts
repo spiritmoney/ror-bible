@@ -2,8 +2,9 @@ import { useCallback } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { isAppShell } from 'utils/appShell';
 import { isElectron } from 'utils/general';
+import { ROR_BIBLE_BLOG_URL } from 'config/appTopNavWebsite';
 
-export const ROR_BIBLE_BLOG_URL = 'https://blog.rorbible.plus';
+export { ROR_BIBLE_BLOG_URL };
 
 export const openExternalUrl = (url: string): void => {
   if (typeof window === 'undefined') return;
@@ -13,7 +14,7 @@ export const openExternalUrl = (url: string): void => {
     return;
   }
 
-  window.open(url, '_blank', 'noopener,noreferrer');
+  window.open(url, '_blank', 'noopener');
 };
 
 /**

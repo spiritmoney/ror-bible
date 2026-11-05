@@ -32,6 +32,7 @@ import note from 'assets/headerIcons/note_White.svg';
 import advancedActive from 'assets/headerIcons/Advance_Dark.svg';
 import advanced from 'assets/headerIcons/Advance_White.svg';
 import logo from '../../assets/website/logo.png';
+import appLogoMark from '../../assets/logo.png.png';
 import { copyTextToClipboard } from 'utils/general';
 import { isJSON } from '../../utils/general';
 import { IProject } from 'interface/project';
@@ -54,12 +55,13 @@ import { useNavigate } from 'react-router-dom';
 import { useRequireLogin } from 'hooks/useRequireLogin';
 import {
   openExternalUrl,
-  ROR_BIBLE_BLOG_URL,
-  useOpenAppShellPage,
 } from 'hooks/useOpenAppShellPage';
-import { WebsiteDownloadRoute } from 'screens/Website/websitePaths';
+import {
+  APP_TOP_NAV_WEBSITE_ORDER,
+  APP_TOP_NAV_WEBSITE_URLS,
+} from 'config/appTopNavWebsite';
+import { TopBarSearchIcon } from 'components/Workspace/AppSidebarIcons';
 import { isAppShell } from 'utils/appShell';
-import { isElectron } from 'utils/general';
 
 export interface IHeader {
   hidden?: boolean;
@@ -72,7 +74,6 @@ const Header: React.FunctionComponent<IHeader> = ({ hidden, quill }) => {
   const { user: authUser } = useUser();
   const navigate = useNavigate();
   const { requireLogin } = useRequireLogin();
-  const { openPage } = useOpenAppShellPage();
   const appShell = isAppShell();
   const [files, setFiles] = useState(false);
   const [search, setSearch] = useState('');
@@ -119,8 +120,8 @@ const Header: React.FunctionComponent<IHeader> = ({ hidden, quill }) => {
     width: number;
     opacity: number;
   }>({ left: 0, width: 0, opacity: 0 });
-  // state for which top item is active (default to Bible Online index 2)
-  const [topActiveIndex, setTopActiveIndex] = useState<number>(2);
+  // state for which top item is active (Bible Online = index 0)
+  const [topActiveIndex, setTopActiveIndex] = useState<number>(0);
 
   useEffect(() => {
     setHeaderHeight(height);
@@ -157,6 +158,10 @@ const Header: React.FunctionComponent<IHeader> = ({ hidden, quill }) => {
       );
       field?.focus();
     }, 350);
+  };
+
+  const openTopWebsiteLink = (url: string) => {
+    openExternalUrl(url);
   };
 
   const topNavItemClass = (index: number) =>
@@ -271,7 +276,11 @@ const Header: React.FunctionComponent<IHeader> = ({ hidden, quill }) => {
               navigate(appShell ? '/bible-online' : '/home')
             }
           >
-            <img src={logo} alt="logo" className="w-[10rem] max-w-[160px]" />
+            <img
+              src={appShell ? appLogoMark : logo}
+              alt="Rhapsody Bible"
+              className={appShell ? 'app-top-bar-logo-mark' : undefined}
+            />
           </div>
 
           <nav className="app-top-bar-nav hidden lg:flex">
@@ -279,153 +288,36 @@ const Header: React.FunctionComponent<IHeader> = ({ hidden, quill }) => {
               ref={topNavContainerRef as any}
               className="app-top-nav-list relative"
             >
-              <li
-                ref={el => setTopItemRef(el, 0)}
-                role="button"
-                tabIndex={0}
-                onClick={() => {
-                  setTopActiveIndex(0);
-                  openPage('/about');
-                }}
-                onKeyDown={e => {
-                  if (e.key === 'Enter' || e.key === ' ') {
-                    e.preventDefault();
+              <li ref={el => setTopItemRef(el, 0)}>
+                <button
+                  type="button"
+                  className={topNavItemClass(0)}
+                  onClick={() => {
                     setTopActiveIndex(0);
-                    openPage('/about');
-                  }
-                }}
-                className={topNavItemClass(0)}
-              >
-                About
-              </li>
-
-              <li
-                ref={el => setTopItemRef(el, 1)}
-                role="button"
-                tabIndex={0}
-                onClick={() => {
-                  setTopActiveIndex(1);
-                  openPage('/product');
-                }}
-                onKeyDown={e => {
-                  if (e.key === 'Enter' || e.key === ' ') {
-                    e.preventDefault();
-                    setTopActiveIndex(1);
-                    openPage('/product');
-                  }
-                }}
-                className={clsx(topNavItemClass(1), 'flex items-center gap-x-1')}
-              >
-                <span>Products</span>
-              </li>
-
-              <li
-                ref={el => setTopItemRef(el, 2)}
-                role="button"
-                tabIndex={0}
-                onClick={() => {
-                  setTopActiveIndex(2);
-                  navigate('/bible-online');
-                }}
-                onKeyDown={e => {
-                  if (e.key === 'Enter' || e.key === ' ') {
-                    e.preventDefault();
-                    setTopActiveIndex(2);
                     navigate('/bible-online');
-                  }
-                }}
-                className={topNavItemClass(2)}
-              >
-                <span>Bible Online</span>
+                  }}
+                >
+                  Bible Online
+                </button>
               </li>
 
-              <li
-                ref={el => setTopItemRef(el, 3)}
-                role="button"
-                tabIndex={0}
-                onClick={() => {
-                  setTopActiveIndex(3);
-                  openExternalUrl(ROR_BIBLE_BLOG_URL);
-                }}
-                onKeyDown={e => {
-                  if (e.key === 'Enter' || e.key === ' ') {
-                    e.preventDefault();
-                    setTopActiveIndex(3);
-                    openExternalUrl(ROR_BIBLE_BLOG_URL);
-                  }
-                }}
-                className={topNavItemClass(3)}
-              >
-                Blog
-              </li>
-              <li
-                ref={el => setTopItemRef(el, 4)}
-                role="button"
-                tabIndex={0}
-                onClick={() => {
-                  setTopActiveIndex(4);
-                  openPage('/partner');
-                }}
-                onKeyDown={e => {
-                  if (e.key === 'Enter' || e.key === ' ') {
-                    e.preventDefault();
-                    setTopActiveIndex(4);
-                    openPage('/partner');
-                  }
-                }}
-                className={topNavItemClass(4)}
-              >
-                Partner
-              </li>
-              <li
-                ref={el => setTopItemRef(el, 5)}
-                role="button"
-                tabIndex={0}
-                onClick={() => {
-                  setTopActiveIndex(5);
-                  openPage('/give');
-                }}
-                onKeyDown={e => {
-                  if (e.key === 'Enter' || e.key === ' ') {
-                    e.preventDefault();
-                    setTopActiveIndex(5);
-                    openPage('/give');
-                  }
-                }}
-                className={topNavItemClass(5)}
-              >
-                Give
-              </li>
-              <li
-                ref={el => setTopItemRef(el, 6)}
-                role="button"
-                tabIndex={0}
-                onClick={() => {
-                  setTopActiveIndex(6);
-                  openPage(WebsiteDownloadRoute, '#contact');
-                }}
-                onKeyDown={e => {
-                  if (e.key === 'Enter' || e.key === ' ') {
-                    e.preventDefault();
-                    setTopActiveIndex(6);
-                    openPage(WebsiteDownloadRoute, '#contact');
-                  }
-                }}
-                className={topNavItemClass(6)}
-              >
-                Contact
-              </li>
+              {APP_TOP_NAV_WEBSITE_ORDER.map((item, i) => {
+                const index = i + 1;
+                const open = () =>
+                  openTopWebsiteLink(APP_TOP_NAV_WEBSITE_URLS[item.key]());
+                return (
+                  <li key={item.key} ref={el => setTopItemRef(el, index)}>
+                    <button
+                      type="button"
+                      className={topNavItemClass(index)}
+                      onClick={open}
+                    >
+                      {item.label}
+                    </button>
+                  </li>
+                );
+              })}
 
-              {/* top underline */}
-              <div
-                aria-hidden
-                className="app-top-nav-underline"
-                style={{
-                  left: topUnderlineStyle.left,
-                  width: topUnderlineStyle.width,
-                  opacity: topUnderlineStyle.opacity,
-                }}
-              />
             </ul>
           </nav>
 
@@ -458,21 +350,7 @@ const Header: React.FunctionComponent<IHeader> = ({ hidden, quill }) => {
               aria-label="Search in Bible reader"
               onClick={handleAppSearch}
             >
-              <svg
-                width="20"
-                height="20"
-                viewBox="0 0 20 20"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-                aria-hidden
-              >
-                <path
-                  fillRule="evenodd"
-                  clipRule="evenodd"
-                  d="M8.4373 1.28919C10.1853 1.28919 12.145 2.04044 13.3304 3.23191C13.4757 3.37798 13.6263 3.51188 13.7593 3.66242C14.4289 4.42026 15.014 5.46466 15.265 6.45355C15.3299 6.7094 15.3842 6.87692 15.4229 7.15499C15.5735 8.23412 15.5527 9.01138 15.2729 10.078C15.0153 11.0605 14.5814 11.8592 13.968 12.6402C13.8897 12.7399 13.8546 12.7683 13.7723 12.8743C13.2252 13.5786 12.0492 14.3455 11.278 14.6768C6.56057 16.7033 1.31008 13.3178 1.31008 8.28136C1.31008 7.25382 1.57342 6.13695 1.93961 5.41664C2.04927 5.20099 2.10098 5.03068 2.22617 4.84385C2.3508 4.65791 2.44215 4.47576 2.57773 4.29686C2.7056 4.12812 2.82654 3.95133 2.96234 3.78304C3.08452 3.63183 3.26342 3.47481 3.40793 3.33019C4.5132 2.22482 6.23939 1.28919 8.4373 1.28919ZM7.95374 0.000111785H8.85888C9.41425 0.0295943 9.97297 0.113127 10.5295 0.251829C10.807 0.320957 11.0427 0.401476 11.3041 0.492828C11.9387 0.714729 12.1421 0.844049 12.6832 1.14502C13.7847 1.75778 14.5782 2.55404 15.3238 3.54338C15.7399 4.09539 16.1369 4.88986 16.3721 5.54194C16.4577 5.77958 16.5354 6.06313 16.6016 6.32814C17.2024 8.73722 16.6667 11.0504 15.2965 13.031L14.6874 13.8282C14.8739 14.1068 16.3962 15.5171 16.748 15.8692L18.7589 17.8817C19.0992 18.2184 20 18.8743 20 19.336C20 19.7244 19.7433 19.9659 19.4445 20H19.2972C19.1432 19.9826 18.9874 19.9104 18.857 19.7758C18.7269 19.6413 18.6346 19.5935 18.5052 19.4635L14.3847 15.381C14.2103 15.2066 13.8867 14.8445 13.7108 14.7266C12.6319 15.4491 12.9922 15.3402 11.5514 15.9657C11.1827 16.1257 10.6897 16.2783 10.2705 16.3645C8.52341 16.7238 6.8669 16.615 5.2171 15.9547C4.50092 15.6681 3.56451 15.1259 2.99763 14.6195L1.76338 13.3538C1.68353 13.2469 1.6249 13.1776 1.5398 13.0696C1.44365 12.9475 1.41539 12.8944 1.33555 12.7659C1.26698 12.6555 1.19405 12.5635 1.1343 12.4594C0.284219 10.9798 0 9.83098 0 7.96878C0 6.8356 0.408627 5.50899 0.793801 4.7391C1.02788 4.27117 1.25972 3.86802 1.55678 3.4709L2.47186 2.39389L3.30352 1.70206C4.68753 0.665367 6.29065 0.088336 7.95386 0L7.95374 0.000111785Z"
-                  fill="white"
-                />
-              </svg>
+              <TopBarSearchIcon />
             </button>
 
             {/* profile avatar — shown once the user is logged in */}
@@ -494,15 +372,35 @@ const Header: React.FunctionComponent<IHeader> = ({ hidden, quill }) => {
 
         {/* small screen top links dropdown content */}
         {showTopLinksDropdown && (
-          <div className="md:hidden bg-[var(--ds-teal)] px-4 py-3">
+          <div className="lg:hidden bg-[var(--ds-teal)] px-4 py-3">
             <ul className="flex flex-col gap-y-2 text-sm text-white">
-              <li className="py-1 cursor-pointer" onClick={() => { setShowTopLinksDropdown(false); openPage('/about'); }}>About</li>
-              <li className="py-1 cursor-pointer" onClick={() => { setShowTopLinksDropdown(false); openPage('/product'); }}>Products</li>
-              <li className="py-1 cursor-pointer border-b-2 border-[var(--ds-cyan)]" onClick={() => { setShowTopLinksDropdown(false); navigate('/bible-online'); }}>Bible Online</li>
-              <li className="py-1 cursor-pointer" onClick={() => { setShowTopLinksDropdown(false); openExternalUrl(ROR_BIBLE_BLOG_URL); }}>Blog</li>
-              <li className="py-1 cursor-pointer" onClick={() => { setShowTopLinksDropdown(false); openPage('/partner'); }}>Partner</li>
-              <li className="py-1 cursor-pointer" onClick={() => { setShowTopLinksDropdown(false); openPage('/give'); }}>Give</li>
-              <li className="py-1 cursor-pointer" onClick={() => { setShowTopLinksDropdown(false); openPage(WebsiteDownloadRoute, '#contact'); }}>Contact</li>
+              <li>
+                <button
+                  type="button"
+                  className="w-full text-left py-1 border-b-2 border-[var(--ds-cyan)]"
+                  onClick={() => {
+                    setShowTopLinksDropdown(false);
+                    setTopActiveIndex(0);
+                    navigate('/bible-online');
+                  }}
+                >
+                  Bible Online
+                </button>
+              </li>
+              {APP_TOP_NAV_WEBSITE_ORDER.map(item => (
+                <li key={item.key}>
+                  <button
+                    type="button"
+                    className="w-full text-left py-1"
+                    onClick={() => {
+                      setShowTopLinksDropdown(false);
+                      openTopWebsiteLink(APP_TOP_NAV_WEBSITE_URLS[item.key]());
+                    }}
+                  >
+                    {item.label}
+                  </button>
+                </li>
+              ))}
             </ul>
           </div>
         )}

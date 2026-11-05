@@ -1,5 +1,6 @@
 import React from 'react';
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import { RecoilRoot, useRecoilValue } from 'recoil';
 import Workspace from './index';
@@ -37,14 +38,6 @@ const loggedOut = () =>
     updateUserInfo: jest.fn(),
   } as unknown as ReturnType<typeof useUser>);
 
-const loggedIn = () =>
-  mockUseUser.mockReturnValue({
-    isAuthenticated: true,
-    isLoggedIn: 'true',
-    user: { id: 'u1' } as any,
-    updateUserInfo: jest.fn(),
-  } as unknown as ReturnType<typeof useUser>);
-
 const LibraryProbe = () => {
   const open = useRecoilValue(libraryAtom);
   return <div data-testid="library-open">{String(open)}</div>;
@@ -55,103 +48,70 @@ const NotificationsProbe = () => {
   return <div data-testid="notifications-open">{String(open)}</div>;
 };
 
+const renderLoggedOutWorkspace = (extra?: React.ReactNode) => {
+  loggedOut();
+  return render(
+    <RecoilRoot initializeState={({ set }) => set(libraryAtom, false)}>
+      <MemoryRouter initialEntries={['/bible-online']}>
+        <Routes>
+          <Route
+            path="/bible-online"
+            element={
+              <>
+                <Workspace />
+                {extra}
+              </>
+            }
+          />
+          <Route path="/login" element={<div>Login screen</div>} />
+        </Routes>
+      </MemoryRouter>
+    </RecoilRoot>
+  );
+};
+
 describe('Workspace sidebar actions', () => {
   beforeEach(() => {
     sessionStorage.clear();
     loggedOut();
   });
 
-  it('sends favourites to login without changing reader route first', () => {
-    render(
-      <RecoilRoot>
-        <MemoryRouter initialEntries={['/bible-online']}>
-          <Routes>
-            <Route path="/bible-online" element={<Workspace />} />
-            <Route path="/login" element={<div>Login screen</div>} />
-          </Routes>
-        </MemoryRouter>
-      </RecoilRoot>
-    );
+  it('opens library modal state when Library is clicked', async () => {
+    renderLoggedOutWorkspace(<LibraryProbe />);
 
-    fireEvent.click(screen.getByLabelText('Favourites'));
-    expect(screen.getByText('Login screen')).toBeInTheDocument();
-    expect(sessionStorage.getItem(AUTH_RETURN_STORAGE_KEY)).toBe(
-      '/bible-online'
-    );
+    await userEvent.click(screen.getByRole('button', { name: 'Library' }));
+    expect(screen.getByTestId('library-open')).toHaveTextContent('true');
+    expect(screen.queryByText('Login screen')).not.toBeInTheDocument();
   });
 
-  it('opens library without login', () => {
-    render(
-      <RecoilRoot initializeState={({ set }) => set(libraryAtom, false)}>
-        <MemoryRouter initialEntries={['/bible-online']}>
-          <Routes>
-            <Route
-              path="/bible-online"
-              element={
-                <>
-                  <Workspace />
-                  <LibraryProbe />
-                </>
-              }
-            />
-          </Routes>
-        </MemoryRouter>
-      </RecoilRoot>
-    );
+  it.each(['Favourites', 'Store'] as const)(
+    'sends %s to login via userEvent on the rail button',
+    async label => {
+      renderLoggedOutWorkspace();
 
-    fireEvent.click(screen.getByLabelText('Library'));
+      await userEvent.click(screen.getByRole('button', { name: label }));
+      expect(screen.getByText('Login screen')).toBeInTheDocument();
+      expect(sessionStorage.getItem(AUTH_RETURN_STORAGE_KEY)).toBe(
+        '/bible-online'
+      );
+    }
+  );
+
+  it('opens library modal when Downloads is clicked', async () => {
+    renderLoggedOutWorkspace(<LibraryProbe />);
+
+    await userEvent.click(screen.getByRole('button', { name: 'Downloads' }));
     expect(screen.getByTestId('library-open')).toHaveTextContent('true');
   });
 
-  it('opens downloads library after login', () => {
-    loggedIn();
-    render(
-      <RecoilRoot initializeState={({ set }) => set(libraryAtom, false)}>
-        <MemoryRouter initialEntries={['/bible-online']}>
-          <Routes>
-            <Route
-              path="/bible-online"
-              element={
-                <>
-                  <Workspace />
-                  <LibraryProbe />
-                </>
-              }
-            />
-          </Routes>
-        </MemoryRouter>
-      </RecoilRoot>
-    );
+  it('opens notifications modal when Alerts is clicked', async () => {
+    renderLoggedOutWorkspace(<NotificationsProbe />);
 
-    fireEvent.click(screen.getByLabelText('Downloads'));
-    expect(screen.getByTestId('library-open')).toHaveTextContent('true');
-  });
-
-  it('opens notifications when logged in', () => {
-    loggedIn();
-    render(
-      <RecoilRoot initializeState={({ set }) => set(notificationsModalAtom, false)}>
-        <MemoryRouter initialEntries={['/bible-online']}>
-          <Routes>
-            <Route
-              path="/bible-online"
-              element={
-                <>
-                  <Workspace />
-                  <NotificationsProbe />
-                </>
-              }
-            />
-          </Routes>
-        </MemoryRouter>
-      </RecoilRoot>
-    );
-
-    fireEvent.click(screen.getByLabelText('Notifications'));
+    await userEvent.click(screen.getByRole('button', { name: 'Alerts' }));
     expect(screen.getByTestId('notifications-open')).toHaveTextContent('true');
   });
 
-  it('sends favourites to login when stale email but no user id', () => {
+  it('sends store to login when stale email but no user id', async () => {
     mockUseUser.mockReturnValue({
       isAuthenticated: true,
       isLoggedIn: 'true',
@@ -170,23 +130,7 @@ describe('Workspace sidebar actions', () => {
       </RecoilRoot>
     );
 
-    fireEvent.click(screen.getByLabelText('Store'));
-    expect(screen.getByText('Login screen')).toBeInTheDocument();
-  });
-
-  it('sends downloads to login when logged out', () => {
-    render(
-      <RecoilRoot>
-        <MemoryRouter initialEntries={['/bible-online']}>
-          <Routes>
-            <Route path="/bible-online" element={<Workspace />} />
-            <Route path="/login" element={<div>Login screen</div>} />
-          </Routes>
-        </MemoryRouter>
-      </RecoilRoot>
-    );
-
-    fireEvent.click(screen.getByLabelText('Downloads'));
+    await userEvent.click(screen.getByRole('button', { name: 'Store' }));
     expect(screen.getByText('Login screen')).toBeInTheDocument();
   });
 });

@@ -1,5 +1,6 @@
 // src/components/featureProduct.tsx
 import React from 'react';
+import { externalAnchorProps } from 'utils/storeLinkClick';
 
 export type LinkBadge = {
   label?: string;
@@ -118,9 +119,7 @@ export default function FeatureProduct({
     if (ln.icon && typeof ln.icon === 'string' && !ln.label) {
       return (
         <a
-          href={ln.href}
-          target="_blank"
-          rel="noopener noreferrer"
+          {...externalAnchorProps(ln.href)}
           aria-label={ln.label ?? ln.href}
           className="inline-block"
           style={{ whiteSpace: 'nowrap' }}
@@ -138,9 +137,7 @@ export default function FeatureProduct({
     if (ln.label) {
       return (
         <a
-          href={ln.href}
-          target="_blank"
-          rel="noopener noreferrer"
+          {...externalAnchorProps(ln.href)}
           aria-label={ln.label}
           className="inline-flex items-center gap-2 rounded-full border px-4 py-1 text-[1.1rem] bg-white"
           style={{ whiteSpace: 'nowrap' }}
@@ -163,9 +160,7 @@ export default function FeatureProduct({
     if (ln.icon && typeof ln.icon !== 'string' && !ln.label) {
       return (
         <a
-          href={ln.href}
-          target="_blank"
-          rel="noopener noreferrer"
+          {...externalAnchorProps(ln.href)}
           aria-label={ln.href}
           className="inline-flex items-center justify-center rounded-full border p-2 bg-white"
           style={{ width: 40, height: 40 }}
@@ -180,9 +175,7 @@ export default function FeatureProduct({
     // fallback: simple link with href text
     return (
       <a
-        href={ln.href}
-        target="_blank"
-        rel="noopener noreferrer"
+        {...externalAnchorProps(ln.href)}
         className="text-slate-700 underline text-[1.1rem]"
         aria-label={ln.href}
       >
@@ -464,9 +457,7 @@ function ActionBadgeWrap({ ln }: { ln: LinkBadge }) {
   if (ln.icon && typeof ln.icon === 'string' && !ln.label) {
     return (
       <a
-        href={ln.href}
-        target="_blank"
-        rel="noopener noreferrer"
+        {...externalAnchorProps(ln.href)}
         aria-label={ln.label ?? ln.href}
         className="inline-block"
         style={{ whiteSpace: 'nowrap' }}
@@ -484,9 +475,7 @@ function ActionBadgeWrap({ ln }: { ln: LinkBadge }) {
   if (ln.label) {
     return (
       <a
-        href={ln.href}
-        target="_blank"
-        rel="noopener noreferrer"
+        {...externalAnchorProps(ln.href)}
         aria-label={ln.label}
         className="inline-flex items-center gap-2 rounded-full border px-4 py-1 text-sm bg-white"
         style={{ whiteSpace: 'nowrap' }}
@@ -509,9 +498,7 @@ function ActionBadgeWrap({ ln }: { ln: LinkBadge }) {
   if (ln.icon && typeof ln.icon !== 'string') {
     return (
       <a
-        href={ln.href}
-        target="_blank"
-        rel="noopener noreferrer"
+        {...externalAnchorProps(ln.href)}
         aria-label={ln.href}
         className="inline-flex items-center justify-center rounded-full border p-2 bg-white"
         style={{ width: 40, height: 40 }}
@@ -526,9 +513,7 @@ function ActionBadgeWrap({ ln }: { ln: LinkBadge }) {
   // fallback
   return (
     <a
-      href={ln.href}
-      target="_blank"
-      rel="noopener noreferrer"
+      {...externalAnchorProps(ln.href)}
       className="text-slate-700 underline text-sm"
       aria-label={ln.href}
     >

@@ -26,6 +26,7 @@ import windows from '../../assets/product/windows.png';
 import linux from '../../assets/product/linux.png';
 import kc from '../../assets/about/kc.png';
 import link from '../../assets/about/link.png';
+import { DESKTOP_DOWNLOAD_URLS, STORE_URLS } from 'config/storeLinks';
 // ------------------------------------------------------------------
 export type LinkBadge = {
   label?: string;
@@ -163,18 +164,9 @@ export default function ProductPage({
       actionText: 'Download now on:',
       // <<-- UPDATED: use three explicit labeled badges (Google Play, App Store, Loveworld)
       actionLinks: [
-        {
-          href: 'https://web.lwappstore.com/share/appId-2f64e9cbe3f4d74c733696b585c933d4',
-          icon: lwapp,
-        },
-        {
-          href: 'https://apps.apple.com/ng/app/ror-bible/id1461993744',
-          icon: ios,
-        },
-        {
-          href: 'https://web.lwappstore.com/share/appId-2f64e9cbe3f4d74c733696b585c933d4',
-          icon: goggle,
-        },
+        { href: STORE_URLS.loveworld, icon: lwapp },
+        { href: STORE_URLS.appStore, icon: ios },
+        { href: STORE_URLS.googlePlay, icon: goggle },
       ],
       image: productImg3,
       imagePlacement: 'aside',
@@ -196,9 +188,9 @@ export default function ProductPage({
         'Download Bible Desktop today and unlock an immersive study experience.',
       // <<-- UPDATED: use three explicit labeled badges (Google Play, App Store, Loveworld)
       actionLinks: [
-        { href: 'https://rhapsodybible.web.app', icon: macOS },
-        { href: 'https://rhapsodybible.web.app', icon: windows },
-        { href: 'https://rhapsodybible.web.app', icon: linux },
+        { href: DESKTOP_DOWNLOAD_URLS.macAppleSilicon, icon: macOS },
+        { href: DESKTOP_DOWNLOAD_URLS.windows, icon: windows },
+        { href: DESKTOP_DOWNLOAD_URLS.linuxAppImage, icon: linux },
       ],
       image: productImg4,
       imagePlacement: 'aside',
@@ -259,18 +251,9 @@ export default function ProductPage({
       actionText: 'Download now on:',
       // <<-- UPDATED: use three explicit labeled badges (Google Play, App Store, Loveworld)
       actionLinks: [
-        {
-          href: 'https://web.lwappstore.com/share/appId-2f64e9cbe3f4d74c733696b585c933d4',
-          icon: lwapp,
-        },
-        {
-          href: 'https://web.lwappstore.com/share/appId-2f64e9cbe3f4d74c733696b585c933d4',
-          icon: ios,
-        },
-        {
-          href: 'https://web.lwappstore.com/share/appId-2f64e9cbe3f4d74c733696b585c933d4',
-          icon: goggle,
-        },
+        { href: STORE_URLS.loveworld, icon: lwapp },
+        { href: STORE_URLS.appStore, icon: ios },
+        { href: STORE_URLS.googlePlay, icon: goggle },
       ],
       image: productImg6,
       imagePlacement: 'aside',

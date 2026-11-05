@@ -114,6 +114,7 @@
     "electron:start": "npm run electron:compile && concurrently \"npm run react\" \"wait-on http://localhost:3400 && electron .\"",
     "electron:build:win": "npm run electron:compile && npm run build-electron && electron-builder --win --x64 --publish never",
     "electron:build:mac": "npm run electron:compile && npm run build-electron && electron-builder --mac --x64 --arm64 --publish never",
+    "electron:build:linux": "npm run electron:compile && npm run build-electron && electron-builder --linux AppImage deb --x64 --publish never",
     "electron:build:all": "npm run electron:compile && npm run build-electron && electron-builder -mwl --publish never"
   },
   "eslintConfig": {
@@ -165,6 +166,7 @@
     "generateUpdatesFilesForAllChannels": false,
     "icon": "build-resources/icon.png",
     "win": {
+      "artifactName": "Rhapsody-Bible-Setup.${ext}",
       "target": [
         {
           "target": "nsis",
@@ -183,8 +185,9 @@
       "installerHeaderIcon": "build-resources/icon.ico"
     },
     "mac": {
+      "artifactName": "Rhapsody-Bible-${arch}.${ext}",
       "category": "public.app-category.reference",
-      "target": ["dmg", "zip"],
+      "target": ["dmg"],
       "icon": "build-resources/icon.icns",
       "hardenedRuntime": true,
       "entitlements": "electron/entitlements.mac.plist",
@@ -192,8 +195,9 @@
       "notarize": false
     },
     "linux": {
+      "artifactName": "Rhapsody-Bible.${ext}",
       "icon": "build-resources/icon.png",
-      "target": ["AppImage"]
+      "target": ["AppImage", "deb"]
     },
     "publish": [
       {

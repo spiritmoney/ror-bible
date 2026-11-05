@@ -51,13 +51,13 @@ const Modal: React.FunctionComponent<IModal> = ({
     if (isVisible) {
       setshh(content);
       onOpen && onOpen();
-    } else {
+    } else if (!isShown) {
       setshh(undefined);
       setIsShown && setIsShown(false);
       onClose && onClose();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isVisible]);
+  }, [isVisible, isShown]);
 
   useEffect(() => {
     if (isShown) {
@@ -66,6 +66,41 @@ const Modal: React.FunctionComponent<IModal> = ({
       closeRef.current.click();
     }
   }, [isShown]);
+
+  useEffect(() => {
+    if (!isShown || hasHeader) {
+      return undefined;
+    }
+    const modalEl = ref.current;
+    if (!modalEl) {
+      return undefined;
+    }
+
+    const dismiss = () => {
+      closeRef.current?.click();
+      setIsShown?.(false);
+    };
+
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        event.preventDefault();
+        dismiss();
+      }
+    };
+
+    const onBackdropClick = (event: MouseEvent) => {
+      if (event.target === modalEl) {
+        dismiss();
+      }
+    };
+
+    document.addEventListener('keydown', onKeyDown);
+    modalEl.addEventListener('mousedown', onBackdropClick);
+    return () => {
+      document.removeEventListener('keydown', onKeyDown);
+      modalEl.removeEventListener('mousedown', onBackdropClick);
+    };
+  }, [hasHeader, isShown, setIsShown]);
 
   return (
     <>
@@ -112,8 +147,23 @@ const Modal: React.FunctionComponent<IModal> = ({
                 ></button>
               </div>
             )}
+            {!hasHeader && (
+              <button
+                type="button"
+                className="modal-headerless-close ds-focus-visible"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+                onClick={() => setIsShown?.(false)}
+              />
+            )}
             <div className="overflow-auto">
-              {loadOnOpen ? isVisible ? <>{shh}</> : '' : <>{shh}</>}
+              {loadOnOpen
+                ? isVisible
+                  ? <>{shh}</>
+                  : ''
+                : isShown
+                  ? <>{content}</>
+                  : <>{shh}</>}
             </div>
           </div>
         </div>
