@@ -32,20 +32,8 @@ export const isAppShell = (): boolean => {
   return false;
 };
 
-export const APP_SHELL_READER_ROUTE = '/bible-online';
-
-export const APP_SHELL_MARKETING_PATHS = new Set([
-  '/',
-  '/home',
-  '/features',
-  '/pricing',
-  '/download',
-  '/about',
-  '/product',
-  '/give',
-  '/partner',
-  '/products/web',
-  '/products/mobile',
-  '/products/desktop',
-  '/products/voice',
-]);
+export {
+  APP_SHELL_MARKETING_PATHS,
+  APP_SHELL_READER_ROUTE,
+  shouldAppShellRedirectMarketingRoute,
+} from './appShellRedirect';

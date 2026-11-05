@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import React, { useEffect } from 'react';
+import { useSetRecoilState, useRecoilState, useRecoilValue } from 'recoil';
 import { footerHeightAtom, headerHeightAtom } from '../../store/atoms/size';
 import Anotations from '../Anotations';
 import AvailableBooks from '../AvailableBooks';
@@ -12,11 +12,11 @@ import useContextMenu from '../../hooks/useContextMenu';
 import AdminSideMenu from 'components/AdminSideMenu';
 // import style from './styles.module.scss';
 import './styles.scss';
-import { SetNavAtom, SideNavAtom, readModeAtom } from 'store/atoms/general';
-import { Navigate, useLocation } from 'react-router-dom';
+import { SetNavAtom, SideNavAtom, libraryAtom, readModeAtom } from 'store/atoms/general';
+import { notificationsModalAtom } from 'store/atoms/workspace';
+import { useNavigate } from 'react-router-dom';
+import { useRequireLogin } from 'hooks/useRequireLogin';
 import { useUser } from 'hooks/useUser';
-import { LoginRoute } from 'navigation/routes';
-import { saveAuthReturnPath } from 'utils/authReturnPath';
 import lang from 'assets/Frame-Lang.png';
 import { ReactComponent as Speaker } from '../../assets/speaker.svg';
 import { ReactComponent as ParalStudy } from '../../assets/paralStudy.svg';
@@ -39,7 +39,7 @@ import Multilayout from 'screens/Multi_layout/multi_layout_component';
 import DynamicProductDetails from 'screens/Store/dynamicProduct_Details';
 import XmlToJsonConverter from 'screens/Xml2Json';
 
-// Views that require a logged-in KingsChat user.
+// Views that require a logged-in KingsChat user (opened via login-on-demand actions).
 const PROTECTED_NAVS = [
   'store',
   'store_audio',
@@ -50,17 +50,6 @@ const PROTECTED_NAVS = [
   'product',
   'fav',
 ];
-
-const NAV_ROUTE: Record<string, string> = {
-  store: '/store',
-  store_audio: '/store/audioBibles',
-  store_bible: '/store/bible',
-  store_resources: '/store/resources',
-  store_translations: '/store/translations',
-  store_freesbies: '/store/freesbies',
-  multi_layout: '/bible-online',
-  fav: '/favourites',
-};
 
 export interface IWorkspace {
   setQuill?: React.Dispatch<any>;
@@ -90,30 +79,54 @@ const Workspace: React.FunctionComponent<IWorkspace> = ({
   const headerHeight = useRecoilValue(headerHeightAtom);
   const [sideNav, setSideNav] = useRecoilState(SideNavAtom);
   const [nav, setNav] = useRecoilState(SetNavAtom);
+  const setShowLibrary = useSetRecoilState(libraryAtom);
+  const setShowNotificationsModal = useSetRecoilState(notificationsModalAtom);
+  const navigate = useNavigate();
+  const { requireLogin } = useRequireLogin();
   const { isAuthenticated } = useUser();
-  const location = useLocation();
 
-  // Protect store / bible-online / favourites (and product details) behind
-  // login. Browsing, reading and audio remain public.
-  if (PROTECTED_NAVS.includes(nav) && !isAuthenticated) {
-    const from =
-      location.pathname + location.search + location.hash ||
-      NAV_ROUTE[nav] ||
-      '/bible-online';
-    saveAuthReturnPath(from);
-    return <Navigate to={LoginRoute} state={{ from }} replace />;
-  }
+  React.useEffect(() => {
+    if (PROTECTED_NAVS.includes(nav) && !isAuthenticated) {
+      setNav('multi_layout');
+    }
+  }, [isAuthenticated, nav, setNav]);
 
   const handleSideNav = () => {
     setSideNav((prev: boolean) => !prev);
   };
-  const handleFav = () => {
+
+  const handleLibrary = () => {
     setSideNav(true);
-    setNav('fav');
+    navigate('/bible-online');
+    setShowLibrary(true);
   };
+
+  const handleFav = () => {
+    requireLogin(() => {
+      setSideNav(true);
+      setNav('fav');
+    });
+  };
+
   const handleStore = () => {
-    setSideNav(true);
-    setNav('store');
+    requireLogin(() => {
+      setSideNav(true);
+      setNav('store');
+    });
+  };
+
+  const handleDownloads = () => {
+    requireLogin(() => {
+      setSideNav(true);
+      navigate('/bible-online');
+      setShowLibrary(true);
+    });
+  };
+
+  const handleNotifications = () => {
+    requireLogin(() => {
+      setShowNotificationsModal(true);
+    });
   };
 
   //   const handleSideNav = () => {
@@ -137,7 +150,7 @@ const Workspace: React.FunctionComponent<IWorkspace> = ({
       >
         <div
           className={clsx(
-            'SideNav relative bg-[var(--ds-blue)] w-[18%] text-[#F2F3F3] flex transition-width duration-500 ease-in-out animate-fadein',
+            'SideNav app-sidebar relative bg-[var(--ds-blue)] w-[18%] text-[#F2F3F3] flex transition-width duration-500 ease-in-out animate-fadein',
             { '!w-[6%]': sideNav === false }
           )}
         >
@@ -146,7 +159,7 @@ const Workspace: React.FunctionComponent<IWorkspace> = ({
               // 'w-full' : sideNav === true, 'w-[20%]' : sideNav === false
             })}
           >
-            <li className={clsx('a-s-opt  w-full')}>
+            <li className={clsx('a-s-opt app-sidebar-item w-full')} aria-label="Toggle sidebar">
               {/* Hamburger Back */}
               <div className="left">
                 <div
@@ -204,10 +217,12 @@ const Workspace: React.FunctionComponent<IWorkspace> = ({
             </li>
 
             <li
-              className={clsx('a-s-opt  hover:bg-[var(--ds-blue)] w-full', {
-                'bg-[var(--ds-blue)]': nav === 'library',
+              className={clsx('a-s-opt app-sidebar-item w-full', {
+                'app-sidebar-item--active': nav === 'library',
               })}
-              // onClick={() => setNav('library')}
+              onClick={handleLibrary}
+              aria-label="Library"
+              title="Library"
             >
               {/* Library */}
               <div className="left">
@@ -271,10 +286,12 @@ const Workspace: React.FunctionComponent<IWorkspace> = ({
 
             {/* Favourite */}
             <li
-              className={clsx('a-s-opt  hover:bg-[var(--ds-blue)] w-full', {
-                'bg-[var(--ds-blue)]': nav === 'fav',
+              className={clsx('a-s-opt app-sidebar-item w-full', {
+                'app-sidebar-item--active': nav === 'fav',
               })}
               onClick={handleFav}
+              aria-label="Favourites"
+              title="Favourites"
             >
               <div className="left">
                 <div
@@ -480,10 +497,13 @@ const Workspace: React.FunctionComponent<IWorkspace> = ({
 
             {/* Store */}
             <li
-              className={clsx('a-s-opt  hover:bg-[var(--ds-blue)] w-full', {
-                'bg-[var(--ds-blue)]': nav === 'store' || nav === 'store_bible',
+              className={clsx('a-s-opt app-sidebar-item w-full', {
+                'app-sidebar-item--active':
+                  nav === 'store' || nav === 'store_bible',
               })}
               onClick={handleStore}
+              aria-label="Store"
+              title="Store"
             >
               <div className="left">
                 <div
@@ -749,9 +769,12 @@ const Workspace: React.FunctionComponent<IWorkspace> = ({
 
             {/* Download */}
             <li
-              className={clsx('a-s-opt  hover:bg-[var(--ds-blue)] w-full', {
-                'bg-[var(--ds-blue)]': nav === 'download',
+              className={clsx('a-s-opt app-sidebar-item w-full', {
+                'app-sidebar-item--active': nav === 'download',
               })}
+              onClick={handleDownloads}
+              aria-label="Downloads"
+              title="Downloads"
             >
               <div className="left">
                 <div
@@ -793,9 +816,12 @@ const Workspace: React.FunctionComponent<IWorkspace> = ({
 
             {/* Notification */}
             <li
-              className={clsx('a-s-opt  hover:bg-[var(--ds-blue)] w-full', {
-                'bg-[var(--ds-blue)]': nav === 'notification',
+              className={clsx('a-s-opt app-sidebar-item w-full', {
+                'app-sidebar-item--active': nav === 'notification',
               })}
+              onClick={handleNotifications}
+              aria-label="Notifications"
+              title="Notifications"
             >
               <div className="left">
                 <div

@@ -52,6 +52,13 @@ import CollabMode from 'components/CollabPopup';
 import ProfileMenu from 'components/ProfileMenu';
 import { useNavigate } from 'react-router-dom';
 import { useRequireLogin } from 'hooks/useRequireLogin';
+import {
+  openExternalUrl,
+  ROR_BIBLE_BLOG_URL,
+  useOpenAppShellPage,
+} from 'hooks/useOpenAppShellPage';
+import { WebsiteDownloadRoute } from 'screens/Website/websitePaths';
+import { isAppShell } from 'utils/appShell';
 import { isElectron } from 'utils/general';
 
 export interface IHeader {
@@ -65,6 +72,8 @@ const Header: React.FunctionComponent<IHeader> = ({ hidden, quill }) => {
   const { user: authUser } = useUser();
   const navigate = useNavigate();
   const { requireLogin } = useRequireLogin();
+  const { openPage } = useOpenAppShellPage();
+  const appShell = isAppShell();
   const [files, setFiles] = useState(false);
   const [search, setSearch] = useState('');
   const [books] = useState(false);
@@ -138,6 +147,22 @@ const Header: React.FunctionComponent<IHeader> = ({ hidden, quill }) => {
   const handleSubmit = () => {
     setShowSubmit(true);
   };
+
+  const handleAppSearch = () => {
+    setNav('multi_layout');
+    navigate('/bible-online');
+    window.setTimeout(() => {
+      const field = document.querySelector<HTMLInputElement>(
+        '.multi_layout_right_top_search input, .multi_layout_right_split_search input'
+      );
+      field?.focus();
+    }, 350);
+  };
+
+  const topNavItemClass = (index: number) =>
+    clsx('app-top-nav-item ds-focus-visible', {
+      'app-top-nav-item--active': topActiveIndex === index,
+    });
 
   useLayoutEffect(() => {
     const fetchData = async () => {
@@ -236,14 +261,16 @@ const Header: React.FunctionComponent<IHeader> = ({ hidden, quill }) => {
   }, [nav, topActiveIndex, productdet]);
 
   return (
-    <header ref={ref} className="w-full select-none">
+    <header ref={ref} className="w-full select-none app-chrome-header">
       {/* TOP BAR: dark. Added long thin border line under this bar. */}
-      <div className="w-full bg-[var(--ds-blue)] text-white font-montserrat">
-        <div className="maxw-[1400px] mx-auto flex items-center px-9 py-3">
+      <div className="w-full bg-[var(--ds-blue)] text-white font-montserrat app-top-bar">
+        <div className="ds-container app-top-bar-inner flex items-center py-2 lg:py-3 gap-3">
           {/* logo left */}
           <div
             className="flex items-center ml-0"
-            onClick={() => navigate('/home')}
+            onClick={() =>
+              navigate(appShell ? '/bible-online' : '/home')
+            }
           >
             <img src={logo} alt="logo" className="w-[10rem] max-w-[160px]" />
           </div>
@@ -252,86 +279,141 @@ const Header: React.FunctionComponent<IHeader> = ({ hidden, quill }) => {
           <nav className="hidden md:flex flex-1 justify-end mr-10 ">
             <ul
               ref={topNavContainerRef as any}
-              className="flex items-center gap-x-8 text-sm font-normal relative pb-2"
-              style={{ borderBottom: '0.4px solid var(--ds-cyan)' }}
+              className="app-top-nav-list hidden lg:flex flex-1 justify-end items-center gap-x-6 xl:gap-x-8 text-sm font-medium relative"
             >
               <li
                 ref={el => setTopItemRef(el, 0)}
+                role="button"
+                tabIndex={0}
                 onClick={() => {
                   setTopActiveIndex(0);
-                  navigate('/about');
+                  openPage('/about');
                 }}
-                className={clsx('hover:opacity-90 cursor-pointer', {
-                  'text-white': topActiveIndex !== 0,
-                })}
+                onKeyDown={e => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    setTopActiveIndex(0);
+                    openPage('/about');
+                  }
+                }}
+                className={topNavItemClass(0)}
               >
                 About
               </li>
 
               <li
                 ref={el => setTopItemRef(el, 1)}
+                role="button"
+                tabIndex={0}
                 onClick={() => {
                   setTopActiveIndex(1);
-                  navigate('/product');
+                  openPage('/product');
                 }}
-                className={clsx(
-                  'hover:opacity-90 cursor-pointer flex items-center gap-x-1',
-                  { 'text-white': topActiveIndex !== 1 }
-                )}
+                onKeyDown={e => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    setTopActiveIndex(1);
+                    openPage('/product');
+                  }
+                }}
+                className={clsx(topNavItemClass(1), 'flex items-center gap-x-1')}
               >
                 <span>Products</span>
-                {/* <FaCaretDown /> */}
               </li>
 
               <li
                 ref={el => setTopItemRef(el, 2)}
-                onClick={() => setTopActiveIndex(2)}
-                className={clsx('hover:opacity-90 cursor-pointer relative', {
-                  'text-white': topActiveIndex !== 2,
-                })}
+                role="button"
+                tabIndex={0}
+                onClick={() => {
+                  setTopActiveIndex(2);
+                  navigate('/bible-online');
+                }}
+                onKeyDown={e => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    setTopActiveIndex(2);
+                    navigate('/bible-online');
+                  }
+                }}
+                className={topNavItemClass(2)}
               >
-                <span className="border-b-0">Bible Online</span>
+                <span>Bible Online</span>
               </li>
 
               <li
                 ref={el => setTopItemRef(el, 3)}
-                onClick={() => setTopActiveIndex(3)}
-                className={clsx('hover:opacity-90 cursor-pointer', {
-                  'text-white': topActiveIndex !== 3,
-                })}
+                role="button"
+                tabIndex={0}
+                onClick={() => {
+                  setTopActiveIndex(3);
+                  openExternalUrl(ROR_BIBLE_BLOG_URL);
+                }}
+                onKeyDown={e => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    setTopActiveIndex(3);
+                    openExternalUrl(ROR_BIBLE_BLOG_URL);
+                  }
+                }}
+                className={topNavItemClass(3)}
               >
                 Blog
               </li>
               <li
                 ref={el => setTopItemRef(el, 4)}
+                role="button"
+                tabIndex={0}
                 onClick={() => {
                   setTopActiveIndex(4);
-                  navigate('/partner');
+                  openPage('/partner');
                 }}
-                className={clsx('hover:opacity-90 cursor-pointer', {
-                  'text-white': topActiveIndex !== 4,
-                })}
+                onKeyDown={e => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    setTopActiveIndex(4);
+                    openPage('/partner');
+                  }
+                }}
+                className={topNavItemClass(4)}
               >
                 Partner
               </li>
               <li
                 ref={el => setTopItemRef(el, 5)}
+                role="button"
+                tabIndex={0}
                 onClick={() => {
                   setTopActiveIndex(5);
-                  navigate('/give');
+                  openPage('/give');
                 }}
-                className={clsx('hover:opacity-90 cursor-pointer', {
-                  'text-white': topActiveIndex !== 5,
-                })}
+                onKeyDown={e => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    setTopActiveIndex(5);
+                    openPage('/give');
+                  }
+                }}
+                className={topNavItemClass(5)}
               >
                 Give
               </li>
               <li
                 ref={el => setTopItemRef(el, 6)}
-                onClick={() => setTopActiveIndex(6)}
-                className={clsx('hover:opacity-90 cursor-pointer', {
-                  'text-white': topActiveIndex !== 6,
-                })}
+                role="button"
+                tabIndex={0}
+                onClick={() => {
+                  setTopActiveIndex(6);
+                  openPage(WebsiteDownloadRoute, '#contact');
+                }}
+                onKeyDown={e => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    setTopActiveIndex(6);
+                    openPage(WebsiteDownloadRoute, '#contact');
+                  }
+                }}
+                className={topNavItemClass(6)}
               >
                 Contact
               </li>
@@ -339,16 +421,10 @@ const Header: React.FunctionComponent<IHeader> = ({ hidden, quill }) => {
               {/* top underline */}
               <div
                 aria-hidden
+                className="app-top-nav-underline"
                 style={{
-                  position: 'absolute',
                   left: topUnderlineStyle.left,
-                  bottom: -2,
-                  height: 3,
                   width: topUnderlineStyle.width,
-                  background: 'var(--ds-cyan)',
-                  borderRadius: 2,
-                  transition:
-                    'left 220ms cubic-bezier(.2,.9,.2,1), width 220ms cubic-bezier(.2,.9,.2,1)',
                   opacity: topUnderlineStyle.opacity,
                 }}
               />
@@ -359,9 +435,11 @@ const Header: React.FunctionComponent<IHeader> = ({ hidden, quill }) => {
           <div className="flex items-center gap-x-3 ml-auto">
             {/* on small screens show a button to toggle center links dropdown */}
             <button
-              className="md:hidden px-2 py-1 rounded hover:bg-white/10"
+              type="button"
+              className="app-top-search-btn ds-focus-visible lg:hidden px-2 py-1 rounded hover:bg-white/10 min-h-[44px] min-w-[44px] flex items-center justify-center"
               onClick={() => setShowTopLinksDropdown(prev => !prev)}
               aria-expanded={showTopLinksDropdown}
+              aria-label="Open navigation menu"
             >
               {/* simple menu icon */}
               <svg
@@ -377,14 +455,19 @@ const Header: React.FunctionComponent<IHeader> = ({ hidden, quill }) => {
               </svg>
             </button>
 
-            {/* search icon (kept simple) */}
-            <div className="">
+            <button
+              type="button"
+              className="app-top-search-btn ds-focus-visible min-h-[44px] min-w-[44px] flex items-center justify-center rounded-full hover:bg-white/10"
+              aria-label="Search in Bible reader"
+              onClick={handleAppSearch}
+            >
               <svg
                 width="20"
                 height="20"
                 viewBox="0 0 20 20"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
+                aria-hidden
               >
                 <path
                   fillRule="evenodd"
@@ -393,7 +476,7 @@ const Header: React.FunctionComponent<IHeader> = ({ hidden, quill }) => {
                   fill="white"
                 />
               </svg>
-            </div>
+            </button>
 
             {/* profile avatar — shown once the user is logged in */}
             {authUser?.id ? (
@@ -402,7 +485,7 @@ const Header: React.FunctionComponent<IHeader> = ({ hidden, quill }) => {
               <button
                 type="button"
                 onClick={() => requireLogin()}
-                className="rounded-full bg-white/15 hover:bg-white/25 text-white text-xs font-semibold px-4 py-2 transition-colors ds-focus-visible font-montserrat"
+                className="app-top-sign-in ds-focus-visible font-montserrat"
               >
                 Sign in
               </button>
@@ -416,13 +499,13 @@ const Header: React.FunctionComponent<IHeader> = ({ hidden, quill }) => {
         {showTopLinksDropdown && (
           <div className="md:hidden bg-[var(--ds-teal)] px-4 py-3">
             <ul className="flex flex-col gap-y-2 text-sm text-white">
-              <li className="py-1">About</li>
-              <li className="py-1">Products</li>
-              <li className="py-1 border-b-2 border-[var(--ds-cyan)]">Bible Online</li>
-              <li className="py-1">Blog</li>
-              <li className="py-1">Partner</li>
-              <li className="py-1">Give</li>
-              <li className="py-1">Contact</li>
+              <li className="py-1 cursor-pointer" onClick={() => { setShowTopLinksDropdown(false); openPage('/about'); }}>About</li>
+              <li className="py-1 cursor-pointer" onClick={() => { setShowTopLinksDropdown(false); openPage('/product'); }}>Products</li>
+              <li className="py-1 cursor-pointer border-b-2 border-[var(--ds-cyan)]" onClick={() => { setShowTopLinksDropdown(false); navigate('/bible-online'); }}>Bible Online</li>
+              <li className="py-1 cursor-pointer" onClick={() => { setShowTopLinksDropdown(false); openExternalUrl(ROR_BIBLE_BLOG_URL); }}>Blog</li>
+              <li className="py-1 cursor-pointer" onClick={() => { setShowTopLinksDropdown(false); openPage('/partner'); }}>Partner</li>
+              <li className="py-1 cursor-pointer" onClick={() => { setShowTopLinksDropdown(false); openPage('/give'); }}>Give</li>
+              <li className="py-1 cursor-pointer" onClick={() => { setShowTopLinksDropdown(false); openPage(WebsiteDownloadRoute, '#contact'); }}>Contact</li>
             </ul>
           </div>
         )}

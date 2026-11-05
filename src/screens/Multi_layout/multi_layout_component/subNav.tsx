@@ -17,7 +17,6 @@ import { DarkThemeAtom, SideNavAtom, layoutViewAtom, readModeAtom } from 'store/
 import Dropdown from 'components/Dropdown';
 import { FaCaretDown } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
-import { useRequireLogin } from 'hooks/useRequireLogin';
 
 
 export type SubNavProps = {
@@ -40,7 +39,6 @@ const SubNav: React.FC<SubNavProps> = ({ nav, setNav, className }) => {
     const [layoutView, setLayoutView] = useRecoilState(layoutViewAtom);
     const DarkTheme = useRecoilValue(DarkThemeAtom)
     const navigate = useNavigate();
-    const { requireLogin } = useRequireLogin();
 
 
 
@@ -102,9 +100,8 @@ const SubNav: React.FC<SubNavProps> = ({ nav, setNav, className }) => {
         setNav('multi_layout');
     };
     const handleHome = () => {
-        requireLogin(() => {
-            setNav('store');
-        });
+        setNav('multi_layout');
+        navigate('/bible-online');
     };
 
     const handleReadView = () => {
