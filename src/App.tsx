@@ -3,6 +3,7 @@ import SplashScreen from './components/SplashScreen';
 import Main from './container/main';
 import 'theme/_scroll-bar.scss';
 import { isElectron } from 'utils/general';
+import { isAppShell } from 'utils/appShell';
 
 const SPLASH_AUTO_MS = 2000;
 
@@ -18,6 +19,13 @@ function App() {
 
   const dismissSplash = useCallback(() => {
     setshowingSplash(false);
+  }, []);
+
+  useEffect(() => {
+    if (isAppShell()) {
+      document.documentElement.classList.add('is-app-shell');
+    }
+    return () => document.documentElement.classList.remove('is-app-shell');
   }, []);
 
   useEffect(() => {

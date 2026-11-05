@@ -97,7 +97,33 @@ async function main() {
     [1024, 720, '1024'],
     [800, 720, '800'],
   ]) {
-    await screenshot(cdp, `app-chrome-${tag}.png`, w, h);
+    await screenshot(cdp, `app-chrome-electron-${tag}.png`, w, h);
+  }
+
+  await cdp.send('Emulation.setEmulatedMedia', {
+    media: 'screen',
+    features: [{ name: 'display-mode', value: 'standalone' }],
+  });
+  await evalJs(cdp, `document.documentElement.classList.add('is-app-shell');`);
+  await sleep(400);
+
+  for (const [w, h, tag] of [
+    [1440, 900, '1440'],
+    [1024, 720, '1024'],
+    [390, 844, '390'],
+  ]) {
+    await cdp.send('Emulation.setDeviceMetricsOverride', {
+      width: w,
+      height: h,
+      deviceScaleFactor: 1,
+      mobile: w < 800,
+    });
+    await sleep(900);
+    const { data } = await cdp.send('Page.captureScreenshot', { format: 'png' });
+    fs.writeFileSync(
+      path.join(outDir, `app-chrome-pwa-${tag}.png`),
+      Buffer.from(data, 'base64')
+    );
   }
 
   cdp.close();

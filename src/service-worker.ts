@@ -69,7 +69,7 @@ registerRoute(
     url.origin === self.location.origin && url.pathname.endsWith('.png'),
   // Customize this strategy as needed, e.g., by changing to CacheFirst.
   new StaleWhileRevalidate({
-    cacheName: 'images',
+    cacheName: 'images-v20251105',
     plugins: [
       // Ensure that once this runtime cache reaches a maximum size the
       // least-recently used images are removed.
@@ -91,7 +91,7 @@ self.addEventListener('message', event => {
 registerRoute(
   ({ url }) => url.origin === 'https://fonts.googleapis.com',
   new StaleWhileRevalidate({
-    cacheName: 'google-fonts-stylesheets',
+    cacheName: 'google-fonts-stylesheets-v20251105',
   })
 );
 
@@ -100,7 +100,7 @@ registerRoute(
 registerRoute(
   ({ url }) => url.origin === 'https://fonts.gstatic.com',
   new CacheFirst({
-    cacheName: 'google-fonts-webfonts',
+    cacheName: 'google-fonts-webfonts-v20251105',
     plugins: [
       new CacheableResponsePlugin({
         statuses: [0, 200],

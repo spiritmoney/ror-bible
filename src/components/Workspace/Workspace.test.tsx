@@ -73,7 +73,7 @@ describe('Workspace sidebar actions', () => {
       </RecoilRoot>
     );
 
-    fireEvent.click(screen.getByText('Favourite'));
+    fireEvent.click(screen.getByLabelText('Favourites'));
     expect(screen.getByText('Login screen')).toBeInTheDocument();
     expect(sessionStorage.getItem(AUTH_RETURN_STORAGE_KEY)).toBe(
       '/bible-online'
@@ -149,6 +149,29 @@ describe('Workspace sidebar actions', () => {
 
     fireEvent.click(screen.getByLabelText('Notifications'));
     expect(screen.getByTestId('notifications-open')).toHaveTextContent('true');
+  });
+
+  it('sends favourites to login when stale email but no user id', () => {
+    mockUseUser.mockReturnValue({
+      isAuthenticated: true,
+      isLoggedIn: 'true',
+      user: {} as any,
+      updateUserInfo: jest.fn(),
+    } as unknown as ReturnType<typeof useUser>);
+
+    render(
+      <RecoilRoot>
+        <MemoryRouter initialEntries={['/bible-online']}>
+          <Routes>
+            <Route path="/bible-online" element={<Workspace />} />
+            <Route path="/login" element={<div>Login screen</div>} />
+          </Routes>
+        </MemoryRouter>
+      </RecoilRoot>
+    );
+
+    fireEvent.click(screen.getByLabelText('Store'));
+    expect(screen.getByText('Login screen')).toBeInTheDocument();
   });
 
   it('sends downloads to login when logged out', () => {

@@ -196,6 +196,7 @@ const createMainWindow = () => {
     icon: getWindowIconPath(),
     show: false,
     backgroundColor: 'white',
+    autoHideMenuBar: true,
     webPreferences: {
       nodeIntegration: false,
       contextIsolation: true,

@@ -433,7 +433,7 @@ const Header: React.FunctionComponent<IHeader> = ({ hidden, quill }) => {
             {/* on small screens show a button to toggle center links dropdown */}
             <button
               type="button"
-              className="app-top-search-btn ds-focus-visible lg:hidden px-2 py-1 rounded hover:bg-white/10 min-h-[44px] min-w-[44px] flex items-center justify-center"
+              className="app-top-mobile-menu-btn ds-focus-visible lg:hidden min-h-[44px] min-w-[44px] flex items-center justify-center"
               onClick={() => setShowTopLinksDropdown(prev => !prev)}
               aria-expanded={showTopLinksDropdown}
               aria-label="Open navigation menu"
@@ -478,7 +478,7 @@ const Header: React.FunctionComponent<IHeader> = ({ hidden, quill }) => {
             {/* profile avatar — shown once the user is logged in */}
             {authUser?.id ? (
               <ProfileMenu />
-            ) : isElectron() ? (
+            ) : appShell && !authUser?.id ? (
               <button
                 type="button"
                 onClick={() => requireLogin()}
