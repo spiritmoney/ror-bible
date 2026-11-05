@@ -46,6 +46,15 @@ const getDevUrl = () => 'http://localhost:3400';
 const getAppLoadUrl = () =>
   isDev ? getDevUrl() : `${APP_SCHEME}://rhapsody/index.html`;
 
+/** HashRouter entry for packaged app (avoids website home flash before React redirect). */
+const getInitialLoadUrl = () => {
+  const base = getAppLoadUrl().split('#')[0];
+  if (isDev) {
+    return base;
+  }
+  return `${base}#/bible-online`;
+};
+
 const resolveBuildFilePath = (pathname: string) => {
   let relPath = decodeURIComponent(pathname);
   if (relPath === '/' || relPath === '') {
@@ -198,7 +207,7 @@ const createMainWindow = () => {
   });
 
   wireNavigationHandlers(mainWindow);
-  mainWindow.loadURL(getAppLoadUrl());
+  mainWindow.loadURL(getInitialLoadUrl());
 
   mainWindow.once('ready-to-show', () => mainWindow?.show());
 

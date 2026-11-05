@@ -20,6 +20,10 @@ import { isElectron } from '../utils/general';
 import { persistElectronLastRoute } from '../utils/authReturnPath';
 import AppShellEntryRedirect from '../components/AppShellEntryRedirect';
 import {
+  APP_SHELL_READER_ROUTE,
+  isAppShell,
+} from '../utils/appShell';
+import {
   AnnotateRoute,
   FavouritesRoute,
   VoiceNoteRoute,
@@ -123,6 +127,13 @@ const SimpleSuspense: React.FunctionComponent<{
   );
 };
 
+const AppShellHomeEntry: React.FunctionComponent = () => {
+  if (isAppShell()) {
+    return <Navigate to={APP_SHELL_READER_ROUTE} replace />;
+  }
+  return <Homepage />;
+};
+
 const Main: React.FunctionComponent<IMain> = () => {
   // AppRoutes uses useLocation and implements the background-location (modal) pattern
   function AppRoutes() {
@@ -185,8 +196,8 @@ const Main: React.FunctionComponent<IMain> = () => {
             element={<DashboardStore nav="xml" />}
           />
           <Route path="/read" element={<DashboardStore nav="read" />} />
-          <Route path="/home" element={<Homepage />} />
-          <Route path="/" element={<Homepage />} />
+          <Route path="/home" element={<AppShellHomeEntry />} />
+          <Route path="/" element={<AppShellHomeEntry />} />
           <Route path="/features" element={<FeaturesPage />} />
           <Route path="/pricing" element={<PricingPage />} />
           <Route path="/download" element={<AppShellDownloadRoute />} />
@@ -301,7 +312,7 @@ const Main: React.FunctionComponent<IMain> = () => {
 
         {/* If backgroundLocation exists (we navigated with a background), render the modal/overlay route(s) on top */}
         {backgroundLocation && (
-          <Routes>
+          <Routes location={location}>
             <Route path="/about" element={<ModalAbout />} />
             <Route path="/product" element={<ModalProduct />} />
             <Route path="/give" element={<ModalGive />} />

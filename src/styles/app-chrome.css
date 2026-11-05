@@ -100,14 +100,13 @@
 }
 
 html.is-electron .app-chrome-header,
+html.is-electron .app-chrome-header .app-top-bar-inner,
+html.is-electron .app-chrome-header .app-top-nav-list,
 html.is-electron .app-chrome-header .app-top-nav-item,
-html.is-electron .app-chrome-header button {
+html.is-electron .app-chrome-header button,
+html.is-electron .app-chrome-header a {
   -webkit-app-region: no-drag;
   cursor: pointer;
-}
-
-html.is-electron .app-chrome-header {
-  -webkit-app-region: drag;
 }
 
 html.is-electron .app-chrome-header .app-top-bar-inner {

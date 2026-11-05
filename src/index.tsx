@@ -10,6 +10,16 @@ import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 import reportWebVitals from './reportWebVitals';
 import { RecoilRoot } from 'recoil';
 
+if (typeof window !== 'undefined') {
+  const desktopShell =
+    window.electronAPI?.isElectron === true ||
+    process.env.REACT_APP_IS_ELECTRON === 'true' ||
+    navigator.userAgent.toLowerCase().includes(' electron/');
+  if (desktopShell) {
+    document.documentElement.classList.add('is-electron');
+  }
+}
+
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
