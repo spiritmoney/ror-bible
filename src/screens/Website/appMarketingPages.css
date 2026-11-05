@@ -1,0 +1,66 @@
+/* In-app marketing pages (About, Products, Partner, Give) — token-aligned shell */
+
+.app-marketing-page {
+  font-family: 'Montserrat', system-ui, sans-serif;
+  color: var(--ds-navy);
+  background: var(--ds-pale);
+}
+
+.app-marketing-page .app-marketing-intro {
+  color: var(--ds-ink);
+  font-size: 1.125rem;
+  line-height: 1.65;
+  font-weight: 500;
+}
+
+.app-marketing-page .app-marketing-section {
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+@media (min-width: 800px) {
+  .app-marketing-page .app-marketing-section {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+}
+
+.app-marketing-page .app-marketing-form-card {
+  background: var(--ds-white);
+  border-radius: var(--ds-radius-card);
+  box-shadow: var(--ds-shadow-card);
+  border: 1px solid rgba(220, 235, 240, 0.9);
+}
+
+.app-marketing-page .ds-input-field,
+.app-marketing-page input[type='text'],
+.app-marketing-page input[type='email'],
+.app-marketing-page textarea,
+.app-marketing-page select {
+  border-radius: var(--ds-radius-input);
+  border: 1px solid var(--ds-input-border);
+}
+
+.app-marketing-page input:focus-visible,
+.app-marketing-page textarea:focus-visible,
+.app-marketing-page select:focus-visible,
+.app-marketing-page button:focus-visible {
+  outline: 3px solid var(--ds-orange);
+  outline-offset: 3px;
+}
+
+.app-marketing-page a:hover {
+  color: var(--ds-navy);
+}
+
+.app-marketing-page .bg-brand-navy a:hover,
+.app-marketing-page .bg-\[var\(--ds-blue\)\] a:hover {
+  color: var(--ds-white);
+}
+
+@media (max-width: 390px) {
+  .app-marketing-page .app-marketing-section {
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+  }
+}

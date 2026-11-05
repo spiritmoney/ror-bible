@@ -5,6 +5,9 @@ import { HEADER_HEIGHT } from './constants';
 import WebsiteLayout from './WebsiteLayout';
 import FeaturesSection from './featureProduct';
 import { scrollToHash } from '../../utils/scrolToHash';
+import PageHero from './PageHero';
+import Section from './Section';
+import './appMarketingPages.css';
 import { useLocation } from 'react-router-dom';
 
 // ---------- Assets (product assets) ----------
@@ -329,7 +332,6 @@ export default function ProductPage({
       document.body.style.overflow = prev;
       if (prevFocused && typeof prevFocused.focus === 'function')
         prevFocused.focus();
-      if (onClose) onClose();
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isModal]);
@@ -367,7 +369,12 @@ export default function ProductPage({
 
   // PageInner (shared between modal & full-page)
   const PageInner = (
-    <div className=" bg-slate-50 text-slate-800">
+    <div className="website-root app-marketing-page bg-brand-pale text-brand-navy font-montserrat">
+      <PageHero
+        eyebrow="Products"
+        title="Premium Bible Reader"
+        description="Bible Online, Bible Lite (PWA), desktop apps, and voice—one study experience across every platform."
+      />
       <div className="w-full">
         <div className="relative w-full overflow-hidden">
           <img
@@ -379,15 +386,14 @@ export default function ProductPage({
         </div>
       </div>
 
-      {/* Features — delegated to FeaturesSection (pairwise layout, 2-column) */}
-      <div className="max-w-6xl mx-auto px-6 py-12">
+      <Section innerClassName="app-marketing-section" pad="tight">
         <FeaturesSection
           features={features}
           imgW={imgW}
           imgH={imgH}
           isLg={isLg}
         />
-      </div>
+      </Section>
 
     </div>
   );

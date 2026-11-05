@@ -3,6 +3,8 @@ import axios from 'axios';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { HEADER_HEIGHT } from './constants';
 import WebsiteLayout from './WebsiteLayout';
+import PageHero from './PageHero';
+import './appMarketingPages.css';
 
 import giveBanner from '../../assets/give/giveBanner.png';
 import giveText from '../../assets/give/giveText.png';
@@ -116,7 +118,6 @@ export default function GivePage({
       document.body.style.overflow = prev;
       if (prevFocused && typeof prevFocused.focus === 'function')
         prevFocused.focus();
-      if (onClose) onClose();
     };
   }, [isModal, onClose]);
 
@@ -150,7 +151,12 @@ export default function GivePage({
   }, [location.pathname, location.search, navigate]);
 
   const PageInner = (
-    <div className="bg-white text-slate-800">
+    <div className="website-root app-marketing-page bg-brand-pale text-brand-navy font-montserrat">
+      <PageHero
+        eyebrow="Give"
+        title="Partner with the mission"
+        description="Your generosity helps put God's Word in more hands—every gift plants seed that grows for generations."
+      />
       <section className="relative w-full overflow-hidden">
         <img
           src={giveBanner}
@@ -212,7 +218,7 @@ export default function GivePage({
           Give Now
         </h3>
 
-        <div className="mt-16 bg-[#F8F7F8] rounded-[24px] max-w-[980px] mx-auto px-4 md:px-10 pb-10 pt-20">
+        <div className="mt-16 app-marketing-form-card max-w-[980px] mx-auto px-4 md:px-10 pb-10 pt-20">
           <div className="w-full flex justify-center -mt-[120px] mb-8">
             <div className="w-full max-w-[420px]">
               <img
