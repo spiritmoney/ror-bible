@@ -263,11 +263,10 @@ const Header: React.FunctionComponent<IHeader> = ({ hidden, quill }) => {
   return (
     <header ref={ref} className="w-full select-none app-chrome-header">
       {/* TOP BAR: dark. Added long thin border line under this bar. */}
-      <div className="w-full bg-[var(--ds-blue)] text-white font-montserrat app-top-bar">
-        <div className="ds-container app-top-bar-inner flex items-center py-2 lg:py-3 gap-3">
-          {/* logo left */}
+      <div className="w-full text-white font-montserrat app-top-bar">
+        <div className="app-top-bar-inner">
           <div
-            className="flex items-center ml-0"
+            className="app-top-bar-logo flex items-center cursor-pointer"
             onClick={() =>
               navigate(appShell ? '/bible-online' : '/home')
             }
@@ -275,11 +274,10 @@ const Header: React.FunctionComponent<IHeader> = ({ hidden, quill }) => {
             <img src={logo} alt="logo" className="w-[10rem] max-w-[160px]" />
           </div>
 
-          {/* center links (hidden on small screens) */}
-          <nav className="hidden md:flex flex-1 justify-end mr-10 ">
+          <nav className="app-top-bar-nav hidden lg:flex">
             <ul
               ref={topNavContainerRef as any}
-              className="app-top-nav-list hidden lg:flex flex-1 justify-end items-center gap-x-6 xl:gap-x-8 text-sm font-medium relative"
+              className="app-top-nav-list relative"
             >
               <li
                 ref={el => setTopItemRef(el, 0)}
@@ -431,8 +429,7 @@ const Header: React.FunctionComponent<IHeader> = ({ hidden, quill }) => {
             </ul>
           </nav>
 
-          {/* top-right: menu toggler (mobile), search icon, bell, settings */}
-          <div className="flex items-center gap-x-3 ml-auto">
+          <div className="app-top-bar-actions">
             {/* on small screens show a button to toggle center links dropdown */}
             <button
               type="button"
@@ -457,7 +454,7 @@ const Header: React.FunctionComponent<IHeader> = ({ hidden, quill }) => {
 
             <button
               type="button"
-              className="app-top-search-btn ds-focus-visible min-h-[44px] min-w-[44px] flex items-center justify-center rounded-full hover:bg-white/10"
+              className="app-top-search-btn ds-focus-visible min-h-[44px] min-w-[44px] flex items-center justify-center"
               aria-label="Search in Bible reader"
               onClick={handleAppSearch}
             >

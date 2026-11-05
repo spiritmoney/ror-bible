@@ -150,8 +150,8 @@ const Workspace: React.FunctionComponent<IWorkspace> = ({
       >
         <div
           className={clsx(
-            'SideNav app-sidebar relative bg-[var(--ds-blue)] w-[18%] text-[#F2F3F3] flex transition-width duration-500 ease-in-out animate-fadein',
-            { '!w-[6%]': sideNav === false }
+            'SideNav app-sidebar relative text-[var(--ds-navy)] flex transition-width duration-500 ease-in-out animate-fadein',
+            sideNav === false ? 'app-sidebar--rail' : 'app-sidebar--expanded w-[18%]'
           )}
         >
           <ul
@@ -160,7 +160,6 @@ const Workspace: React.FunctionComponent<IWorkspace> = ({
             })}
           >
             <li className={clsx('a-s-opt app-sidebar-item w-full')} aria-label="Toggle sidebar">
-              {/* Hamburger Back */}
               <div className="left">
                 <div
                   className={clsx('a-s-logo hover:animate-bounce', {
@@ -213,9 +212,15 @@ const Workspace: React.FunctionComponent<IWorkspace> = ({
                     />
                   </svg>
                 </div>
+                <div
+                  className={clsx('a-s-label app-sidebar-menu-label', {
+                    hidden: sideNav === true,
+                  })}
+                >
+                  Menu
+                </div>
               </div>
             </li>
-
             <li
               className={clsx('a-s-opt app-sidebar-item w-full', {
                 'app-sidebar-item--active': nav === 'library',
@@ -845,9 +850,9 @@ const Workspace: React.FunctionComponent<IWorkspace> = ({
                   </svg>
                 </div>
                 <div
-                  className={clsx('a-s-label', { hidden: sideNav === false })}
+                  className={clsx('a-s-label app-sidebar-menu-label', { hidden: sideNav === false })}
                 >
-                  Notifications
+                  Alerts
                 </div>
               </div>
               {nav === 'notification' ? (

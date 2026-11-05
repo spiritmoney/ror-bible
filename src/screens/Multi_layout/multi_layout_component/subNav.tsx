@@ -111,16 +111,8 @@ const SubNav: React.FC<SubNavProps> = ({ nav, setNav, className }) => {
 
     // render
     return (
-        <div className={clsx('w-full bg-[var(--ds-blue)] app-subnav-bar', className)}>
-            <div
-                className="ds-container maxw-[1400px] bg-[var(--ds-teal)] mx-auto"
-                style={
-                    {
-                        borderTopLeftRadius: 10,
-                    }
-                }
-
-            >
+        <div className={clsx('w-full app-subnav-bar', className)}>
+            <div className="ds-container maxw-[1400px] mx-auto">
                 <div className="flex items-center justify-between">
 
 
@@ -157,8 +149,8 @@ const SubNav: React.FC<SubNavProps> = ({ nav, setNav, className }) => {
                                     onClick={() => {
                                         handleHome();
                                     }}
-                                    className={clsx("flex flex-col items-center text-[10px] px-3 py-1 rounded transition-all duration-200 focus:outline-none relative", {
-                                        "text-[#0f2230]": nav === 'store', "text-white": nav !== 'store'
+                                    className={clsx('app-subnav-tab ds-focus-visible', {
+                                        'app-subnav-tab--active': nav === 'store',
                                     })}
                                     title="Home"
                                 >
@@ -170,8 +162,8 @@ const SubNav: React.FC<SubNavProps> = ({ nav, setNav, className }) => {
                                 <button
                                     ref={(el) => setItemRef(el, 1)}
                                     onClick={() => { setNav('read'); navigate('/read'); handleReadView && handleReadView(); }}
-                                    className={clsx("flex flex-col items-center text-[10px] px-3 py-1 rounded transition-all duration-200 focus:outline-none relative", {
-                                        "text-[#0f2230]": nav === 'read', "text-white": nav !== 'read'
+                                    className={clsx('app-subnav-tab ds-focus-visible', {
+                                        'app-subnav-tab--active': nav === 'read',
                                     })}
                                     title="Read"
                                 >
@@ -183,8 +175,8 @@ const SubNav: React.FC<SubNavProps> = ({ nav, setNav, className }) => {
                                 <button
                                     ref={(el) => setItemRef(el, 2)}
                                     onClick={() => { setNav('multi_layout'); handleMultiView && handleMultiView(); }}
-                                    className={clsx("flex flex-col items-center text-[10px] px-3 py-1 rounded transition-all duration-200 focus:outline-none relative", {
-                                        "text-[#0f2230]": nav === 'multi_layout', "text-white": nav !== 'multi_layout'
+                                    className={clsx('app-subnav-tab ds-focus-visible', {
+                                        'app-subnav-tab--active': nav === 'multi_layout',
                                     })}
                                     title="Advance View"
                                 >
@@ -196,10 +188,8 @@ const SubNav: React.FC<SubNavProps> = ({ nav, setNav, className }) => {
 
                                 {/* Bookmark */}
                                 <button
-                                    // ref={(el) => setItemRef(el, 3)}
-                                    // onClick={() => { setNav('bookmark'); }}
-                                    className={clsx("flex flex-col items-center text-[10px] px-3 py-1 rounded transition-all duration-200 focus:outline-none relative", {
-                                        "text-[#0f2230]": nav === 'bookmark', "text-white": nav !== 'bookmark'
+                                    className={clsx('app-subnav-tab ds-focus-visible', {
+                                        'app-subnav-tab--active': nav === 'bookmark',
                                     })}
                                     title="Bookmark"
                                 >
@@ -209,10 +199,8 @@ const SubNav: React.FC<SubNavProps> = ({ nav, setNav, className }) => {
 
                                 {/* Note */}
                                 <button
-                                    // ref={(el) => setItemRef(el, 2)}
-                                    // onClick={() => { setNav('note'); }}
-                                    className={clsx("flex flex-col items-center text-[10px] px-3 py-1 rounded transition-all duration-200 focus:outline-none relative", {
-                                        "text-[#0f2230]": nav === 'note', "text-white": nav !== 'note'
+                                    className={clsx('app-subnav-tab ds-focus-visible', {
+                                        'app-subnav-tab--active': nav === 'note',
                                     })}
                                     title="Note"
                                 >
