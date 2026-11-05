@@ -1,7 +1,11 @@
 import React from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import DownloadPage from 'screens/Website/downloadPage';
-import { APP_SHELL_READER_ROUTE, isAppShell } from 'utils/appShell';
+import { isAppShell } from 'utils/appShell';
+import {
+  closeAppShellMarketingOverlay,
+  hasAppShellReaderBackground,
+} from 'utils/appShellOverlayClose';
 
 const isContactHash = (hash: string) => {
   const h = hash.toLowerCase();
@@ -12,10 +16,7 @@ const isContactHash = (hash: string) => {
 export const AppShellDownloadRoute: React.FunctionComponent = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const hasBackground = Boolean(
-    (location.state as { backgroundLocation?: unknown } | null)
-      ?.backgroundLocation
-  );
+  const hasBackground = hasAppShellReaderBackground(location.state);
 
   if (!isAppShell()) {
     return <DownloadPage />;
@@ -32,7 +33,9 @@ export const AppShellDownloadRoute: React.FunctionComponent = () => {
   return (
     <DownloadPage
       isModal
-      onClose={() => navigate(APP_SHELL_READER_ROUTE, { replace: true })}
+      onClose={() =>
+        closeAppShellMarketingOverlay(hasBackground, navigate)
+      }
     />
   );
 };

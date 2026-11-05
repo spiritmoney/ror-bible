@@ -1,6 +1,10 @@
 import React from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { APP_SHELL_READER_ROUTE, isAppShell } from 'utils/appShell';
+import {
+  closeAppShellMarketingOverlay,
+  hasAppShellReaderBackground,
+} from 'utils/appShellOverlayClose';
 
 export type AppShellPageProps = {
   isModal?: boolean;
@@ -17,10 +21,7 @@ export const AppShellMarketingRoute: React.FunctionComponent<
 > = ({ Page }) => {
   const location = useLocation();
   const navigate = useNavigate();
-  const hasBackground = Boolean(
-    (location.state as { backgroundLocation?: unknown } | null)
-      ?.backgroundLocation
-  );
+  const hasBackground = hasAppShellReaderBackground(location.state);
 
   if (!isAppShell()) {
     return <Page />;
@@ -33,7 +34,9 @@ export const AppShellMarketingRoute: React.FunctionComponent<
   return (
     <Page
       isModal
-      onClose={() => navigate(APP_SHELL_READER_ROUTE, { replace: true })}
+      onClose={() =>
+        closeAppShellMarketingOverlay(hasBackground, navigate)
+      }
     />
   );
 };

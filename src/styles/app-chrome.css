@@ -1,0 +1,144 @@
+/* App shell chrome (reader top bar, sidebar, sub-nav) — tokens from design-tokens.css */
+
+.app-top-bar {
+  border-bottom: 1px solid rgba(7, 189, 210, 0.35);
+  box-shadow: var(--ds-shadow-header);
+}
+
+.app-top-bar-inner {
+  max-width: 1400px;
+}
+
+.app-top-nav-list {
+  border-bottom: 1px solid rgba(7, 189, 210, 0.45);
+  padding-bottom: 0.35rem;
+}
+
+.app-top-nav-item {
+  position: relative;
+  display: flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 0.35rem;
+  color: rgba(255, 255, 255, 0.92);
+  cursor: pointer;
+  transition: color 0.2s ease, opacity 0.2s ease;
+  white-space: nowrap;
+}
+
+.app-top-nav-item:hover {
+  color: var(--ds-white);
+  opacity: 1;
+}
+
+.app-top-nav-item--active {
+  color: var(--ds-white);
+  font-weight: 600;
+}
+
+.app-top-nav-underline {
+  position: absolute;
+  bottom: -2px;
+  height: 3px;
+  background: var(--ds-cyan);
+  border-radius: 2px;
+  transition:
+    left 220ms cubic-bezier(0.2, 0.9, 0.2, 1),
+    width 220ms cubic-bezier(0.2, 0.9, 0.2, 1),
+    opacity 160ms ease;
+  pointer-events: none;
+}
+
+.app-top-sign-in {
+  min-height: 44px;
+  padding: 0.5rem 1.25rem;
+  border-radius: var(--ds-radius-pill);
+  background: var(--ds-orange);
+  color: var(--ds-white);
+  font-size: 0.8125rem;
+  font-weight: 700;
+  box-shadow: var(--ds-shadow-orange);
+  transition: filter 0.2s ease, transform 0.2s ease;
+}
+
+.app-top-sign-in:hover {
+  filter: brightness(1.05);
+  transform: translateY(-1px);
+  color: var(--ds-white);
+}
+
+.app-sidebar {
+  border-right: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.app-sidebar-item {
+  min-height: 44px;
+  transition: background-color 0.2s ease;
+}
+
+.app-sidebar-item:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.app-sidebar-item--active {
+  background: rgba(7, 189, 210, 0.22);
+  box-shadow: inset 3px 0 0 var(--ds-cyan);
+}
+
+.app-sidebar-item .a-s-label {
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.app-subnav-bar {
+  border-top: 1px solid rgba(7, 189, 210, 0.25);
+}
+
+.app-subnav-bar button {
+  min-height: 44px;
+  min-width: 44px;
+}
+
+html.is-electron .app-chrome-header,
+html.is-electron .app-chrome-header .app-top-nav-item,
+html.is-electron .app-chrome-header button {
+  -webkit-app-region: no-drag;
+  cursor: pointer;
+}
+
+html.is-electron .app-chrome-header {
+  -webkit-app-region: drag;
+}
+
+html.is-electron .app-chrome-header .app-top-bar-inner {
+  user-select: none;
+}
+
+@media (max-width: 1024px) {
+  .app-top-bar-inner {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+}
+
+@media (max-width: 800px) {
+  .app-top-bar-inner {
+    flex-wrap: nowrap;
+    gap: 0.5rem;
+  }
+
+  .app-top-bar-inner img[alt='logo'] {
+    max-width: 7.5rem;
+  }
+
+  .app-top-sign-in {
+    flex-shrink: 0;
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+    font-size: 0.75rem;
+  }
+
+  .app-top-search-btn {
+    flex-shrink: 0;
+  }
+}

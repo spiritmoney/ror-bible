@@ -1,9 +1,11 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
-import { MemoryRouter, Route, Routes, useLocation } from 'react-router-dom';
-import { RecoilRoot } from 'recoil';
+import { MemoryRouter, Route, Routes } from 'react-router-dom';
+import { RecoilRoot, useRecoilValue } from 'recoil';
 import Workspace from './index';
 import { useUser } from 'hooks/useUser';
+import { libraryAtom } from 'store/atoms/general';
+import { notificationsModalAtom } from 'store/atoms/workspace';
 import { AUTH_RETURN_STORAGE_KEY } from 'utils/authReturnPath';
 
 jest.mock('hooks/useUser');
@@ -27,20 +29,36 @@ jest.mock('components/AdminSideMenu', () => () => null);
 
 const mockUseUser = useUser as jest.MockedFunction<typeof useUser>;
 
-const LocationDisplay = () => {
-  const location = useLocation();
-  return <div data-testid="path">{location.pathname}</div>;
+const loggedOut = () =>
+  mockUseUser.mockReturnValue({
+    isAuthenticated: false,
+    isLoggedIn: 'false',
+    user: {} as any,
+    updateUserInfo: jest.fn(),
+  } as unknown as ReturnType<typeof useUser>);
+
+const loggedIn = () =>
+  mockUseUser.mockReturnValue({
+    isAuthenticated: true,
+    isLoggedIn: 'true',
+    user: { id: 'u1' } as any,
+    updateUserInfo: jest.fn(),
+  } as unknown as ReturnType<typeof useUser>);
+
+const LibraryProbe = () => {
+  const open = useRecoilValue(libraryAtom);
+  return <div data-testid="library-open">{String(open)}</div>;
 };
 
-describe('Workspace sidebar login-on-demand', () => {
+const NotificationsProbe = () => {
+  const open = useRecoilValue(notificationsModalAtom);
+  return <div data-testid="notifications-open">{String(open)}</div>;
+};
+
+describe('Workspace sidebar actions', () => {
   beforeEach(() => {
     sessionStorage.clear();
-    mockUseUser.mockReturnValue({
-      isAuthenticated: false,
-      isLoggedIn: 'false',
-      user: {} as any,
-      updateUserInfo: jest.fn(),
-    } as unknown as ReturnType<typeof useUser>);
+    loggedOut();
   });
 
   it('sends favourites to login without changing reader route first', () => {
@@ -48,15 +66,7 @@ describe('Workspace sidebar login-on-demand', () => {
       <RecoilRoot>
         <MemoryRouter initialEntries={['/bible-online']}>
           <Routes>
-            <Route
-              path="/bible-online"
-              element={
-                <>
-                  <Workspace />
-                  <LocationDisplay />
-                </>
-              }
-            />
+            <Route path="/bible-online" element={<Workspace />} />
             <Route path="/login" element={<div>Login screen</div>} />
           </Routes>
         </MemoryRouter>
@@ -68,5 +78,92 @@ describe('Workspace sidebar login-on-demand', () => {
     expect(sessionStorage.getItem(AUTH_RETURN_STORAGE_KEY)).toBe(
       '/bible-online'
     );
+  });
+
+  it('opens library without login', () => {
+    render(
+      <RecoilRoot initializeState={({ set }) => set(libraryAtom, false)}>
+        <MemoryRouter initialEntries={['/bible-online']}>
+          <Routes>
+            <Route
+              path="/bible-online"
+              element={
+                <>
+                  <Workspace />
+                  <LibraryProbe />
+                </>
+              }
+            />
+          </Routes>
+        </MemoryRouter>
+      </RecoilRoot>
+    );
+
+    fireEvent.click(screen.getByLabelText('Library'));
+    expect(screen.getByTestId('library-open')).toHaveTextContent('true');
+  });
+
+  it('opens downloads library after login', () => {
+    loggedIn();
+    render(
+      <RecoilRoot initializeState={({ set }) => set(libraryAtom, false)}>
+        <MemoryRouter initialEntries={['/bible-online']}>
+          <Routes>
+            <Route
+              path="/bible-online"
+              element={
+                <>
+                  <Workspace />
+                  <LibraryProbe />
+                </>
+              }
+            />
+          </Routes>
+        </MemoryRouter>
+      </RecoilRoot>
+    );
+
+    fireEvent.click(screen.getByLabelText('Downloads'));
+    expect(screen.getByTestId('library-open')).toHaveTextContent('true');
+  });
+
+  it('opens notifications when logged in', () => {
+    loggedIn();
+    render(
+      <RecoilRoot initializeState={({ set }) => set(notificationsModalAtom, false)}>
+        <MemoryRouter initialEntries={['/bible-online']}>
+          <Routes>
+            <Route
+              path="/bible-online"
+              element={
+                <>
+                  <Workspace />
+                  <NotificationsProbe />
+                </>
+              }
+            />
+          </Routes>
+        </MemoryRouter>
+      </RecoilRoot>
+    );
+
+    fireEvent.click(screen.getByLabelText('Notifications'));
+    expect(screen.getByTestId('notifications-open')).toHaveTextContent('true');
+  });
+
+  it('sends downloads to login when logged out', () => {
+    render(
+      <RecoilRoot>
+        <MemoryRouter initialEntries={['/bible-online']}>
+          <Routes>
+            <Route path="/bible-online" element={<Workspace />} />
+            <Route path="/login" element={<div>Login screen</div>} />
+          </Routes>
+        </MemoryRouter>
+      </RecoilRoot>
+    );
+
+    fireEvent.click(screen.getByLabelText('Downloads'));
+    expect(screen.getByText('Login screen')).toBeInTheDocument();
   });
 });
