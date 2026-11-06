@@ -13,10 +13,10 @@ describe('storeLinks config', () => {
     expect(STORE_URLS.appStore).toBe(
       'https://apps.apple.com/ng/app/ror-bible/id1461993744'
     );
-    expect(STORE_URLS.googlePlay).toBe(
+    expect(STORE_URLS.loveworld).toBe(
       'https://web.lwappstore.com/share/appId-2f64e9cbe3f4d74c733696b585c933d4'
     );
-    expect(STORE_URLS.loveworld).toBe(STORE_URLS.googlePlay);
+    expect(STORE_URLS.googlePlay).toBe(STORE_URLS.loveworld);
   });
 
   it('builds fixed desktop release URLs', () => {

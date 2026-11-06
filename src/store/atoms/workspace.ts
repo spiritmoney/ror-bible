@@ -3,6 +3,7 @@ import { IUser } from 'interface/user';
 import { atom } from 'recoil';
 import { ISquareSwitchPosition } from '../../interface/squareSwitch';
 import persistAtom from '../persist/persist';
+import { blockModalOpenEffect } from './modalGuards';
 
 export const booksSwitchAtom = atom({
   key: 'booksSwitch',
@@ -78,6 +79,7 @@ export const viewUserInfoModalAtom = atom({
 export const notificationsModalAtom = atom({
   key: 'notificationsModalAtom',
   default: false,
+  effects_UNSTABLE: [blockModalOpenEffect()],
 });
 export const upgradeModalAtom = atom({
   key: 'upgradeModalAtom',

@@ -2,8 +2,9 @@ import clsx from 'clsx';
 import React from 'react';
 // import style from './styles.module.scss';
 import { useRef, useEffect, useState } from 'react';
-import { useRecoilValue } from 'recoil';
-import { DarkThemeAtom } from 'store/atoms/general';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { DarkThemeAtom, libraryAtom } from 'store/atoms/general';
+import { notificationsModalAtom } from 'store/atoms/workspace';
 import { useIntersectionObserver } from 'usehooks-ts';
 
 export interface IModal {
@@ -40,7 +41,18 @@ const Modal: React.FunctionComponent<IModal> = ({
   const openRef = useRef<any>();
   const closeRef = useRef<any>();
   const DarkTheme = useRecoilValue(DarkThemeAtom);
+  const setLibrary = useSetRecoilState(libraryAtom);
+  const setNotifications = useSetRecoilState(notificationsModalAtom);
 
+  const blockedModal =
+    id === 'library' || id === 'notifications';
+
+  useEffect(() => {
+    if (!blockedModal) return;
+    setLibrary(false);
+    setNotifications(false);
+    setIsShown?.(false);
+  }, [blockedModal, setIsShown, setLibrary, setNotifications]);
 
 
   // useMemo(() => {
@@ -60,12 +72,16 @@ const Modal: React.FunctionComponent<IModal> = ({
   }, [isVisible, isShown]);
 
   useEffect(() => {
-    if (isShown) {
-      openRef.current.click();
-    } else {
-      closeRef.current.click();
+    // Never drive Bootstrap open for disabled chrome modals — that flashes the gray backdrop.
+    if (blockedModal) {
+      return;
     }
-  }, [isShown]);
+    if (isShown) {
+      openRef.current?.click();
+    } else {
+      closeRef.current?.click();
+    }
+  }, [isShown, blockedModal]);
 
   useEffect(() => {
     if (!isShown || hasHeader) {

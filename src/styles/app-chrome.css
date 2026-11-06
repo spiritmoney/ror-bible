@@ -382,12 +382,22 @@ button.app-top-nav-item {
 
 .app-sidebar--rail button.app-sidebar-item--coming-soon,
 .app-sidebar--rail button.app-sidebar-item--coming-soon:disabled {
-  cursor: default;
+  cursor: not-allowed;
   opacity: 1;
+  pointer-events: none;
 }
 
 .app-sidebar--rail button.app-sidebar-item--coming-soon .app-sidebar-icon-wrap,
 .app-sidebar--rail button.app-sidebar-item--coming-soon:disabled .app-sidebar-icon-wrap {
+  opacity: 0.45;
+}
+
+.app-sidebar--rail
+  button.app-sidebar-item--coming-soon
+  .a-s-label.app-sidebar-menu-label,
+.app-sidebar--rail
+  button.app-sidebar-item--coming-soon:disabled
+  .a-s-label.app-sidebar-menu-label {
   opacity: 0.45;
 }
 
@@ -420,7 +430,11 @@ button.app-top-nav-item {
 }
 
 .app-sidebar--rail button.app-sidebar-item--disabled:hover,
-.app-sidebar--rail button.app-sidebar-item--disabled:disabled:hover {
+.app-sidebar--rail button.app-sidebar-item--disabled:disabled:hover,
+.app-sidebar--rail
+  button.app-sidebar-item--coming-soon:hover,
+.app-sidebar--rail
+  button.app-sidebar-item--coming-soon:disabled:hover {
   background: transparent;
 }
 
@@ -540,6 +554,13 @@ html.is-electron .app-sidebar--rail .app-sidebar-rail-list {
   margin-left: 0 !important;
 }
 
+/* Installed PWA (is-app-shell) uses the same top bar chrome affordances as Electron */
+html.is-app-shell .app-chrome-header,
+html.is-app-shell .app-chrome-header .app-top-bar-inner,
+html.is-app-shell .app-chrome-header .app-top-nav-list,
+html.is-app-shell .app-chrome-header .app-top-nav-item,
+html.is-app-shell .app-chrome-header button,
+html.is-app-shell .app-chrome-header a,
 html.is-electron .app-chrome-header,
 html.is-electron .app-chrome-header .app-top-bar-inner,
 html.is-electron .app-chrome-header .app-top-nav-list,
@@ -550,6 +571,7 @@ html.is-electron .app-chrome-header a {
   cursor: pointer;
 }
 
+html.is-app-shell .app-chrome-header .app-top-bar-inner,
 html.is-electron .app-chrome-header .app-top-bar-inner {
   user-select: none;
 }

@@ -9,7 +9,7 @@ import { headerHeightAtom } from '../../store/atoms/size';
 // import { newProjectModalAtom, projectAtom } from 'store/atoms/workspace';
 // import style from './styles.module.scss';
 import usePermission from 'hooks/usePermission';
-import { DarkThemeAtom, ProdSKUAtom, SetNavAtom, SideNavAtom, layoutViewAtom, libraryAtom, readModeAtom, storeBackAtom, storeCartAtom } from '../../store/atoms/general';
+import { DarkThemeAtom, ProdSKUAtom, SetNavAtom, SideNavAtom, layoutViewAtom, readModeAtom, storeBackAtom, storeCartAtom } from '../../store/atoms/general';
 import {
   editorSelectedAtom,
   editorUserCursorPositionAtom,
@@ -52,7 +52,6 @@ const Header: React.FunctionComponent<IHeader> = ({ hidden, quill }) => {
   // const setShowNewProjectModal = useSetRecoilState(newProjectModalAtom);
   const { isSystemsAdmin, isAppManager } = usePermission();
   // const { saveDoc, isProjectInSync } = useProjects();
-  const setShowLibrary = useSetRecoilState(libraryAtom);
   const [sideNav, setSideNav] = useRecoilState(SideNavAtom);
   const selectedText = useRecoilValue(editorSelectedAtom);
   const cursorPosition = useRecoilValue(editorUserCursorPositionAtom);

@@ -1,4 +1,19 @@
 const webpack = require('webpack');
+const { execSync } = require('child_process');
+const path = require('path');
+
+function getGitShort() {
+  try {
+    return execSync('git rev-parse --short HEAD', {
+      cwd: path.join(__dirname),
+      encoding: 'utf8',
+    }).trim();
+  } catch {
+    return 'unknown';
+  }
+}
+
+const REACT_APP_BUILD_ID = `${getGitShort()} · ${new Date().toISOString()}`;
 
 module.exports = {
   style: {
@@ -25,6 +40,9 @@ module.exports = {
         timers: require.resolve('timers-browserify'),
       };
       webpackConfig.plugins.push(
+        new webpack.DefinePlugin({
+          'process.env.REACT_APP_BUILD_ID': JSON.stringify(REACT_APP_BUILD_ID),
+        }),
         new webpack.ProvidePlugin({
           process: 'process/browser',
         }),

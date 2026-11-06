@@ -51,7 +51,12 @@ const NotificationsProbe = () => {
 const renderLoggedOutWorkspace = (extra?: React.ReactNode) => {
   loggedOut();
   return render(
-    <RecoilRoot initializeState={({ set }) => set(libraryAtom, false)}>
+    <RecoilRoot
+      initializeState={({ set }) => {
+        set(libraryAtom, false);
+        set(notificationsModalAtom, false);
+      }}
+    >
       <MemoryRouter initialEntries={['/bible-online']}>
         <Routes>
           <Route
@@ -76,13 +81,24 @@ describe('Workspace sidebar actions', () => {
     loggedOut();
   });
 
-  it('opens library modal state when Library is clicked', async () => {
-    renderLoggedOutWorkspace(<LibraryProbe />);
+  it.each(['Library', 'Downloads', 'Alerts'] as const)(
+    'does not open modal state when %s rail is clicked',
+    async label => {
+      renderLoggedOutWorkspace(
+        <>
+          <LibraryProbe />
+          <NotificationsProbe />
+        </>
+      );
 
-    await userEvent.click(screen.getByRole('button', { name: 'Library' }));
-    expect(screen.getByTestId('library-open')).toHaveTextContent('true');
-    expect(screen.queryByText('Login screen')).not.toBeInTheDocument();
-  });
+      await userEvent.click(screen.getByRole('button', { name: label }));
+      expect(screen.getByTestId('library-open')).toHaveTextContent('false');
+      expect(screen.getByTestId('notifications-open')).toHaveTextContent(
+        'false'
+      );
+      expect(screen.queryByText('Login screen')).not.toBeInTheDocument();
+    }
+  );
 
   it.each(['Favourites', 'Store'] as const)(
     'sends %s to login via userEvent on the rail button',
@@ -97,18 +113,17 @@ describe('Workspace sidebar actions', () => {
     }
   );
 
-  it('opens library modal when Downloads is clicked', async () => {
-    renderLoggedOutWorkspace(<LibraryProbe />);
-
-    await userEvent.click(screen.getByRole('button', { name: 'Downloads' }));
-    expect(screen.getByTestId('library-open')).toHaveTextContent('true');
-  });
-
-  it('opens notifications modal when Alerts is clicked', async () => {
-    renderLoggedOutWorkspace(<NotificationsProbe />);
-
-    await userEvent.click(screen.getByRole('button', { name: 'Alerts' }));
-    expect(screen.getByTestId('notifications-open')).toHaveTextContent('true');
+  it('blocks persisted true for library atom (cannot open modal)', () => {
+    render(
+      <RecoilRoot
+        initializeState={({ set }) => set(libraryAtom, true)}
+      >
+        <MemoryRouter>
+          <LibraryProbe />
+        </MemoryRouter>
+      </RecoilRoot>
+    );
+    expect(screen.getByTestId('library-open')).toHaveTextContent('false');
   });
 
   it('sends store to login when stale email but no user id', async () => {

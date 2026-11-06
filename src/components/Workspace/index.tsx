@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import { footerHeightAtom, headerHeightAtom } from '../../store/atoms/size';
 import Anotations from '../Anotations';
 import AvailableBooks from '../AvailableBooks';
@@ -12,13 +12,7 @@ import useContextMenu from '../../hooks/useContextMenu';
 import AdminSideMenu from 'components/AdminSideMenu';
 // import style from './styles.module.scss';
 import './styles.scss';
-import {
-  SetNavAtom,
-  SideNavAtom,
-  libraryAtom,
-  readModeAtom,
-} from 'store/atoms/general';
-import { notificationsModalAtom } from 'store/atoms/workspace';
+import { SetNavAtom, SideNavAtom, readModeAtom } from 'store/atoms/general';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useUser } from 'hooks/useUser';
 import { LoginRoute } from 'navigation/routes';
@@ -75,6 +69,7 @@ const AppSidebarRailButton: React.FC<{
   <li className="w-full">
     <button
       type="button"
+      tabIndex={disabled ? -1 : undefined}
       className={clsx('a-s-opt app-sidebar-item w-full', {
         'app-sidebar-item--active': Boolean(active) && !disabled,
         'app-sidebar-item--disabled': disabled,
@@ -155,21 +150,6 @@ const Workspace: React.FunctionComponent<IWorkspace> = ({
     setNav('store');
   };
 
-  const setShowLibrary = useSetRecoilState(libraryAtom);
-  const setShowNotificationsModal = useSetRecoilState(notificationsModalAtom);
-
-  const handleLibrary = () => {
-    setShowLibrary(true);
-  };
-
-  const handleDownloads = () => {
-    setShowLibrary(true);
-  };
-
-  const handleAlerts = () => {
-    setShowNotificationsModal(true);
-  };
-
   //   const handleSideNav = () => {
   //     setSideNav(false);
   // };
@@ -193,7 +173,8 @@ const Workspace: React.FunctionComponent<IWorkspace> = ({
           <ul className="app-sidebar-rail-list mt-3 w-full">
             <AppSidebarRailButton
               label="Library"
-              onClick={handleLibrary}
+              disabled
+              comingSoon
               icon={<SidebarLibraryIcon />}
             />
 
@@ -572,14 +553,16 @@ const Workspace: React.FunctionComponent<IWorkspace> = ({
             {/* Download */}
             <AppSidebarRailButton
               label="Downloads"
-              onClick={handleDownloads}
+              disabled
+              comingSoon
               icon={<SidebarDownloadsIcon />}
             />
 
             {/* Notification */}
             <AppSidebarRailButton
               label="Alerts"
-              onClick={handleAlerts}
+              disabled
+              comingSoon
               icon={<SidebarAlertsIcon />}
             />
           </ul>

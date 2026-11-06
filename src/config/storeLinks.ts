@@ -8,7 +8,7 @@ const githubReleaseAssetUrl = (fileName: string): string =>
 export const STORE_LOVEWORLD_APP_STORE_URL =
   'https://web.lwappstore.com/share/appId-2f64e9cbe3f4d74c733696b585c933d4';
 
-/** Google Play badge — Loveworld web store share link. */
+/** Google Play badge — Loveworld web store share link (same listing as Loveworld badge). */
 export const STORE_GOOGLE_PLAY_URL =
   'https://web.lwappstore.com/share/appId-2f64e9cbe3f4d74c733696b585c933d4';
 

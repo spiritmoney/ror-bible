@@ -2,8 +2,8 @@ import React, { useState, useCallback, useEffect } from 'react';
 import SplashScreen from './components/SplashScreen';
 import Main from './container/main';
 import 'theme/_scroll-bar.scss';
-import { isElectron } from 'utils/general';
 import { isAppShell } from 'utils/appShell';
+import { isRunningInElectron } from 'utils/electronRuntime';
 
 const SPLASH_AUTO_MS = 2000;
 
@@ -14,8 +14,31 @@ const isKingsChatCallback = () => {
   return window.location.pathname.indexOf('/auth/callback') === 0;
 };
 
+/** Marketing pages: show the site immediately (splash would keep Main unmounted and break tooling). */
+function skipSplashForMarketingPath(pathname: string): boolean {
+  return (
+    pathname === '/' ||
+    pathname === '/home' ||
+    pathname === '/bible-online' ||
+    pathname === '/features' ||
+    pathname === '/pricing' ||
+    pathname === '/download' ||
+    /^\/products\/(web|mobile|desktop|voice)$/.test(pathname) ||
+    pathname === '/about' ||
+    pathname === '/product' ||
+    pathname === '/give' ||
+    pathname === '/partner'
+  );
+}
+
 function App() {
-  const [showingSplash, setshowingSplash] = useState(() => !isKingsChatCallback());
+  const [showingSplash, setshowingSplash] = useState(() => {
+    if (typeof window === 'undefined') return true;
+    if (process.env.NODE_ENV === 'development') return false;
+    if (isKingsChatCallback()) return false;
+    if (skipSplashForMarketingPath(window.location.pathname)) return false;
+    return true;
+  });
 
   const dismissSplash = useCallback(() => {
     setshowingSplash(false);
@@ -29,7 +52,14 @@ function App() {
   }, []);
 
   useEffect(() => {
-    if (!isElectron()) return;
+    const id = process.env.REACT_APP_BUILD_ID;
+    if (id) {
+      console.info(`[Rhapsody Bible] build ${id}`);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (!isRunningInElectron()) return;
     document.documentElement.classList.add('is-electron');
     return () => document.documentElement.classList.remove('is-electron');
   }, []);

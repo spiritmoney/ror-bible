@@ -17,6 +17,7 @@ import IsAuth from '../components/isAuth/index';
 import ReaderLogin from '../components/ReaderLogin';
 import WelcomeScreen from '../components/WelcomeScreen';
 import { isElectron } from '../utils/general';
+import { isRunningInElectron } from '../utils/electronRuntime';
 import { persistElectronLastRoute } from '../utils/authReturnPath';
 import AppShellEntryRedirect from '../components/AppShellEntryRedirect';
 import {
@@ -327,7 +328,7 @@ const Main: React.FunctionComponent<IMain> = () => {
   return (
     <main className="font-montserrat">
       <Suspense fallback={<SuspenseLoader fullscreen />}>
-        {isElectron() ? (
+        {isRunningInElectron() ? (
           <HashRouter>
             <ScrollToTop />
             <AppRoutes />

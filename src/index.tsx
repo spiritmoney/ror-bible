@@ -9,15 +9,16 @@ import 'tw-elements';
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 import reportWebVitals from './reportWebVitals';
 import { RecoilRoot } from 'recoil';
+import { persistInstalledLaunchFromLocation } from 'utils/appShell';
+import {
+  isPackagedElectronBundle,
+  isRunningInElectron,
+} from 'utils/electronRuntime';
 
-if (typeof window !== 'undefined') {
-  const desktopShell =
-    window.electronAPI?.isElectron === true ||
-    process.env.REACT_APP_IS_ELECTRON === 'true' ||
-    navigator.userAgent.toLowerCase().includes(' electron/');
-  if (desktopShell) {
-    document.documentElement.classList.add('is-electron');
-  }
+persistInstalledLaunchFromLocation();
+
+if (isRunningInElectron()) {
+  document.documentElement.classList.add('is-electron');
 }
 
 const root = ReactDOM.createRoot(
@@ -34,12 +35,7 @@ root.render(
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
 // Learn more about service workers: https://cra.link/PWA
-const isDesktopShell =
-  typeof window !== 'undefined' &&
-  (window.electronAPI?.isElectron === true ||
-    process.env.REACT_APP_IS_ELECTRON === 'true');
-
-if (!isDesktopShell) {
+if (!isPackagedElectronBundle() && !isRunningInElectron()) {
   serviceWorkerRegistration.register();
 }
 

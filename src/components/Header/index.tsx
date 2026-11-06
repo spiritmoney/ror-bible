@@ -15,7 +15,6 @@ import {
   SetNavAtom,
   SideNavAtom,
   layoutViewAtom,
-  libraryAtom,
   readModeAtom,
   storeBackAtom,
   storeCartAtom,
@@ -33,7 +32,7 @@ import advancedActive from 'assets/headerIcons/Advance_Dark.svg';
 import advanced from 'assets/headerIcons/Advance_White.svg';
 import logo from '../../assets/website/logo.png';
 import appLogoMark from '../../assets/logo.png.png';
-import { copyTextToClipboard } from 'utils/general';
+import { copyTextToClipboard, isElectron } from 'utils/general';
 import { isJSON } from '../../utils/general';
 import { IProject } from 'interface/project';
 import {
@@ -51,17 +50,20 @@ import Modal from 'components/Modal';
 import Submit from 'components/Submit';
 import CollabMode from 'components/CollabPopup';
 import ProfileMenu from 'components/ProfileMenu';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useRequireLogin } from 'hooks/useRequireLogin';
 import {
   openExternalUrl,
 } from 'hooks/useOpenAppShellPage';
 import {
+  APP_TOP_NAV_IN_SITE,
   APP_TOP_NAV_WEBSITE_ORDER,
   APP_TOP_NAV_WEBSITE_URLS,
+  type AppTopNavWebsiteKey,
 } from 'config/appTopNavWebsite';
 import { TopBarSearchIcon } from 'components/Workspace/AppSidebarIcons';
 import { isAppShell } from 'utils/appShell';
+import { isReaderAppTopBarRoute } from 'utils/readerTopBar';
 
 export interface IHeader {
   hidden?: boolean;
@@ -73,8 +75,11 @@ const Header: React.FunctionComponent<IHeader> = ({ hidden, quill }) => {
   const { height, ref } = useGetSize();
   const { user: authUser } = useUser();
   const navigate = useNavigate();
+  const { pathname } = useLocation();
   const { requireLogin } = useRequireLogin();
   const appShell = isAppShell();
+  const readerTopBar = isReaderAppTopBarRoute(pathname);
+  const useAppChromeTopBar = appShell || readerTopBar;
   const [files, setFiles] = useState(false);
   const [search, setSearch] = useState('');
   const [books] = useState(false);
@@ -83,7 +88,6 @@ const Header: React.FunctionComponent<IHeader> = ({ hidden, quill }) => {
   // const setShowNewProjectModal = useSetRecoilState(newProjectModalAtom);
   const { isSystemsAdmin, isAppManager } = usePermission();
   // const { saveDoc, isProjectInSync } = useProjects();
-  const setShowLibrary = useSetRecoilState(libraryAtom);
   const [sideNav, setSideNav] = useRecoilState(SideNavAtom);
   const selectedText = useRecoilValue(editorSelectedAtom);
   const cursorPosition = useRecoilValue(editorUserCursorPositionAtom);
@@ -160,8 +164,13 @@ const Header: React.FunctionComponent<IHeader> = ({ hidden, quill }) => {
     }, 350);
   };
 
-  const openTopWebsiteLink = (url: string) => {
-    openExternalUrl(url);
+  const openTopWebsiteLink = (key: AppTopNavWebsiteKey) => {
+    if (isElectron() || isAppShell()) {
+      openExternalUrl(APP_TOP_NAV_WEBSITE_URLS[key]());
+      return;
+    }
+    const target = APP_TOP_NAV_IN_SITE[key];
+    navigate({ pathname: target.pathname, hash: target.hash });
   };
 
   const topNavItemClass = (index: number) =>
@@ -273,13 +282,13 @@ const Header: React.FunctionComponent<IHeader> = ({ hidden, quill }) => {
           <div
             className="app-top-bar-logo flex items-center cursor-pointer"
             onClick={() =>
-              navigate(appShell ? '/bible-online' : '/home')
+              navigate(useAppChromeTopBar ? '/bible-online' : '/home')
             }
           >
             <img
-              src={appShell ? appLogoMark : logo}
+              src={useAppChromeTopBar ? appLogoMark : logo}
               alt="Rhapsody Bible"
-              className={appShell ? 'app-top-bar-logo-mark' : undefined}
+              className={useAppChromeTopBar ? 'app-top-bar-logo-mark' : undefined}
             />
           </div>
 
@@ -303,8 +312,7 @@ const Header: React.FunctionComponent<IHeader> = ({ hidden, quill }) => {
 
               {APP_TOP_NAV_WEBSITE_ORDER.map((item, i) => {
                 const index = i + 1;
-                const open = () =>
-                  openTopWebsiteLink(APP_TOP_NAV_WEBSITE_URLS[item.key]());
+                const open = () => openTopWebsiteLink(item.key);
                 return (
                   <li key={item.key} ref={el => setTopItemRef(el, index)}>
                     <button
@@ -356,7 +364,7 @@ const Header: React.FunctionComponent<IHeader> = ({ hidden, quill }) => {
             {/* profile avatar — shown once the user is logged in */}
             {authUser?.id ? (
               <ProfileMenu />
-            ) : appShell && !authUser?.id ? (
+            ) : useAppChromeTopBar && !authUser?.id ? (
               <button
                 type="button"
                 onClick={() => requireLogin()}
@@ -394,7 +402,7 @@ const Header: React.FunctionComponent<IHeader> = ({ hidden, quill }) => {
                     className="w-full text-left py-1"
                     onClick={() => {
                       setShowTopLinksDropdown(false);
-                      openTopWebsiteLink(APP_TOP_NAV_WEBSITE_URLS[item.key]());
+                      openTopWebsiteLink(item.key);
                     }}
                   >
                     {item.label}

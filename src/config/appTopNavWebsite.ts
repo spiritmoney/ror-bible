@@ -21,6 +21,19 @@ export const APP_TOP_NAV_WEBSITE_URLS = {
 
 export type AppTopNavWebsiteKey = keyof typeof APP_TOP_NAV_WEBSITE_URLS;
 
+/** Same-tab website targets when the reader top bar is shown in a browser tab. */
+export const APP_TOP_NAV_IN_SITE: Record<
+  AppTopNavWebsiteKey,
+  { pathname: string; hash?: string }
+> = {
+  features: { pathname: WebsiteFeaturesRoute },
+  products: { pathname: WebsiteProductWebRoute },
+  pricing: { pathname: WebsitePricingRoute },
+  download: { pathname: WebsiteDownloadRoute },
+  about: { pathname: '/about' },
+  contact: { pathname: WebsiteDownloadRoute, hash: '#contact' },
+};
+
 /** Desktop / dropdown order after Bible Online. */
 export const APP_TOP_NAV_WEBSITE_ORDER: ReadonlyArray<{
   label: string;
