@@ -1,0 +1,249 @@
+{
+  "navClicks": [
+    {
+      "item": "About",
+      "pass": true,
+      "before": {
+        "hash": "#/bible-online",
+        "pathname": "/",
+        "href": "http://localhost:3400/#/bible-online"
+      },
+      "after": {
+        "hash": "#/about",
+        "pathname": "/",
+        "href": "http://localhost:3400/#/about"
+      },
+      "note": ""
+    },
+    {
+      "item": "Products",
+      "pass": true,
+      "before": {
+        "hash": "#/bible-online",
+        "pathname": "/",
+        "href": "http://localhost:3400/#/bible-online"
+      },
+      "after": {
+        "hash": "#/product",
+        "pathname": "/",
+        "href": "http://localhost:3400/#/product"
+      },
+      "note": ""
+    },
+    {
+      "item": "Bible Online",
+      "pass": false,
+      "before": {
+        "hash": "#/product",
+        "pathname": "/",
+        "href": "http://localhost:3400/#/product"
+      },
+      "after": {
+        "hash": "#/product",
+        "pathname": "/",
+        "href": "http://localhost:3400/#/product"
+      },
+      "note": ""
+    },
+    {
+      "item": "Blog",
+      "pass": true,
+      "before": {
+        "hash": "#/product",
+        "pathname": "/",
+        "href": "http://localhost:3400/#/product"
+      },
+      "after": {
+        "hash": "#/product",
+        "pathname": "/",
+        "href": "http://localhost:3400/#/product"
+      },
+      "note": "openExternal IPC"
+    },
+    {
+      "item": "Partner",
+      "pass": true,
+      "before": {
+        "hash": "#/product",
+        "pathname": "/",
+        "href": "http://localhost:3400/#/product"
+      },
+      "after": {
+        "hash": "#/product",
+        "pathname": "/",
+        "href": "http://localhost:3400/#/product"
+      },
+      "note": ""
+    },
+    {
+      "item": "Give",
+      "pass": true,
+      "before": {
+        "hash": "#/product",
+        "pathname": "/",
+        "href": "http://localhost:3400/#/product"
+      },
+      "after": {
+        "hash": "#/about",
+        "pathname": "/",
+        "href": "http://localhost:3400/#/about"
+      },
+      "note": ""
+    },
+    {
+      "item": "Contact",
+      "pass": true,
+      "before": {
+        "hash": "#/bible-online",
+        "pathname": "/",
+        "href": "http://localhost:3400/#/bible-online"
+      },
+      "after": {
+        "hash": "#/download#contact",
+        "pathname": "/",
+        "href": "http://localhost:3400/#/download#contact"
+      },
+      "note": ""
+    },
+    {
+      "item": "Sidebar:Toggle sidebar",
+      "pass": true,
+      "before": {
+        "hash": "#/bible-online",
+        "pathname": "/",
+        "href": "http://localhost:3400/#/bible-online"
+      },
+      "after": {
+        "hash": "#/about",
+        "pathname": "/",
+        "href": "http://localhost:3400/#/about"
+      }
+    },
+    {
+      "item": "Sidebar:Library",
+      "pass": false,
+      "before": {
+        "hash": "#/bible-online",
+        "pathname": "/",
+        "href": "http://localhost:3400/#/bible-online"
+      },
+      "after": {
+        "hash": "#/product",
+        "pathname": "/",
+        "href": "http://localhost:3400/#/product"
+      }
+    },
+    {
+      "item": "Sidebar:Favourites",
+      "pass": false,
+      "before": {
+        "hash": "#/bible-online",
+        "pathname": "/",
+        "href": "http://localhost:3400/#/bible-online"
+      },
+      "after": {
+        "hash": "#/bible-online",
+        "pathname": "/",
+        "href": "http://localhost:3400/#/bible-online"
+      }
+    },
+    {
+      "item": "Sidebar:Store",
+      "pass": false,
+      "before": {
+        "hash": "#/bible-online",
+        "pathname": "/",
+        "href": "http://localhost:3400/#/bible-online"
+      },
+      "after": {
+        "hash": "#/bible-online",
+        "pathname": "/",
+        "href": "http://localhost:3400/#/bible-online"
+      }
+    },
+    {
+      "item": "Sidebar:Downloads",
+      "pass": false,
+      "before": {
+        "hash": "#/bible-online",
+        "pathname": "/",
+        "href": "http://localhost:3400/#/bible-online"
+      },
+      "after": {
+        "hash": "#/bible-online",
+        "pathname": "/",
+        "href": "http://localhost:3400/#/bible-online"
+      }
+    },
+    {
+      "item": "Sidebar:Notifications",
+      "pass": false,
+      "before": {
+        "hash": "#/bible-online",
+        "pathname": "/",
+        "href": "http://localhost:3400/#/bible-online"
+      },
+      "after": {
+        "hash": "#/bible-online",
+        "pathname": "/",
+        "href": "http://localhost:3400/#/bible-online"
+      }
+    }
+  ],
+  "marketing": {
+    "about": {
+      "closeOk": false,
+      "hashAfterClose": {
+        "hash": "#/bible-online",
+        "pathname": "/",
+        "href": "http://localhost:3400/#/bible-online"
+      },
+      "chapterBefore": "",
+      "chapterAfter": "",
+      "readerPreserved": false
+    },
+    "product": {
+      "closeOk": false,
+      "hashAfterClose": {
+        "hash": "#/bible-online",
+        "pathname": "/",
+        "href": "http://localhost:3400/#/bible-online"
+      },
+      "chapterBefore": "",
+      "chapterAfter": "",
+      "readerPreserved": false
+    },
+    "partner": {
+      "closeOk": false,
+      "hashAfterClose": {
+        "hash": "#/bible-online",
+        "pathname": "/",
+        "href": "http://localhost:3400/#/bible-online"
+      },
+      "chapterBefore": "",
+      "chapterAfter": "",
+      "readerPreserved": false
+    },
+    "give": {
+      "closeOk": false,
+      "hashAfterClose": {
+        "hash": "#/bible-online",
+        "pathname": "/",
+        "href": "http://localhost:3400/#/bible-online"
+      },
+      "chapterBefore": "",
+      "chapterAfter": "",
+      "readerPreserved": false
+    }
+  },
+  "forms": {
+    "productDetailsModal": false,
+    "partnerSubmit": true,
+    "giveSubmit": true
+  },
+  "gated": {
+    "loginRoutes": false
+  },
+  "generatedAt": "2026-11-05T00:42:25.016Z",
+  "chapterBaseline": "Genesis 2"
+}
