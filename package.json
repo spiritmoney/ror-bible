@@ -1,7 +1,10 @@
 {
   "name": "rorbible",
   "version": "2.0.1",
-  "author": "Loveworld Xceptia, New Media Technologies.",
+  "author": {
+    "name": "Loveworld Xceptia, New Media Technologies",
+    "email": "mail@rorbible.com"
+  },
   "main": "dist-electron/main.js",
   "homepage": "./",
   "private": true,
@@ -196,6 +199,8 @@
     },
     "linux": {
       "artifactName": "Rhapsody-Bible.${ext}",
+      "category": "Education",
+      "maintainer": "Loveworld Xceptia <mail@rorbible.com>",
       "icon": "build-resources/icon.png",
       "target": ["AppImage", "deb"]
     },
