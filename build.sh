@@ -13,4 +13,6 @@ export REACT_APP_KINGSCHAT_REDIRECT_URL="https://rhapsodybible.web.app/auth/call
 export REACT_APP_KINGSCHAT_TOKEN_URL="https://connect.kingsch.at/developer/api/oauth2/token" \
 export REACT_APP_KINGSCHAT_PROFILE_URL="https://connect.kingsch.at/developer/api/profile" \
 
-craco build
+# Use node + relative path so Git Bash on Windows does not mangle
+# node_modules/.bin/craco into D:\d\a\... (MODULE_NOT_FOUND).
+node ./node_modules/@craco/craco/dist/bin/craco.js build
