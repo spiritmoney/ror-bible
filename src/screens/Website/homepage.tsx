@@ -24,6 +24,8 @@ import partner from '../../assets/website/sideMenu/partner.png';
 import product from '../../assets/website/sideMenu/product.png';
 import store from '../../assets/website/sideMenu/store.png';
 import Footer from './footer';
+import { STORE_URLS } from 'config/storeLinks';
+import WebsiteStoreAnchor from '../../components/Website/WebsiteStoreAnchor';
 
 type Slide = { id: string; image: string; title?: string; subtitle?: string };
 const SLIDE_INTERVAL_MS = 7000;
@@ -306,10 +308,8 @@ export default function LandingPushNav(): JSX.Element {
                   draggable={false}
                 />
                 <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-6 md:gap-8">
-                  <a
-                    href="https://web.lwappstore.com/share/appId-2f64e9cbe3f4d74c733696b585c933d4"
-                    target="_blank"
-                    rel="noopener noreferrer"
+                  <WebsiteStoreAnchor
+                    href={STORE_URLS.loveworld}
                     aria-label="Open Loveworld App Store in new tab"
                     className="shrink-0"
                   >
@@ -319,11 +319,9 @@ export default function LandingPushNav(): JSX.Element {
                       className="h-11 sm:h-12 md:h-14 w-auto object-contain cursor-pointer transition-transform duration-200 hover:scale-105"
                       draggable={false}
                     />
-                  </a>
-                  <a
-                    href="https://web.lwappstore.com/share/appId-2f64e9cbe3f4d74c733696b585c933d4"
-                    target="_blank"
-                    rel="noopener noreferrer"
+                  </WebsiteStoreAnchor>
+                  <WebsiteStoreAnchor
+                    href={STORE_URLS.googlePlay}
                     aria-label="Open Google Play Store in new tab"
                     className="shrink-0"
                   >
@@ -333,11 +331,9 @@ export default function LandingPushNav(): JSX.Element {
                       className="h-11 sm:h-12 md:h-14 w-auto object-contain cursor-pointer transition-transform duration-200 hover:scale-105"
                       draggable={false}
                     />
-                  </a>
-                  <a
-                    href="https://apps.apple.com/ng/app/ror-bible/id1461993744"
-                    target="_blank"
-                    rel="noopener noreferrer"
+                  </WebsiteStoreAnchor>
+                  <WebsiteStoreAnchor
+                    href={STORE_URLS.appStore}
                     aria-label="Open Apple App Store in new tab"
                     className="shrink-0"
                   >
@@ -347,7 +343,7 @@ export default function LandingPushNav(): JSX.Element {
                       className="h-11 sm:h-12 md:h-14 w-auto object-contain cursor-pointer transition-transform duration-200 hover:scale-105"
                       draggable={false}
                     />
-                  </a>
+                  </WebsiteStoreAnchor>
                 </div>
               </div>
             </div>

@@ -5,6 +5,9 @@ import { HEADER_HEIGHT } from './constants';
 import WebsiteLayout from "./WebsiteLayout";
 import FeaturesSection from "./featuresAbout";
 import { scrollToHash } from "../../utils/scrolToHash"; // fixed import
+import PageHero from "./PageHero";
+import Section from "./Section";
+import "./appMarketingPages.css";
 
 
 // ---------- Assets (update filenames to match your repo) ----------
@@ -253,7 +256,12 @@ export default function AboutPage({ isModal = false, onClose }: AboutPageProps):
 
   // PageInner (shared between modal & full-page)
   const PageInner = (
-    <div className="bg-brand-pale text-brand-navy">
+    <div className="website-root app-marketing-page bg-brand-pale text-brand-navy font-montserrat">
+      <PageHero
+        eyebrow="About ROR Bible+"
+        title="More than a Bible app"
+        description="Interactive study, daily Rhapsody articles, and tools to read, share, and grow—free for millions worldwide."
+      />
       <div className="w-full">
         <div className="relative w-full overflow-hidden">
           <img src={aboutBanner} alt="About banner" className="w-full h-auto object-contain " draggable={false} />
@@ -265,25 +273,22 @@ export default function AboutPage({ isModal = false, onClose }: AboutPageProps):
 
       {/* callout paragraph */}
 
-      <div className="max-w-6xl mx-auto px-12 py-10 text-center text-slate-700">
-        <span className=" font-semibold text-[1.35rem]">
+      <Section innerClassName="app-marketing-section text-center max-w-4xl">
+        <p className="app-marketing-intro font-semibold">
           All around the world, over 3 billion people are daily reading and sharing the #1 best-selling  daily devotional “Rhapsody of Realities” by Rev. (Dr.) Chris Oyakhilome, DSc. DSc. DD., completely free. From the desk of the same author, comes the ROR Bible+, a fully interactive Bible reader developed to deliver the most exhilarating study experience!
+        </p>
+      </Section>
 
-        </span>
-      </div>
-
-
-      {/* Features — delegated to FeaturesSection (pairwise layout, 2-column) */}
-      <div className="max-w-6xl mx-auto px-6 py-12">
+      <Section innerClassName="app-marketing-section" pad="tight">
         <FeaturesSection features={features} imgW={imgW} imgH={imgH} isLg={isLg} />
-      </div>
+      </Section>
 
       {/* Appreciation */}
       <img src={appreciation} alt="Appreciation block" className="w-full h-full object-cover" />
 
-      <div className="max-w-6xl mx-auto px-6 py-12">
+      <Section innerClassName="app-marketing-section" pad="tight">
         <FeaturesSection features={finalFeature} imgW={imgW} imgH={imgH} isLg={isLg} />
-      </div>
+      </Section>
     </div>
   );
 

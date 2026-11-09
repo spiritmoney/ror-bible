@@ -9,6 +9,9 @@ import { HEADER_HEIGHT } from './constants';
 import WebsiteLayout from './WebsiteLayout';
 import FeaturesSection, { ProductFeature } from './featureProduct';
 import { scrollToHash } from '../../utils/scrolToHash';
+import PageHero from './PageHero';
+import Section from './Section';
+import './appMarketingPages.css';
 
 import partnerBanner from '../../assets/partner/partnerBanner.svg';
 import partnerTranslator from '../../assets/partner/partnerTranslator.svg';
@@ -149,7 +152,12 @@ export default function PartnerPage({
   }, [location, isModal]);
 
   const PageInner = (
-    <div className="bg-slate-50 text-slate-800">
+    <div className="website-root app-marketing-page bg-brand-pale text-brand-navy font-montserrat">
+      <PageHero
+        eyebrow="Partners"
+        title="Work with ROR Bible+"
+        description="Publishers, churches, creators, and translators—join the mission to put Scripture in every language and every home."
+      />
       <div className="w-full">
         <div className="relative w-full overflow-hidden">
           <img
@@ -171,7 +179,7 @@ export default function PartnerPage({
         </div>
       </div>
 
-      <div className="max-w-6xl mx-auto px-6 py-12">
+      <div className="max-w-6xl mx-auto px-6 py-12 app-marketing-section">
         <section
           id="be_a_translator"
           className="grid grid-cols-1 lg:grid-cols-[469px_1fr] gap-6 items-start"
@@ -310,14 +318,14 @@ export default function PartnerPage({
           </div>
         </section>
 
-        <div className="mt-10">
+        <Section innerClassName="app-marketing-section" pad="tight">
           <FeaturesSection
             features={features}
             imgW={469}
             imgH={487}
             isLg={isLg}
           />
-        </div>
+        </Section>
 
         <section
           id="careers"

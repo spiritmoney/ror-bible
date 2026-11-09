@@ -2,8 +2,9 @@ import clsx from 'clsx';
 import React from 'react';
 // import style from './styles.module.scss';
 import { useRef, useEffect, useState } from 'react';
-import { useRecoilValue } from 'recoil';
-import { DarkThemeAtom } from 'store/atoms/general';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { DarkThemeAtom, libraryAtom } from 'store/atoms/general';
+import { notificationsModalAtom } from 'store/atoms/workspace';
 import { useIntersectionObserver } from 'usehooks-ts';
 
 export interface IModal {
@@ -40,7 +41,18 @@ const Modal: React.FunctionComponent<IModal> = ({
   const openRef = useRef<any>();
   const closeRef = useRef<any>();
   const DarkTheme = useRecoilValue(DarkThemeAtom);
+  const setLibrary = useSetRecoilState(libraryAtom);
+  const setNotifications = useSetRecoilState(notificationsModalAtom);
 
+  const blockedModal =
+    id === 'library' || id === 'notifications';
+
+  useEffect(() => {
+    if (!blockedModal) return;
+    setLibrary(false);
+    setNotifications(false);
+    setIsShown?.(false);
+  }, [blockedModal, setIsShown, setLibrary, setNotifications]);
 
 
   // useMemo(() => {
@@ -51,21 +63,60 @@ const Modal: React.FunctionComponent<IModal> = ({
     if (isVisible) {
       setshh(content);
       onOpen && onOpen();
-    } else {
+    } else if (!isShown) {
       setshh(undefined);
       setIsShown && setIsShown(false);
       onClose && onClose();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isVisible]);
+  }, [isVisible, isShown]);
 
   useEffect(() => {
-    if (isShown) {
-      openRef.current.click();
-    } else {
-      closeRef.current.click();
+    // Never drive Bootstrap open for disabled chrome modals — that flashes the gray backdrop.
+    if (blockedModal) {
+      return;
     }
-  }, [isShown]);
+    if (isShown) {
+      openRef.current?.click();
+    } else {
+      closeRef.current?.click();
+    }
+  }, [isShown, blockedModal]);
+
+  useEffect(() => {
+    if (!isShown || hasHeader) {
+      return undefined;
+    }
+    const modalEl = ref.current;
+    if (!modalEl) {
+      return undefined;
+    }
+
+    const dismiss = () => {
+      closeRef.current?.click();
+      setIsShown?.(false);
+    };
+
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        event.preventDefault();
+        dismiss();
+      }
+    };
+
+    const onBackdropClick = (event: MouseEvent) => {
+      if (event.target === modalEl) {
+        dismiss();
+      }
+    };
+
+    document.addEventListener('keydown', onKeyDown);
+    modalEl.addEventListener('mousedown', onBackdropClick);
+    return () => {
+      document.removeEventListener('keydown', onKeyDown);
+      modalEl.removeEventListener('mousedown', onBackdropClick);
+    };
+  }, [hasHeader, isShown, setIsShown]);
 
   return (
     <>
@@ -112,8 +163,23 @@ const Modal: React.FunctionComponent<IModal> = ({
                 ></button>
               </div>
             )}
+            {!hasHeader && (
+              <button
+                type="button"
+                className="modal-headerless-close ds-focus-visible"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+                onClick={() => setIsShown?.(false)}
+              />
+            )}
             <div className="overflow-auto">
-              {loadOnOpen ? isVisible ? <>{shh}</> : '' : <>{shh}</>}
+              {loadOnOpen
+                ? isVisible
+                  ? <>{shh}</>
+                  : ''
+                : isShown
+                  ? <>{content}</>
+                  : <>{shh}</>}
             </div>
           </div>
         </div>

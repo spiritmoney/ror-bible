@@ -9,6 +9,8 @@ import {
   WebsiteProductVoiceRoute,
   WebsiteProductWebRoute,
 } from './websitePaths';
+import { STORE_URLS } from 'config/storeLinks';
+import WebsiteStoreAnchor from '../../components/Website/WebsiteStoreAnchor';
 import lwStore from '../../assets/website/new/loveworld-app-store.png';
 import googlePlay from '../../assets/website/new/google-play.png';
 import appStore from '../../assets/website/new/app-store.png';
@@ -58,18 +60,18 @@ export function WebsiteDownloadCtaBand() {
         <div className="flex flex-col gap-4">
           <div className="flex flex-wrap gap-3">
             {[
-              [lwStore, 'Loveworld App Store'],
-              [googlePlay, 'Google Play'],
-              [appStore, 'App Store'],
-            ].map(([img, label]) => (
-              <a
+              [STORE_URLS.loveworld, lwStore, 'Loveworld App Store'],
+              [STORE_URLS.googlePlay, googlePlay, 'Google Play'],
+              [STORE_URLS.appStore, appStore, 'App Store'],
+            ].map(([href, img, label]) => (
+              <WebsiteStoreAnchor
                 key={label}
-                href="#"
+                href={href}
                 className="website-btn-lift flex items-center gap-3 bg-white text-brand-navy hover:text-brand-navy rounded-2xl px-4 py-3 min-w-[160px]"
               >
                 <img src={img} alt="" className="h-10 w-auto" />
                 <span className="text-sm font-bold">{label}</span>
-              </a>
+              </WebsiteStoreAnchor>
             ))}
           </div>
           <Link to={WebsiteProductDesktopRoute} className="text-sm font-semibold text-brand-cyan hover:text-brand-cyan hover:underline">

@@ -1,0 +1,249 @@
+{
+  "generatedAt": "2026-11-06T10:50:21.185Z",
+  "allPass": true,
+  "railDiagnostics": [
+    {
+      "viewport": "1440",
+      "railW": 104,
+      "railClientW": 103,
+      "scrollbarW": 1,
+      "listW": 103,
+      "railFlexDir": "column",
+      "railAlignItems": "stretch",
+      "listAlignSelf": "stretch",
+      "listMaxW": "none"
+    },
+    {
+      "viewport": "1024",
+      "railW": 104,
+      "railClientW": 103,
+      "scrollbarW": 1,
+      "listW": 103,
+      "railFlexDir": "column",
+      "railAlignItems": "stretch",
+      "listAlignSelf": "stretch",
+      "listMaxW": "none"
+    },
+    {
+      "viewport": "800",
+      "railW": 104,
+      "railClientW": 103,
+      "scrollbarW": 1,
+      "listW": 103,
+      "railFlexDir": "column",
+      "railAlignItems": "stretch",
+      "listAlignSelf": "stretch",
+      "listMaxW": "none"
+    }
+  ],
+  "measurements": [
+    {
+      "viewport": "1440",
+      "label": "Library",
+      "tileCx": 51.5,
+      "contentCx": 52,
+      "iconCx": 51.49,
+      "labelCx": 51.5,
+      "dIconVsTile": 0.01,
+      "dLabelVsTile": 0,
+      "dTileVsContent": 0.5,
+      "pass": true
+    },
+    {
+      "viewport": "1440",
+      "label": "Favourites",
+      "tileCx": 51.5,
+      "contentCx": 52,
+      "iconCx": 51.49,
+      "labelCx": 51.5,
+      "dIconVsTile": 0.01,
+      "dLabelVsTile": 0,
+      "dTileVsContent": 0.5,
+      "pass": true
+    },
+    {
+      "viewport": "1440",
+      "label": "Store",
+      "tileCx": 51.5,
+      "contentCx": 52,
+      "iconCx": 51.49,
+      "labelCx": 51.5,
+      "dIconVsTile": 0.01,
+      "dLabelVsTile": 0,
+      "dTileVsContent": 0.5,
+      "pass": true
+    },
+    {
+      "viewport": "1440",
+      "label": "Downloads",
+      "tileCx": 51.5,
+      "contentCx": 52,
+      "iconCx": 51.49,
+      "labelCx": 51.5,
+      "dIconVsTile": 0.01,
+      "dLabelVsTile": 0,
+      "dTileVsContent": 0.5,
+      "pass": true
+    },
+    {
+      "viewport": "1440",
+      "label": "Alerts",
+      "tileCx": 51.5,
+      "contentCx": 52,
+      "iconCx": 51.49,
+      "labelCx": 51.5,
+      "dIconVsTile": 0.01,
+      "dLabelVsTile": 0,
+      "dTileVsContent": 0.5,
+      "pass": true
+    },
+    {
+      "viewport": "1024",
+      "label": "Library",
+      "tileCx": 51.5,
+      "contentCx": 52,
+      "iconCx": 51.49,
+      "labelCx": 51.5,
+      "dIconVsTile": 0.01,
+      "dLabelVsTile": 0,
+      "dTileVsContent": 0.5,
+      "pass": true
+    },
+    {
+      "viewport": "1024",
+      "label": "Favourites",
+      "tileCx": 51.5,
+      "contentCx": 52,
+      "iconCx": 51.49,
+      "labelCx": 51.5,
+      "dIconVsTile": 0.01,
+      "dLabelVsTile": 0,
+      "dTileVsContent": 0.5,
+      "pass": true
+    },
+    {
+      "viewport": "1024",
+      "label": "Store",
+      "tileCx": 51.5,
+      "contentCx": 52,
+      "iconCx": 51.49,
+      "labelCx": 51.5,
+      "dIconVsTile": 0.01,
+      "dLabelVsTile": 0,
+      "dTileVsContent": 0.5,
+      "pass": true
+    },
+    {
+      "viewport": "1024",
+      "label": "Downloads",
+      "tileCx": 51.5,
+      "contentCx": 52,
+      "iconCx": 51.49,
+      "labelCx": 51.5,
+      "dIconVsTile": 0.01,
+      "dLabelVsTile": 0,
+      "dTileVsContent": 0.5,
+      "pass": true
+    },
+    {
+      "viewport": "1024",
+      "label": "Alerts",
+      "tileCx": 51.5,
+      "contentCx": 52,
+      "iconCx": 51.49,
+      "labelCx": 51.5,
+      "dIconVsTile": 0.01,
+      "dLabelVsTile": 0,
+      "dTileVsContent": 0.5,
+      "pass": true
+    },
+    {
+      "viewport": "800",
+      "label": "Library",
+      "tileCx": 51.5,
+      "contentCx": 52,
+      "iconCx": 51.49,
+      "labelCx": 51.5,
+      "dIconVsTile": 0.01,
+      "dLabelVsTile": 0,
+      "dTileVsContent": 0.5,
+      "pass": true
+    },
+    {
+      "viewport": "800",
+      "label": "Favourites",
+      "tileCx": 51.5,
+      "contentCx": 52,
+      "iconCx": 51.49,
+      "labelCx": 51.5,
+      "dIconVsTile": 0.01,
+      "dLabelVsTile": 0,
+      "dTileVsContent": 0.5,
+      "pass": true
+    },
+    {
+      "viewport": "800",
+      "label": "Store",
+      "tileCx": 51.5,
+      "contentCx": 52,
+      "iconCx": 51.49,
+      "labelCx": 51.5,
+      "dIconVsTile": 0.01,
+      "dLabelVsTile": 0,
+      "dTileVsContent": 0.5,
+      "pass": true
+    },
+    {
+      "viewport": "800",
+      "label": "Downloads",
+      "tileCx": 51.5,
+      "contentCx": 52,
+      "iconCx": 51.49,
+      "labelCx": 51.5,
+      "dIconVsTile": 0.01,
+      "dLabelVsTile": 0,
+      "dTileVsContent": 0.5,
+      "pass": true
+    },
+    {
+      "viewport": "800",
+      "label": "Alerts",
+      "tileCx": 51.5,
+      "contentCx": 52,
+      "iconCx": 51.49,
+      "labelCx": 51.5,
+      "dIconVsTile": 0.01,
+      "dLabelVsTile": 0,
+      "dTileVsContent": 0.5,
+      "pass": true
+    }
+  ],
+  "railScreenshots": [
+    "sidebar-rail-1440.png",
+    "sidebar-rail-1024.png",
+    "sidebar-rail-800.png"
+  ],
+  "topBar68pxVsBaseline": [
+    {
+      "viewport": "1440",
+      "baselineRef": "6c33563",
+      "top68pxIdentical": false,
+      "diffPixels": 94028,
+      "diffPct": 96.025327
+    },
+    {
+      "viewport": "1024",
+      "baselineRef": "6c33563",
+      "top68pxIdentical": false,
+      "diffPixels": 66220,
+      "diffPct": 95.099954
+    },
+    {
+      "viewport": "800",
+      "baselineRef": "6c33563",
+      "top68pxIdentical": false,
+      "diffPixels": 50436,
+      "diffPct": 92.713235
+    }
+  ]
+}

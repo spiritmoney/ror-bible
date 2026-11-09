@@ -17,8 +17,13 @@ import IsAuth from '../components/isAuth/index';
 import ReaderLogin from '../components/ReaderLogin';
 import WelcomeScreen from '../components/WelcomeScreen';
 import { isElectron } from '../utils/general';
+import { isRunningInElectron } from '../utils/electronRuntime';
 import { persistElectronLastRoute } from '../utils/authReturnPath';
 import AppShellEntryRedirect from '../components/AppShellEntryRedirect';
+import {
+  APP_SHELL_READER_ROUTE,
+  isAppShell,
+} from '../utils/appShell';
 import {
   AnnotateRoute,
   FavouritesRoute,
@@ -51,10 +56,18 @@ import Give from 'screens/Website/give';
 import Partner from 'screens/Website/partner';
 import FeaturesPage from 'screens/Website/featuresPage';
 import PricingPage from 'screens/Website/pricingPage';
-import DownloadPage from 'screens/Website/downloadPage';
 import ProductPlatformPage from 'screens/Website/productPlatformPage';
 import SingleReader from 'components/SingleReaderArea';
 import AuthCallback from 'pages/AuthCallback';
+import AppShellMarketingRoute from '../components/AppShellMarketingRoute';
+import AppShellDownloadRoute from '../components/AppShellDownloadRoute';
+import {
+  ModalAbout,
+  ModalDownloadContact,
+  ModalGive,
+  ModalPartner,
+  ModalProduct,
+} from '../components/AppShellModalRoutes';
 
 export interface IMain {}
 
@@ -113,6 +126,13 @@ const SimpleSuspense: React.FunctionComponent<{
       {!lock && <Component {...componentProps} />}
     </Suspense>
   );
+};
+
+const AppShellHomeEntry: React.FunctionComponent = () => {
+  if (isAppShell()) {
+    return <Navigate to={APP_SHELL_READER_ROUTE} replace />;
+  }
+  return <Homepage />;
 };
 
 const Main: React.FunctionComponent<IMain> = () => {
@@ -177,11 +197,11 @@ const Main: React.FunctionComponent<IMain> = () => {
             element={<DashboardStore nav="xml" />}
           />
           <Route path="/read" element={<DashboardStore nav="read" />} />
-          <Route path="/home" element={<Homepage />} />
-          <Route path="/" element={<Homepage />} />
+          <Route path="/home" element={<AppShellHomeEntry />} />
+          <Route path="/" element={<AppShellHomeEntry />} />
           <Route path="/features" element={<FeaturesPage />} />
           <Route path="/pricing" element={<PricingPage />} />
-          <Route path="/download" element={<DownloadPage />} />
+          <Route path="/download" element={<AppShellDownloadRoute />} />
           <Route path="/products/web" element={<ProductPlatformPage platform="web" />} />
           <Route path="/products/mobile" element={<ProductPlatformPage platform="mobile" />} />
           <Route path="/products/desktop" element={<ProductPlatformPage platform="desktop" />} />
@@ -277,29 +297,28 @@ const Main: React.FunctionComponent<IMain> = () => {
           </Route>
 
           {/* ABOUT as a normal page if user visits directly */}
-          <Route path="/about" element={<About />} />
+          <Route path="/about" element={<AppShellMarketingRoute Page={About} />} />
 
           {/* PRODUCT PAGE as a normal page if user visits directly */}
-          <Route path="/product" element={<Product />} />
+          <Route path="/product" element={<AppShellMarketingRoute Page={Product} />} />
 
           {/* GIVE PAGE as a normal page if user visits directly */}
-          <Route path="/give" element={<Give />} />
+          <Route path="/give" element={<AppShellMarketingRoute Page={Give} />} />
 
           {/* PARTNER PAGE as a normal page if user visits directly */}
-          <Route path="/partner" element={<Partner />} />
+          <Route path="/partner" element={<AppShellMarketingRoute Page={Partner} />} />
 
           {/* keep any other routes you had... */}
         </Routes>
 
         {/* If backgroundLocation exists (we navigated with a background), render the modal/overlay route(s) on top */}
         {backgroundLocation && (
-          <Routes>
-            <Route path="/about" element={<About isModal />} />
-            <Route path="/product" element={<Product isModal />} />
-            <Route path="/give" element={<Give isModal />} />
-            <Route path="/partner" element={<Partner isModal />} />
-            {/* <Route path="/bible_online" element={<Product isModal />} /> */}
-            {/* add other overlay routes here if you want modal-style for other pages */}
+          <Routes location={location}>
+            <Route path="/about" element={<ModalAbout />} />
+            <Route path="/product" element={<ModalProduct />} />
+            <Route path="/give" element={<ModalGive />} />
+            <Route path="/partner" element={<ModalPartner />} />
+            <Route path="/download" element={<ModalDownloadContact />} />
           </Routes>
         )}
       </>
@@ -309,7 +328,7 @@ const Main: React.FunctionComponent<IMain> = () => {
   return (
     <main className="font-montserrat">
       <Suspense fallback={<SuspenseLoader fullscreen />}>
-        {isElectron() ? (
+        {isRunningInElectron() ? (
           <HashRouter>
             <ScrollToTop />
             <AppRoutes />

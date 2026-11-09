@@ -9,6 +9,7 @@ on:
       - electron-open-bible
       - pwa-icons
       - app-routing
+      - electron-nav
     paths:
       - 'electron/**'
       - 'src/**'
@@ -16,6 +17,8 @@ on:
       - 'build-resources/**'
       - 'package.json'
       - 'yarn.lock'
+      - 'scripts/electron-build.sh'
+      - '.github/workflows/electron-build.yml'
 
 jobs:
   build-windows:
@@ -29,19 +32,17 @@ jobs:
           node-version: '22'
           cache: yarn
       - run: yarn install --frozen-lockfile
-      - run: npm run electron:compile
       - run: npm test -- --watchAll=false --passWithNoTests
-      - run: npm run build-electron
+      - run: npm run electron:build:win
         env:
           CI: "false"
           NODE_OPTIONS: --max-old-space-size=6144
           GENERATE_SOURCEMAP: "false"
-      - run: npx electron-builder --win --x64 --publish never
       - uses: actions/upload-artifact@v4
         with:
           name: rhapsody-bible-windows
           path: |
-            dist/*.exe
+            dist/Rhapsody-Bible-Setup.exe
             dist/*.blockmap
 
   build-macos:
@@ -55,24 +56,74 @@ jobs:
           node-version: '22'
           cache: yarn
       - run: yarn install --frozen-lockfile
-      - run: npm run electron:compile
       - run: npm test -- --watchAll=false --passWithNoTests
-      - run: npm run build-electron
+      - run: npm run electron:build:mac
         env:
           CI: "false"
           NODE_OPTIONS: --max-old-space-size=6144
           GENERATE_SOURCEMAP: "false"
-      - run: npx electron-builder --mac dmg --x64 --arm64 --publish never
+      - name: Rename macOS artifacts
+        run: |
+          if [ -f dist/Rhapsody-Bible-arm64.dmg ]; then
+            mv dist/Rhapsody-Bible-arm64.dmg dist/Rhapsody-Bible-Apple-Silicon.dmg
+          fi
+          if [ -f dist/Rhapsody-Bible-x64.dmg ]; then
+            mv dist/Rhapsody-Bible-x64.dmg dist/Rhapsody-Bible-Intel.dmg
+          fi
       - uses: actions/upload-artifact@v4
         with:
           name: rhapsody-bible-macos
           path: |
-            dist/*.dmg
-            dist/mac/*.dmg
+            dist/Rhapsody-Bible-Apple-Silicon.dmg
+            dist/Rhapsody-Bible-Intel.dmg
+
+  build-linux:
+    runs-on: ubuntu-latest
+    env:
+      CSC_IDENTITY_AUTO_DISCOVERY: false
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: yarn
+      - run: yarn install --frozen-lockfile
+      - run: npm test -- --watchAll=false --passWithNoTests
+      - run: npm run electron:build:linux
+        env:
+          CI: "false"
+          NODE_OPTIONS: --max-old-space-size=6144
+          GENERATE_SOURCEMAP: "false"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: rhapsody-bible-linux
+          path: |
+            dist/Rhapsody-Bible.AppImage
+            dist/Rhapsody-Bible.deb
 
   release:
-    if: false
-    needs: [build-windows, build-macos]
+    needs: [build-windows, build-macos, build-linux]
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
-      - run: echo "Enable when GH_TOKEN and publish URL are configured"
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: rhapsody-bible-*
+          merge-multiple: true
+          path: release-assets
+      - name: Upload to GitHub Release (latest)
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: desktop-build-${{ github.run_id }}
+          name: Desktop build ${{ github.run_id }}
+          make_latest: true
+          prerelease: false
+          files: |
+            release-assets/Rhapsody-Bible-Setup.exe
+            release-assets/Rhapsody-Bible-Apple-Silicon.dmg
+            release-assets/Rhapsody-Bible-Intel.dmg
+            release-assets/Rhapsody-Bible.AppImage
+            release-assets/Rhapsody-Bible.deb
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

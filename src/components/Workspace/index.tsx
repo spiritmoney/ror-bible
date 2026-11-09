@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect } from 'react';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { footerHeightAtom, headerHeightAtom } from '../../store/atoms/size';
 import Anotations from '../Anotations';
@@ -13,10 +13,17 @@ import AdminSideMenu from 'components/AdminSideMenu';
 // import style from './styles.module.scss';
 import './styles.scss';
 import { SetNavAtom, SideNavAtom, readModeAtom } from 'store/atoms/general';
-import { Navigate, useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useUser } from 'hooks/useUser';
 import { LoginRoute } from 'navigation/routes';
 import { saveAuthReturnPath } from 'utils/authReturnPath';
+import {
+  SidebarAlertsIcon,
+  SidebarDownloadsIcon,
+  SidebarFavouritesIcon,
+  SidebarLibraryIcon,
+  SidebarStoreIcon,
+} from './AppSidebarIcons';
 import lang from 'assets/Frame-Lang.png';
 import { ReactComponent as Speaker } from '../../assets/speaker.svg';
 import { ReactComponent as ParalStudy } from '../../assets/paralStudy.svg';
@@ -39,7 +46,7 @@ import Multilayout from 'screens/Multi_layout/multi_layout_component';
 import DynamicProductDetails from 'screens/Store/dynamicProduct_Details';
 import XmlToJsonConverter from 'screens/Xml2Json';
 
-// Views that require a logged-in KingsChat user.
+// Views that require a logged-in KingsChat user (opened via login-on-demand actions).
 const PROTECTED_NAVS = [
   'store',
   'store_audio',
@@ -51,16 +58,36 @@ const PROTECTED_NAVS = [
   'fav',
 ];
 
-const NAV_ROUTE: Record<string, string> = {
-  store: '/store',
-  store_audio: '/store/audioBibles',
-  store_bible: '/store/bible',
-  store_resources: '/store/resources',
-  store_translations: '/store/translations',
-  store_freesbies: '/store/freesbies',
-  multi_layout: '/bible-online',
-  fav: '/favourites',
-};
+const AppSidebarRailButton: React.FC<{
+  label: string;
+  active?: boolean;
+  disabled?: boolean;
+  comingSoon?: boolean;
+  onClick?: () => void;
+  icon: React.ReactNode;
+}> = ({ label, active, disabled, comingSoon, onClick, icon }) => (
+  <li className="w-full">
+    <button
+      type="button"
+      tabIndex={disabled ? -1 : undefined}
+      className={clsx('a-s-opt app-sidebar-item w-full', {
+        'app-sidebar-item--active': Boolean(active) && !disabled,
+        'app-sidebar-item--disabled': disabled,
+        'app-sidebar-item--coming-soon': disabled && comingSoon,
+      })}
+      disabled={disabled}
+      aria-disabled={disabled ? true : undefined}
+      aria-label={label}
+      title={disabled && comingSoon ? 'Coming soon' : label}
+      onClick={disabled ? undefined : onClick}
+    >
+      <div className="left">
+        <div className="a-s-logo app-sidebar-icon-wrap">{icon}</div>
+        <div className="a-s-label app-sidebar-menu-label">{label}</div>
+      </div>
+    </button>
+  </li>
+);
 
 export interface IWorkspace {
   setQuill?: React.Dispatch<any>;
@@ -90,28 +117,35 @@ const Workspace: React.FunctionComponent<IWorkspace> = ({
   const headerHeight = useRecoilValue(headerHeightAtom);
   const [sideNav, setSideNav] = useRecoilState(SideNavAtom);
   const [nav, setNav] = useRecoilState(SetNavAtom);
-  const { isAuthenticated } = useUser();
+  const navigate = useNavigate();
   const location = useLocation();
+  const { isAuthenticated, user } = useUser();
 
-  // Protect store / bible-online / favourites (and product details) behind
-  // login. Browsing, reading and audio remain public.
-  if (PROTECTED_NAVS.includes(nav) && !isAuthenticated) {
-    const from =
-      location.pathname + location.search + location.hash ||
-      NAV_ROUTE[nav] ||
-      '/bible-online';
-    saveAuthReturnPath(from);
-    return <Navigate to={LoginRoute} state={{ from }} replace />;
-  }
-
-  const handleSideNav = () => {
-    setSideNav((prev: boolean) => !prev);
+  /** KingsChat session: use user.id (matches Sign in), not stale localStorage email alone. */
+  const redirectToLoginIfNeeded = (): boolean => {
+    if (user?.id) {
+      return false;
+    }
+    const returnPath = location.pathname + location.search + location.hash;
+    saveAuthReturnPath(returnPath);
+    navigate(LoginRoute, { state: { from: returnPath } });
+    return true;
   };
+
+  React.useEffect(() => {
+    if (PROTECTED_NAVS.includes(nav) && !isAuthenticated) {
+      setNav('multi_layout');
+    }
+  }, [isAuthenticated, nav, setNav]);
+
   const handleFav = () => {
+    if (redirectToLoginIfNeeded()) return;
     setSideNav(true);
     setNav('fav');
   };
+
   const handleStore = () => {
+    if (redirectToLoginIfNeeded()) return;
     setSideNav(true);
     setNav('store');
   };
@@ -135,186 +169,22 @@ const Workspace: React.FunctionComponent<IWorkspace> = ({
           maxHeight: `calc(100vh - ${footerHeight + headerHeight}px)`,
         }}
       >
-        <div
-          className={clsx(
-            'SideNav relative bg-[var(--ds-blue)] w-[18%] text-[#F2F3F3] flex transition-width duration-500 ease-in-out animate-fadein',
-            { '!w-[6%]': sideNav === false }
-          )}
-        >
-          <ul
-            className={clsx('mt-3 w-full', {
-              // 'w-full' : sideNav === true, 'w-[20%]' : sideNav === false
-            })}
-          >
-            <li className={clsx('a-s-opt  w-full')}>
-              {/* Hamburger Back */}
-              <div className="left">
-                <div
-                  className={clsx('a-s-logo hover:animate-bounce', {
-                    hidden: sideNav === false,
-                  })}
-                >
-                  <svg
-                    onClick={handleSideNav}
-                    className={clsx({ hidden: sideNav === false })}
-                    width="37"
-                    height="20"
-                    viewBox="0 0 37 20"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      fill-rule="evenodd"
-                      clip-rule="evenodd"
-                      d="M7.37117 18.9774C7.37117 19.606 7.75458 20 8.16655 20H35.6664C36.0786 20 36.4618 19.6058 36.4618 18.9774C36.4618 18.6225 36.0211 18.182 35.6664 18.182H8.16655C7.8117 18.182 7.37117 18.6225 7.37117 18.9774ZM3.86246 10.9092H35.5179C36.007 10.9092 36.4622 10.515 36.4622 9.88639C36.4622 9.53154 35.9391 9.09101 35.5179 9.09101H3.86246V7.36256L0 9.88657L3.86246 12.4104V10.9094V10.9092ZM7.37117 0.795379C7.37117 1.42395 7.75458 1.81816 8.16655 1.81816H35.6664C36.0786 1.81816 36.4618 1.42395 36.4618 0.795379C36.4618 0.440717 36.0211 0 35.6664 0H8.16655C7.8117 0 7.37117 0.440717 7.37117 0.795379Z"
-                      fill="#EAFCFF"
-                    />
-                  </svg>
-                </div>
-                {/* left hamburger */}
-                <div
-                  className={clsx('a-s-logo hover:animate-bounce', {
-                    hidden: sideNav === true,
-                  })}
-                >
-                  <svg
-                    onClick={handleSideNav}
-                    className={clsx({ hidden: sideNav === true })}
-                    width="57"
-                    height="35"
-                    viewBox="0 0 57 35"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M54.6692 0H2.20997C1.1753 0 0.336426 0.881571 0.336426 1.96889C0.336426 3.05621 1.1753 3.93778 2.20997 3.93778H54.6692C55.7038 3.93778 56.5427 3.05621 56.5427 1.96889C56.5427 0.881571 55.7038 0 54.6692 0Z"
-                      fill="#EBECEE"
-                    />
-                    <path
-                      d="M54.3327 15.3279H1.87354C0.838879 15.3279 0 16.2095 0 17.2968C0 18.3841 0.838879 19.2657 1.87354 19.2657H54.3327C55.3674 19.2657 56.2063 18.3841 56.2063 17.2968C56.2063 16.2095 55.3674 15.3279 54.3327 15.3279Z"
-                      fill="#EBECEE"
-                    />
-                    <path
-                      d="M54.3327 30.675H1.87354C0.838879 30.675 0 31.5557 0 32.6439C0 33.7322 0.838879 34.6128 1.87354 34.6128H54.3327C55.3674 34.6128 56.2063 33.7322 56.2063 32.6439C56.2063 31.5557 55.3674 30.675 54.3327 30.675Z"
-                      fill="#EBECEE"
-                    />
-                  </svg>
-                </div>
-              </div>
-            </li>
-
-            <li
-              className={clsx('a-s-opt  hover:bg-[var(--ds-blue)] w-full', {
-                'bg-[var(--ds-blue)]': nav === 'library',
-              })}
-              // onClick={() => setNav('library')}
-            >
-              {/* Library */}
-              <div className="left">
-                <div
-                  className={clsx('a-s-logo hover:animate-bounce', {
-                    show: sideNav === false,
-                  })}
-                >
-                  <svg
-                    width="25"
-                    height="25"
-                    viewBox="0 0 25 25"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      fill-rule="evenodd"
-                      clip-rule="evenodd"
-                      d="M0.80589 23.2171V22.5624H4.12971C4.35022 23.5087 4.82979 23.8153 5.03634 24.1236C4.53964 24.2394 2.42529 24.174 1.76281 24.174C1.14538 24.174 0.806049 23.8345 0.806049 23.2171H0.80589ZM8.86384 20.9508H23.7711V22.5624H8.86384V20.9508ZM7.40325 20.9508H8.05795V22.5624H7.40325C6.16062 22.5624 6.11937 20.9508 7.40325 20.9508ZM4.02898 21.555V21.7565H0.805732V20.1449H4.43176C4.35768 20.4225 4.02898 20.7951 4.02898 21.555ZM5.6406 21.6558C5.6406 22.1869 5.72658 22.5132 6.0794 22.8789C6.28468 23.0916 6.71078 23.368 7.1012 23.368H24.174V24.1739H7.45369C6.60846 24.1739 6.05021 23.92 5.60173 23.5077C4.61134 22.5968 4.58993 20.9766 5.57587 20.0299C5.98358 19.6383 6.62131 19.3392 7.40325 19.3392H24.1739V20.1449H7.15133C6.37415 20.1449 5.64044 20.8786 5.64044 21.6558H5.6406ZM5.03634 19.3392H0.80589V8.05795H5.6406V18.9865C5.42548 19.0439 5.15183 19.339 5.03634 19.339V19.3392ZM16.9218 8.86384H20.9508V18.5334H16.9218V8.86384ZM12.0869 6.44633H14.5043V18.5333H12.0869V6.44633ZM6.44633 18.634V12.8927H9.66958V18.5333H7.05075C6.84245 18.5333 6.5807 18.5696 6.44633 18.634ZM6.44633 11.281H9.66958V12.0868H6.44633V11.281ZM6.44633 8.86369H9.66958V10.4753H6.44633V8.86369ZM16.9218 7.25206H20.9508V8.05795H16.9218V7.25206ZM0.80589 5.64044H5.6406V7.25206H0.80589V5.64044ZM16.9218 5.79147C16.9218 5.15802 17.2451 4.83455 17.8786 4.83455H19.9937C21.0728 4.83455 20.9506 5.72611 20.9506 6.44617H16.9216V5.79147H16.9218ZM11.2812 6.04323V18.5331H10.4753V1.76249C10.4753 1.12904 10.7988 0.805732 11.4322 0.805732H15.159C15.7764 0.805732 16.1159 1.14522 16.1159 1.76249V18.5331H15.31V6.04323C15.31 5.79956 15.1507 5.64028 14.9071 5.64028H11.684C11.4403 5.64028 11.281 5.79956 11.281 6.04323H11.2812ZM0.80589 4.17984C0.80589 3.54639 1.12936 3.22309 1.76265 3.22309H4.68368C5.76275 3.22309 5.6406 4.11448 5.6406 4.83471H0.80589V4.18V4.17984ZM9.66958 1.51073V8.05779H6.44633V3.87763C6.44633 3.2123 5.74514 2.4172 4.93544 2.4172H1.51089C0.733709 2.4172 0 3.15091 0 3.92808V23.4687C0 24.277 0.793358 24.9796 1.46044 24.9796C2.11768 24.9796 4.97114 25.0624 5.40407 24.8944C5.48735 24.862 5.77766 24.6775 5.79162 24.6775C6.00928 24.6775 6.36241 24.9798 7.05075 24.9798H24.5768C24.8203 24.9798 24.9796 24.8205 24.9796 24.577V22.9653C24.9796 22.7018 24.8246 22.5832 24.5768 22.5624V20.9508C24.8248 20.9301 24.9796 20.8115 24.9796 20.5478V18.9362C24.9796 18.6925 24.8203 18.5333 24.5768 18.5333H21.7565V5.48942C21.7565 5.11312 21.4922 4.69225 21.2926 4.49268C21.0628 4.26281 20.6908 4.02898 20.2456 4.02898H17.5763C17.3522 4.02898 17.0708 4.15145 16.9216 4.23045C16.9216 3.43852 17.0032 2.08992 16.9166 1.36478C16.8361 0.691352 16.1768 0 15.4108 0H11.1803C10.4031 0 9.66942 0.733709 9.66942 1.51089L9.66958 1.51073Z"
-                      fill="white"
-                    />
-                    <path
-                      fill-rule="evenodd"
-                      clip-rule="evenodd"
-                      d="M2.41722 13.7488C2.37772 13.4939 2.61615 12.9447 3.18234 12.905C3.62796 12.8738 3.98934 13.2583 4.01663 13.6577C4.04709 14.1038 3.66381 14.4647 3.26372 14.492C2.81953 14.5223 2.47909 14.1494 2.41722 13.7488ZM1.61133 13.5978C1.61133 15.9967 4.83457 15.6952 4.83457 13.7993C4.83457 13.2861 4.74843 12.9283 4.37071 12.5508C3.37715 11.5572 1.61133 12.2628 1.61133 13.5978Z"
-                      fill="white"
-                    />
-                    <path
-                      fill-rule="evenodd"
-                      clip-rule="evenodd"
-                      d="M12.4895 3.27351C12.45 3.01858 12.6884 2.46937 13.2546 2.42971C13.7001 2.39846 14.0619 2.78316 14.0889 3.18245C14.1568 4.18934 12.6543 4.3383 12.4895 3.27351ZM11.6838 3.12249C11.6838 5.4123 14.9068 5.4142 14.9068 3.12249C14.9068 2.29296 14.2083 1.6116 13.1945 1.6116C12.4173 1.6116 11.6836 2.34531 11.6836 3.12249H11.6838Z"
-                      fill="white"
-                    />
-                    <path
-                      fill-rule="evenodd"
-                      clip-rule="evenodd"
-                      d="M18.5334 11.2812C18.5334 10.7724 19.3393 10.7724 19.3393 11.2812C19.3393 11.7899 18.5334 11.7899 18.5334 11.2812ZM17.7275 11.1805C17.7275 12.936 20.1449 12.936 20.1449 11.1805C20.1449 10.564 19.6155 10.0725 18.8355 10.0725C18.2814 10.0725 17.7275 10.6265 17.7275 11.1805Z"
-                      fill="white"
-                    />
-                  </svg>
-                </div>
-                <div
-                  className={clsx('a-s-label', {
-                    'hidden opacity-0 transform -translate-y-full':
-                      sideNav === false,
-                  })}
-                >
-                  Library
-                </div>
-              </div>
-              {nav === 'library' ? (
-                <ToggOn
-                  className={clsx('ml-auto w-4', { hidden: sideNav === false })}
-                />
-              ) : (
-                <Toggle
-                  className={clsx('ml-auto w-4', { hidden: sideNav === false })}
-                />
-              )}
-            </li>
+        <div className="SideNav app-sidebar app-sidebar--rail relative text-[var(--ds-navy)] flex animate-fadein">
+          <ul className="app-sidebar-rail-list mt-3 w-full">
+            <AppSidebarRailButton
+              label="Library"
+              disabled
+              comingSoon
+              icon={<SidebarLibraryIcon />}
+            />
 
             {/* Favourite */}
-            <li
-              className={clsx('a-s-opt  hover:bg-[var(--ds-blue)] w-full', {
-                'bg-[var(--ds-blue)]': nav === 'fav',
-              })}
+            <AppSidebarRailButton
+              label="Favourites"
+              active={nav === 'fav'}
               onClick={handleFav}
-            >
-              <div className="left">
-                <div
-                  className={clsx('a-s-logo hover:animate-bounce', {
-                    show: sideNav === false,
-                  })}
-                >
-                  <svg
-                    width="27"
-                    height="25"
-                    viewBox="0 0 27 25"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      fill-rule="evenodd"
-                      clip-rule="evenodd"
-                      d="M1.069 10.0129C1.069 9.08754 2.0891 9.16582 2.75625 9.05293C3.59583 8.91099 7.94296 8.35069 8.36958 8.20129C9.3792 7.84787 9.56194 7.07656 10.0962 6.00819L11.81 2.52954C12.2672 1.61486 12.3463 1.10425 13.0827 1.10425C13.7038 1.10425 13.9021 1.82666 14.2536 2.52954C14.5448 3.11222 14.8382 3.65156 15.1043 4.27506C15.3145 4.76772 16.6237 7.41315 16.8868 7.68497C17.1288 7.93535 17.2928 8.05712 17.6489 8.19557C17.9191 8.30052 18.4396 8.34529 18.7752 8.39261L24.443 9.24092C24.7844 9.34682 24.9944 9.63435 24.9944 10.013C24.9944 10.4361 24.6758 10.6625 24.4473 10.891C24.2104 11.1277 23.9796 11.3872 23.7343 11.6034L21.5207 13.7168C21.267 13.9402 21.0269 14.2098 20.7821 14.4545C20.076 15.1607 19.6496 15.3823 19.6496 16.478C19.6496 16.9094 20.0813 19.2188 20.188 19.8084L20.6097 22.2883C20.6787 22.7032 20.7186 22.7829 20.7186 23.2486C20.7186 23.5993 20.3982 23.9102 19.9041 23.9102C19.4778 23.9102 17.1296 22.5479 16.5272 22.2474L14.8622 21.3673C12.6946 20.1078 12.5811 20.6994 10.401 21.7887L9.5702 22.2304C8.9964 22.5157 6.58357 23.9103 6.15965 23.9103C4.87012 23.9103 5.45265 22.3593 5.60015 21.4673C5.69192 20.9126 5.78162 20.3807 5.88387 19.8165C6.02851 19.0175 6.41432 17.0118 6.41432 16.2236C6.41432 15.416 5.73431 14.9073 5.30722 14.4802L1.64216 10.9169C1.40925 10.684 1.06948 10.4458 1.06948 10.0133L1.069 10.0129ZM0 9.86012C0 10.7891 0.420106 11.3573 1.09059 11.8749C1.52451 12.2098 2.42919 13.1754 2.91391 13.6657C3.06379 13.8172 3.15111 13.8608 3.29671 13.9955C3.54709 14.2269 3.76476 14.4648 4.00879 14.709C4.30156 15.0017 5.34516 15.899 5.34516 16.2741C5.34516 16.8098 5.0635 18.2143 4.95983 18.8413C4.82249 19.6697 4.67039 20.4723 4.53782 21.2702C4.35031 22.3989 3.89543 23.767 4.90711 24.5518C6.17188 25.5325 7.24644 24.6497 8.46802 24.0297L10.5042 22.9607C13.5291 21.4254 12.4482 21.3803 14.8646 22.5867L18.4625 24.4865C19.0428 24.8114 19.7282 25.183 20.5365 24.8988C21.1468 24.6844 21.6941 24.135 21.7817 23.4447C21.8746 22.7118 21.2162 19.5153 21.0895 18.7544C21.0206 18.3391 20.9715 17.9919 20.8929 17.5765C20.5639 15.8366 20.5523 16.2119 22.0297 14.7345L24.9439 11.8967C25.6214 11.3797 26.0639 10.8121 26.0639 9.86044C26.0639 9.13756 25.4874 8.47469 24.8364 8.23733C24.3722 8.06808 19.4764 7.41363 18.6538 7.29312C17.5536 7.13181 17.7037 7.08767 17.1216 5.92373L14.7633 1.15522C13.9986 -0.389617 12.0592 -0.369135 11.3178 1.12108C10.9921 1.77569 10.6951 2.36838 10.3682 3.0222L8.46008 6.86651C8.20255 7.21564 7.97345 7.21088 7.45459 7.28645L3.71935 7.82722C3.3156 7.88327 2.8539 7.95853 2.48015 8.0133C1.53293 8.15239 1.06551 8.11269 0.418995 8.80303C0.230376 9.00451 0.000476292 9.48002 0.000476292 9.86076L0 9.86012Z"
-                      fill="white"
-                    />
-                  </svg>
-                </div>
-                <div
-                  className={clsx('a-s-label flex w-full', {
-                    'hidden ': sideNav === false,
-                  })}
-                >
-                  Favourite
-                </div>
-              </div>
-              {nav === 'fav' ? (
-                <ToggOn
-                  className={clsx('ml-auto w-4', { hidden: sideNav === false })}
-                />
-              ) : (
-                <Toggle
-                  className={clsx('ml-auto w-4', { hidden: sideNav === false })}
-                />
-              )}
-            </li>
+              icon={<SidebarFavouritesIcon />}
+            />
             {/* Cascaded Menu for Favourites */}
             <ul
               className={clsx(
@@ -479,79 +349,12 @@ const Workspace: React.FunctionComponent<IWorkspace> = ({
             </ul>
 
             {/* Store */}
-            <li
-              className={clsx('a-s-opt  hover:bg-[var(--ds-blue)] w-full', {
-                'bg-[var(--ds-blue)]': nav === 'store' || nav === 'store_bible',
-              })}
+            <AppSidebarRailButton
+              label="Store"
+              active={nav === 'store' || nav === 'store_bible'}
               onClick={handleStore}
-            >
-              <div className="left">
-                <div
-                  className={clsx('a-s-logo hover:animate-bounce', {
-                    show: sideNav === false,
-                  })}
-                >
-                  <svg
-                    width="31"
-                    height="25"
-                    viewBox="0 0 31 25"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      fill-rule="evenodd"
-                      clip-rule="evenodd"
-                      d="M10.5508 22.9285V22.6337C10.5508 21.6839 11.9201 21.1047 12.6902 21.85C13.5154 22.6482 13.0136 24.064 11.8427 24.098C11.2002 24.1167 10.5507 23.576 10.5507 22.9285H10.5508ZM0.000168137 2.19237V1.00197C0.000168137 0.480631 0.480799 0 1.00214 0H4.89228C5.06152 0 5.25212 0.108508 5.36029 0.180342C5.5768 0.323673 5.44659 0.338982 5.77212 0.357824C6.14693 0.379694 6.62706 0.354123 7.01416 0.353618C7.56242 0.352945 7.6901 0.325524 8.11135 0.494258C9.04687 0.869073 9.19626 1.94473 9.41883 2.84123L9.90232 4.77435C10.8796 4.77435 11.7885 4.59384 11.7885 5.2459C11.7885 5.56217 11.535 5.65856 11.263 5.66344L8.54673 5.6584L10.7524 14.298C11.1082 15.5499 11.0163 16.4448 12.201 16.4448H25.8755C27.29 16.4448 26.7135 14.3818 27.467 14.3818C28.1695 14.3818 27.9996 14.9546 27.8726 15.3768C27.8209 15.5486 27.7814 15.7269 27.7281 15.9396C27.3501 17.445 26.0961 17.329 24.9326 17.329H11.0813C10.6747 17.329 10.0282 17.2788 9.72854 17.3909C8.97723 17.6723 8.88958 18.7747 9.72215 19.1006C10.0273 19.22 10.6163 19.1563 11.0222 19.1563L27.6446 19.1554C29.4874 19.1427 29.5032 20.9462 28.506 21.492C28.1194 21.7036 27.4394 21.6318 26.8775 21.6318C27.1894 22.2211 27.1722 22.3981 27.1722 23.0464C27.1722 24.1111 25.7317 25.5964 23.9401 24.7459C23.8193 24.6885 23.7357 24.633 23.6201 24.5354L23.3496 24.2755C22.3232 23.1598 22.9088 22.2218 23.0462 21.6318H13.7334C13.8189 21.9987 14.0281 22.1595 14.0281 22.6928C14.0281 23.3817 13.8032 23.9545 13.3971 24.3605C12.0597 25.6979 9.60741 24.8212 9.60741 22.8106C9.60741 22.0685 9.79465 22.0932 9.90215 21.6318C9.01138 21.6318 8.10798 21.1042 7.64653 20.6456C6.4807 19.4874 6.31685 17.4984 7.29964 16.2589C7.41454 16.114 7.54576 15.9308 7.67513 15.8092C8.30229 15.2195 9.08556 14.9262 9.9612 14.8533L9.17136 11.8119C8.91498 10.7835 8.62596 9.75865 8.38153 8.77047L7.21469 4.22003C7.1087 3.7961 6.96133 2.82895 6.71942 2.82895C4.8837 2.82895 5.80072 2.82289 5.14715 3.08381C4.6761 3.27189 1.80897 3.18256 1.12007 3.18256C0.795389 3.18256 0.524876 3.0394 0.351431 2.89018C0.127854 2.69773 0.0349917 2.46708 0 2.1922L0.000168137 2.19237ZM23.6949 22.8694C23.6949 21.4079 25.2711 21.17 25.9447 21.9164C26.6543 22.7027 26.18 23.9976 25.0359 24.0947C24.3505 24.1529 23.6949 23.5302 23.6949 22.8694ZM8.19328 18.213C8.19328 19.0365 8.69241 19.6305 9.2718 19.9047C9.89811 20.2012 10.9667 20.0992 11.8477 20.0992L27.7664 20.0948C28.2067 20.0928 28.2336 20.1423 28.2336 20.4528C28.2336 20.5908 28.1359 20.6887 27.9979 20.6887H25.9349C25.5048 20.6887 25.3631 20.5708 24.9329 20.5708C24.5563 20.5708 24.4844 20.6887 24.1078 20.6887H12.791C12.3775 20.6887 12.2274 20.5708 11.8479 20.5708C11.4177 20.5708 11.2761 20.6887 10.8459 20.6887C9.83015 20.6887 8.96427 20.8145 8.15105 19.847C7.84235 19.4798 7.48284 18.7345 7.5747 18.0707C7.77624 16.6132 8.71058 15.7966 10.1976 15.7966C10.2701 16.108 10.3015 16.1959 10.4333 16.4449C9.55341 16.4449 8.82615 16.5637 8.4071 17.4247C8.31171 17.6205 8.19361 17.9528 8.19361 18.2132L8.19328 18.213ZM0.884382 1.9449C0.884382 1.39294 0.780416 0.883877 1.12024 0.883877C1.88922 0.883877 4.3129 0.807838 4.89262 0.942758C4.89262 2.52008 5.17322 2.23947 3.5959 2.23947C2.71169 2.23947 1.82764 2.23947 0.94343 2.23947C0.912645 2.10724 0.88455 2.10388 0.88455 1.94473L0.884382 1.9449ZM5.83554 1.23766C8.325 1.23766 8.02101 1.00652 8.68804 3.68994C8.77367 4.03448 8.93164 4.43806 8.95956 4.77418H8.31121L7.69919 2.38011C7.51464 1.71106 7.1945 1.88602 5.83571 1.88602V1.23766H5.83554Z"
-                      fill="white"
-                    />
-                    <path
-                      fill-rule="evenodd"
-                      clip-rule="evenodd"
-                      d="M27.585 12.8493C27.585 13.1564 27.9549 13.3892 28.2624 13.2376C28.6124 13.065 29.06 10.7216 29.1647 10.3028C29.3389 9.6057 29.5055 8.9989 29.6833 8.28712C29.8416 7.65407 30.1784 6.60264 30.1784 6.01199C30.1784 5.37743 29.5751 4.77432 28.9407 4.77432H13.38C12.8738 4.77432 12.7514 5.50292 13.2248 5.63683C13.4601 5.70345 26.7591 5.66173 28.1745 5.65837C28.719 5.65702 29.33 5.62035 29.2723 6.16592L27.585 12.8495V12.8493Z"
-                      fill="white"
-                    />
-                    <path
-                      fill-rule="evenodd"
-                      clip-rule="evenodd"
-                      d="M11.9062 7.95708C11.9062 8.27016 12.9597 12.4789 13.1419 13.205C13.3781 14.1461 14.0872 13.5963 14.0872 13.4387C14.0872 12.9375 13.0559 8.9244 12.8389 8.08544C12.6169 7.22663 11.9064 7.68775 11.9064 7.95708H11.9062Z"
-                      fill="white"
-                    />
-                    <path
-                      fill-rule="evenodd"
-                      clip-rule="evenodd"
-                      d="M24.2252 13.7336C24.7383 13.7336 24.7462 13.1184 24.9326 12.378C25.0756 11.8095 25.2047 11.2307 25.3451 10.6686C25.4809 10.1252 25.6404 9.55846 25.7529 9.0134C25.8517 8.53529 26.2761 7.60364 25.5221 7.60364C25.1784 7.60364 25.0982 7.80484 25.0247 8.10816L23.9889 12.3183C23.8423 12.9207 23.5281 13.7336 24.2254 13.7336H24.2252Z"
-                      fill="white"
-                    />
-                    <path
-                      fill-rule="evenodd"
-                      clip-rule="evenodd"
-                      d="M17.1527 13.7335C17.8418 13.7335 17.5923 12.8873 17.5642 12.3201L17.211 8.07598C17.1581 7.42275 16.3382 7.45942 16.2793 8.02736L16.5039 10.6102C16.5337 11.2347 16.5787 11.7499 16.6262 12.3741C16.6401 12.5585 16.6661 13.0246 16.7022 13.2411C16.7519 13.5386 16.8252 13.7337 17.1527 13.7337V13.7335Z"
-                      fill="white"
-                    />
-                    <path
-                      fill-rule="evenodd"
-                      clip-rule="evenodd"
-                      d="M20.6888 13.7336C21.2866 13.7336 21.1489 13.1368 21.2284 12.3869L21.5793 8.19073C21.5806 7.42108 20.7874 7.37549 20.6591 8.10409C20.6131 8.36468 20.6163 8.75548 20.5872 8.97535L20.3936 11.5521C20.384 11.7547 20.3512 12.1741 20.3189 12.4205C20.254 12.9143 20.057 13.7336 20.6888 13.7336Z"
-                      fill="white"
-                    />
-                  </svg>
-                </div>
-                <div
-                  className={clsx('a-s-label', { hidden: sideNav === false })}
-                >
-                  Store
-                </div>
-              </div>
-              {nav === 'store' || nav === 'store_bible' ? (
-                <ToggOn
-                  className={clsx('ml-auto w-4', { hidden: sideNav === false })}
-                />
-              ) : (
-                <Toggle
-                  className={clsx('ml-auto w-4', { hidden: sideNav === false })}
-                />
-              )}
-            </li>
+              icon={<SidebarStoreIcon />}
+            />
             {/* Cascaded Menu for Store */}
             <ul
               className={clsx('pl-10 w-full bg-[var(--ds-blue)]', {
@@ -748,111 +551,24 @@ const Workspace: React.FunctionComponent<IWorkspace> = ({
             </ul>
 
             {/* Download */}
-            <li
-              className={clsx('a-s-opt  hover:bg-[var(--ds-blue)] w-full', {
-                'bg-[var(--ds-blue)]': nav === 'download',
-              })}
-            >
-              <div className="left">
-                <div
-                  className={clsx('a-s-logo hover:animate-bounce', {
-                    show: sideNav === false,
-                  })}
-                >
-                  <svg
-                    width="20"
-                    height="21"
-                    viewBox="0 0 24 25"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      fill-rule="evenodd"
-                      clip-rule="evenodd"
-                      d="M0 7.61721V21.9239C0 22.8767 0.400622 23.525 0.844038 24.0584C1.04061 24.2948 1.41096 24.5348 1.69225 24.6751C2.02381 24.8407 2.40791 25 2.8809 25H20.8985C22.39 25 23.7793 23.6 23.7793 21.875V7.56833C23.7793 6.18416 22.8549 5.07101 21.6868 4.6803C20.8569 4.40267 18.9112 4.49208 17.92 4.49208C16.7644 4.49208 16.8373 5.42066 17.3497 5.69708C17.5926 5.82807 19.8892 5.76214 20.2637 5.76162C21.0616 5.76057 21.3474 5.80806 21.8202 6.15824C22.1596 6.40943 22.5096 6.89355 22.5096 7.47057V22.1189C22.5096 22.5538 22.2057 23.0665 21.8695 23.3344C21.4341 23.6812 21.0324 23.7792 20.41 23.7792H3.36902C2.51211 23.7792 1.89421 23.5184 1.50907 22.8558C1.41218 22.689 1.26936 22.3809 1.26936 22.1189V7.42169C1.26936 6.99584 1.59309 6.42961 1.93057 6.17859C2.40356 5.82668 2.67563 5.75988 3.46661 5.76144C3.81939 5.76231 6.13388 5.81467 6.36403 5.72926C6.93269 5.5179 7.0696 4.49208 5.85938 4.49208H3.66213C2.38877 4.49208 1.78288 4.68674 1.06653 5.26567C0.514564 5.71169 0 6.62601 0 7.61704V7.61721ZM11.2793 16.1621L8.2398 13.3423C8.01818 13.1202 7.44656 12.5 7.12892 12.5C6.63679 12.5 6.49415 12.7924 6.49415 13.1837C6.49415 13.5523 6.87685 13.7636 7.09186 13.9531L8.51048 15.3177C8.6693 15.4505 8.72619 15.4874 8.87457 15.6371L11.0351 17.6759C11.362 17.9254 11.749 18.5949 12.3661 18.0303L13.8061 16.6871C13.9306 16.5621 14.0199 16.4664 14.1468 16.3443L15.9384 14.6691C16.2335 14.4414 16.3949 14.2048 16.6647 13.9793C16.8983 13.784 17.2549 13.5676 17.2998 13.201C17.3445 12.8357 17.1222 12.5 16.6503 12.5C16.3678 12.5 15.7709 13.1104 15.5394 13.3423L14.0256 14.7581C13.8689 14.9163 13.6977 15.1097 13.5324 15.2416C13.1508 15.546 12.8985 15.8949 12.4998 16.1621V1.56248C12.4998 0.768714 12.6943 0 11.8162 0C11.5646 0 11.3121 0.27346 11.2821 0.491254L11.279 16.1621H11.2793Z"
-                      fill="white"
-                    />
-                  </svg>
-                </div>
-                <div
-                  className={clsx('a-s-label', { hidden: sideNav === false })}
-                >
-                  Downloads
-                </div>
-              </div>
-              {nav === 'download' ? (
-                <ToggOn
-                  className={clsx('ml-auto w-4', { hidden: sideNav === false })}
-                />
-              ) : (
-                <Toggle
-                  className={clsx('ml-auto w-4', { hidden: sideNav === false })}
-                />
-              )}
-            </li>
+            <AppSidebarRailButton
+              label="Downloads"
+              disabled
+              comingSoon
+              icon={<SidebarDownloadsIcon />}
+            />
 
             {/* Notification */}
-            <li
-              className={clsx('a-s-opt  hover:bg-[var(--ds-blue)] w-full', {
-                'bg-[var(--ds-blue)]': nav === 'notification',
-              })}
-            >
-              <div className="left">
-                <div
-                  className={clsx('a-s-logo hover:animate-bounce', {
-                    show: sideNav === false,
-                  })}
-                >
-                  <svg
-                    width="18"
-                    height="20"
-                    viewBox="0 0 23 25"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      fill-rule="evenodd"
-                      clip-rule="evenodd"
-                      d="M8.61883 21.6027H14.1519C13.9723 21.9769 14.0316 22.3762 13.3487 23.0339C12.288 24.0554 10.613 24.1153 9.56165 23.1604C8.71497 22.3914 8.86417 22.1141 8.61883 21.6025V21.6027ZM1.1703 19.5278C1.1703 18.497 2.8479 18.2986 3.38393 16.9532C3.56272 16.5044 3.61158 16.1577 3.70124 15.6213C3.983 13.9355 4.39522 11.6663 4.61954 10.0488C4.94158 7.72797 5.5347 6.15491 7.40248 4.74471C8.33356 4.04162 9.73922 3.46024 11.0128 3.46024C12.3068 3.46024 13.155 3.53011 14.3122 4.09783C15.729 4.79304 16.8515 5.94635 17.503 7.39788C17.8369 8.14195 18.0166 9.04922 18.1449 10.0013C18.2659 10.8991 19.1208 16.1846 19.3446 16.8354C19.7071 17.8897 21.0056 18.5028 21.3497 18.8737C21.8871 19.4532 21.4851 20.4321 20.6426 20.4321H2.12765C1.55853 20.4321 1.16995 19.9452 1.16995 19.5276L1.1703 19.5278ZM10.2682 2.34317C10.2682 0.778519 12.5027 0.778519 12.5027 2.34317C12.1992 2.34317 12.1346 2.28994 11.811 2.28994H10.9598C10.6362 2.28994 10.5715 2.34317 10.2681 2.34317H10.2682ZM9.09777 2.60917C8.93088 2.6892 8.69168 2.75014 8.51183 2.82124L7.43102 3.3366C5.95112 4.1572 4.64704 5.73498 4.05042 7.29806C3.56342 8.57413 2.79869 13.9132 2.53094 15.5148C2.32115 16.7702 2.24218 16.7954 1.28447 17.5138C0.685226 17.9633 0 18.5056 0 19.4747C0 20.5713 0.898342 21.6029 2.12818 21.6029H7.44853C7.45466 21.8747 7.6317 22.3776 7.74413 22.6373C8.8379 25.1623 12.2547 25.7475 14.0336 23.9846C14.6016 23.4215 15.3032 22.4832 15.3226 21.6027H20.643C22.2302 21.6027 23.3863 19.8393 22.3782 18.3246C21.9467 17.6759 21.1795 17.4376 20.658 16.7993C20.3573 16.4314 20.3423 16.126 20.2477 15.5602C19.935 13.6885 19.6332 11.8199 19.328 9.98924C18.9375 7.6483 18.6496 6.26016 16.8 4.4302C16.4554 4.08925 15.8311 3.6315 15.4074 3.37548C14.6754 2.93331 14.1064 2.81686 13.6734 2.609C13.6734 1.72239 13.5056 1.22541 13.0757 0.759257C12.1416 -0.253085 10.6295 -0.253085 9.69561 0.759257C9.26553 1.22524 9.09794 1.72239 9.09794 2.609L9.09777 2.60917Z"
-                      fill="white"
-                    />
-                  </svg>
-                </div>
-                <div
-                  className={clsx('a-s-label', { hidden: sideNav === false })}
-                >
-                  Notifications
-                </div>
-              </div>
-              {nav === 'notification' ? (
-                <ToggOn
-                  className={clsx('ml-auto w-4', { hidden: sideNav === false })}
-                />
-              ) : (
-                <Toggle
-                  className={clsx('ml-auto w-4', { hidden: sideNav === false })}
-                />
-              )}
-            </li>
+            <AppSidebarRailButton
+              label="Alerts"
+              disabled
+              comingSoon
+              icon={<SidebarAlertsIcon />}
+            />
           </ul>
-
-          <div
-            className={clsx(
-              'absolute top-[50%] right-[0%] h-[28px] cursor-pointer',
-              { '!right-[-25%]': sideNav === false }
-            )}
-            onClick={handleSideNav}
-          >
-            <>
-              {sideNav === false ? (
-                <NavarrowOut className={clsx(' w-4 shadow-xl h-[28px]')} />
-              ) : (
-                <Navarrow className={clsx('ml-auto w-4 h-[28px]')} />
-              )}
-            </>
-          </div>
         </div>
 
+        <div className="app-workspace-pane flex flex-col">
         <SingleReader hidden={nav !== 'read'} />
 
         <StoreHomePage hidden={nav !== 'store'} />
@@ -876,6 +592,7 @@ const Workspace: React.FunctionComponent<IWorkspace> = ({
         <Multilayout hidden={nav !== 'multi_layout'} />
 
         <XmlToJsonConverter hidden={nav !== 'xml'} />
+        </div>
       </div>
     </section>
   );

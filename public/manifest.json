@@ -27,6 +27,7 @@
   "start_url": "/bible-online?source=pwa",
   "scope": "/",
   "display": "standalone",
+  "display_override": ["standalone", "window-controls-overlay", "minimal-ui", "browser"],
   "theme_color": "#04557d",
   "background_color": "#ffffff"
 }

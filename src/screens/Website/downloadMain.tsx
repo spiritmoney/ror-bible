@@ -22,12 +22,8 @@ import f8 from '../../assets/website/new/feature-08-roar.jpg';
 import f9 from '../../assets/website/new/feature-09-colour-search.jpg';
 import f10 from '../../assets/website/new/feature-10-study-workspace.jpg';
 import bibleOnline from '../../assets/website/new/bible-online-reader.jpg';
-import lwStore from '../../assets/website/new/loveworld-app-store.png';
-import googlePlay from '../../assets/website/new/google-play.png';
-import appStore from '../../assets/website/new/app-store.png';
-import macos from '../../assets/website/new/macos.png';
-import windows from '../../assets/website/new/windows.png';
-import linux from '../../assets/website/new/linux.png';
+import DownloadPageStoreBadges from '../../components/Website/DownloadPageStoreBadges';
+import DesktopDownloadButtons from '../../components/Website/DesktopDownloadButtons';
 import icon from '../../assets/website/new/ror-bible-plus-icon.png';
 
 export default function DownloadMain() {
@@ -50,7 +46,7 @@ export default function DownloadMain() {
 <div className="ue39012"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#19688B" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><rect x="7" y="2" width="10" height="20" rx="2.5"/><path d="M11 18h2"/></svg></div>
 <h2 className="u83a5da">ROR Bible+ Mobile</h2>
 <p className="ue35007">iPhone, iPad and Android</p>
-<div className="uc74f11"><a href="#" className="btn-lift u873fb7"><span className="u76317c"><img className="u0d77d9" src={lwStore} alt="" />Loveworld App Store</span><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#072233" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a><a href="#" className="btn-lift u873fb7"><span className="u76317c"><img className="u0d77d9" src={googlePlay} alt="" />Google Play</span><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#072233" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a><a href="#" className="btn-lift u873fb7"><span className="u76317c"><img className="u0d77d9" src={appStore} alt="" />App Store</span><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#072233" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div>
+<div className="uc74f11"><DownloadPageStoreBadges /></div>
 </div>
 <div className="card-lift ucfaa3c">
 <div className="u962c0c"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#072233" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3.5 3 14.5 0 18M12 3c-3 3.5-3 14.5 0 18"/></svg></div>
@@ -62,7 +58,7 @@ export default function DownloadMain() {
 <div className="u962c0c"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#072233" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="12" rx="1.5"/><path d="M8 20h8M12 16v4"/></svg></div>
 <h2 className="u585dff">ROR Bible+ Desktop</h2>
 <p className="uf374b8">MacOS, Windows and Linux</p>
-<div className="uc74f11"><a href="#" className="btn-lift u9c2843"><span className="u76317c"><img className="u0d77d9" src={macos} alt="" />Download for MacOS</span><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#072233" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a><a href="#" className="btn-lift u9c2843"><span className="u76317c"><img className="u0d77d9" src={windows} alt="" />Download for Windows</span><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#072233" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a><a href="#" className="btn-lift u9c2843"><span className="u76317c"><img className="u0d77d9" src={linux} alt="" />Download for Linux</span><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#072233" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div>
+<div className="uc74f11"><DesktopDownloadButtons variant="download-page" /></div>
 </div>
 <div className="card-lift u57f7e8">
 <div className="u291155"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg></div>

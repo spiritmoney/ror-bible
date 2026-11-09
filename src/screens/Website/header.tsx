@@ -15,9 +15,9 @@ import {
 } from './websitePaths';
 import icon from '../../assets/website/new/ror-bible-plus-icon.png';
 import { isAppShell } from 'utils/appShell';
+import { isReaderAppTopBarRoute } from 'utils/readerTopBar';
 
 export default function Header() {
-  const appShell = isAppShell();
   const { mobileOpen, setMobileOpen, megaOpen, setMegaOpen } = useWebsiteMenu();
   const headerRef = useRef<HTMLElement>(null);
   const megaRef = useRef<HTMLDivElement>(null);
@@ -26,6 +26,9 @@ export default function Header() {
   const navigate = useNavigate();
   const { user } = useUser();
   const path = location.pathname;
+  const appShell = isAppShell();
+  const readerTopBar = isReaderAppTopBarRoute(path);
+  const homeLinkToReader = appShell || readerTopBar;
   const navActive = {
     features: path === WebsiteFeaturesRoute,
     products:
@@ -96,7 +99,11 @@ export default function Header() {
             <span className="u0d987c">Mobile · Web · Desktop · Voice</span>
           </span>
           <nav className="udb6254" aria-label="Utility">
-            <Link className="u2ee821" to="/bible-online">
+            <Link
+              className="u2ee821"
+              to="/bible-online"
+              data-website-nav="bible-online"
+            >
               Bible Online
             </Link>
             {!appShell && (
@@ -147,7 +154,11 @@ export default function Header() {
       </div>
       <div className="main-bar uddc867">
         <div className="wrap u253ea9">
-          <Link className="lockup u0eefb8" to={appShell ? '/bible-online' : '/home'} aria-label="ROR Bible+ home">
+          <Link
+            className="lockup u0eefb8"
+            to={homeLinkToReader ? '/bible-online' : '/home'}
+            aria-label="ROR Bible+ home"
+          >
             <img className="u8abd8c" src={icon} alt="" />
             <span className="u1a913d">
               <span className="u55add1">ROR Bible+</span>

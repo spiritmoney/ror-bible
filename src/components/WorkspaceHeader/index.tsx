@@ -21,7 +21,7 @@ import style from './styles.module.scss';
 import useProjects from 'hooks/useProjects';
 import { ReactComponent as DownloadIcon } from 'assets/download.svg';
 import ModalContent from 'components/ModalContent';
-import { DarkThemeAtom, libraryAtom } from '../../store/atoms/general';
+import { DarkThemeAtom } from '../../store/atoms/general';
 
 export interface IWorkspaceHeader {}
 
@@ -36,7 +36,6 @@ const WorkspaceHeader: React.FunctionComponent<IWorkspaceHeader> = () => {
   const [showSaveModal, setShowSaveModal] = useState(false);
   const [showApproveModal, setShowApproveModal] = useState(false);
   const [showSubmit, setShowSubmit] = useState(false);
-  const setShowLibrary = useSetRecoilState(libraryAtom);
   const DarkTheme = useRecoilValue(DarkThemeAtom);
   useEffect(() => {
     setHeight(height);
@@ -66,10 +65,13 @@ const WorkspaceHeader: React.FunctionComponent<IWorkspaceHeader> = () => {
       <div className={clsx(flex)}>
         <SquareSwitch position={booksSwitch} setPosition={setBooksSwitch} />
 
-        <BooksIcon
-          className="ml-6 cursor-pointer"
-          onClick={() => setShowLibrary(true)}
-        />
+        <span
+          className="ml-6 inline-flex opacity-45 cursor-not-allowed"
+          title="Coming soon"
+          aria-hidden
+        >
+          <BooksIcon aria-hidden />
+        </span>
         <Modal
           id={'saved-project'}
           isShown={showSaveModal}

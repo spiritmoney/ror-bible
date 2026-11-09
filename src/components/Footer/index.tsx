@@ -79,11 +79,21 @@ const Footer: React.FunctionComponent<IFooter> = () => {
         <div className="text-center text-[#727272] text-[13px] mr-10  justify-center  ">
           <p className="hidden md:block">
             {getCurrentYear()} &copy; ROR Bible+. All Rights Reserved | Privacy | Terms of Use
+            {process.env.REACT_APP_BUILD_ID ? (
+              <span className="block text-[10px] text-[#9ca3af] mt-0.5 tabular-nums">
+                Build {process.env.REACT_APP_BUILD_ID}
+              </span>
+            ) : null}
           </p>
 
           <p className="md:hidden">
             {getCurrentYear()} &copy; ROR Bible+.<br />
             All Rights Reserved | Privacy | Terms of Use
+            {process.env.REACT_APP_BUILD_ID ? (
+              <span className="block text-[10px] text-[#9ca3af] mt-1 tabular-nums">
+                Build {process.env.REACT_APP_BUILD_ID}
+              </span>
+            ) : null}
           </p>
         </div>
 

@@ -14,9 +14,7 @@ import f2 from '../../assets/website/new/feature-02-solution-search.jpg';
 import f3 from '../../assets/website/new/feature-03-audio-bible.jpg';
 import f4 from '../../assets/website/new/feature-04-pulpit.jpg';
 import f8 from '../../assets/website/new/feature-08-roar.jpg';
-import lwStore from '../../assets/website/new/loveworld-app-store.png';
-import googlePlay from '../../assets/website/new/google-play.png';
-import appStore from '../../assets/website/new/app-store.png';
+import MarketingStoreBadgeRow from '../../components/Website/MarketingStoreBadgeRow';
 
 export default function HomeMain() {
   const posterRef = useRef<HTMLDivElement>(null);
@@ -194,20 +192,7 @@ export default function HomeMain() {
 <p className="ub4344f">Free to download. Some features and resources require a subscription.</p>
 </div>
 <div className="u3e7f6a">
-<div className="u230928">
-<a href="#" className="btn-lift u466af7">
-<img className="ue0f809" src={lwStore} alt="" /><span className="uad67f1"><span className="u7103c4">Get it on</span>
-<span className="uc7be1b">Loveworld App Store</span></span>
-</a>
-<a href="#" className="btn-lift u466af7">
-<img className="ue0f809" src={googlePlay} alt="" /><span className="uad67f1"><span className="u7103c4">Get it on</span>
-<span className="uc7be1b">Google Play</span></span>
-</a>
-<a href="#" className="btn-lift u466af7">
-<img className="ue0f809" src={appStore} alt="" /><span className="uad67f1"><span className="u7103c4">Download on the</span>
-<span className="uc7be1b">App Store</span></span>
-</a>
-</div>
+<MarketingStoreBadgeRow />
 <Link className="u74c5a0" to={WebsiteProductDesktopRoute}>Also on MacOS, Windows and Linux →</Link>
 </div>
 </div>

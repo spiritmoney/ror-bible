@@ -1,5 +1,6 @@
 import { atom } from 'recoil';
 import persistAtom from '../persist/persist';
+import { blockModalOpenEffect } from './modalGuards';
 import { ConcordanceItem } from 'screens/JsonBibleDisplay/StrongsDictionary';
 
 export const lockAtom = atom({
@@ -281,5 +282,6 @@ export const avatarColorAtom = atom({
 export const libraryAtom = atom({
   key: 'libraryAtom',
   default: false,
+  effects_UNSTABLE: [blockModalOpenEffect()],
   // effects_UNSTABLE: [persistAtom],
 });

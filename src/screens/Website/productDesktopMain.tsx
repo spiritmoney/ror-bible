@@ -22,12 +22,7 @@ import f8 from '../../assets/website/new/feature-08-roar.jpg';
 import f9 from '../../assets/website/new/feature-09-colour-search.jpg';
 import f10 from '../../assets/website/new/feature-10-study-workspace.jpg';
 import bibleOnline from '../../assets/website/new/bible-online-reader.jpg';
-import lwStore from '../../assets/website/new/loveworld-app-store.png';
-import googlePlay from '../../assets/website/new/google-play.png';
-import appStore from '../../assets/website/new/app-store.png';
-import macos from '../../assets/website/new/macos.png';
-import windows from '../../assets/website/new/windows.png';
-import linux from '../../assets/website/new/linux.png';
+import DesktopDownloadButtons from '../../components/Website/DesktopDownloadButtons';
 import icon from '../../assets/website/new/ror-bible-plus-icon.png';
 
 export default function ProductDesktopMain() {
@@ -41,7 +36,7 @@ export default function ProductDesktopMain() {
 <h1 className="u0288f9">More room for <span className="ub8bc62">deeper study.</span></h1>
 <p className="u742aa7">“The ultimate study desk for ministers and scholars.”</p>
 <p className="u62020b">Premium Bible Reader 2.0 for Windows, MacOS and Linux: a distraction-free workspace for ministers, teachers and Bible scholars who want depth and focus.</p>
-<div className="u230928"><a href="#" className="btn-lift u11b395"><img className="ue0f809" src={macos} alt="" /><span className="uad67f1"><span className="ubbc4dd">Download for</span><span className="uc7be1b">MacOS</span></span></a><a href="#" className="btn-lift u11b395"><img className="ue0f809" src={windows} alt="" /><span className="uad67f1"><span className="ubbc4dd">Download for</span><span className="uc7be1b">Windows</span></span></a><a href="#" className="btn-lift u11b395"><img className="ue0f809" src={linux} alt="" /><span className="uad67f1"><span className="ubbc4dd">Download for</span><span className="uc7be1b">Linux</span></span></a></div>
+<DesktopDownloadButtons variant="product-hero" />
 </div>
 <div className="u1c0f7c"><div className="u20d6c8">
 <div className="u21ba85"><img className="u064c8c" src={bibleOnline} alt="ROR Bible+ study workspace on a desktop monitor" /></div>

@@ -8,11 +8,7 @@ import {
   headerHeightAtom,
   workspaceHeaderHeightAtom,
 } from '../../store/atoms/size';
-import {
-  booksSwitchAtom,
-  notificationsModalAtom,
-  settingsModalAtom,
-} from '../../store/atoms/workspace';
+import { booksSwitchAtom, settingsModalAtom } from '../../store/atoms/workspace';
 import menu from 'assets/menu.svg';
 import { ReactComponent as Arrow } from 'assets/arrow.svg';
 import { ReactComponent as Update } from 'assets/update.svg';
@@ -29,7 +25,7 @@ import style from './styles.module.scss';
 import { useUser } from 'hooks/useUser';
 import useProjects from 'hooks/useProjects';
 import Avatar from 'components/Avatar';
-import { DarkThemeAtom, libraryAtom } from '../../store/atoms/general';
+import { DarkThemeAtom } from '../../store/atoms/general';
 import { IProject } from '../../interface/project';
 import useGeneral from 'hooks/useGeneral';
 import { DateTime } from 'luxon';
@@ -45,8 +41,6 @@ const AvailableBooks: React.FunctionComponent<IAvailableBooks> = () => {
   const workspaceHeaderHeight = useRecoilValue(workspaceHeaderHeightAtom);
   const toggle = useRecoilValue<ISquareSwitchPosition>(booksSwitchAtom);
   const setShowSettingsModal = useSetRecoilState(settingsModalAtom);
-  const setShowNotificationsModal = useSetRecoilState(notificationsModalAtom);
-  const setShowLibrary = useSetRecoilState(libraryAtom);
   const [topThreeProjects, setTopThreeProjects] = useState<IProject[]>([]);
   const [DarkTheme, setDarkTheme] = useRecoilState(DarkThemeAtom);
   const { user } = useUser();
@@ -173,10 +167,10 @@ const AvailableBooks: React.FunctionComponent<IAvailableBooks> = () => {
               <BooksPreview key={i} project={project} />
             ))}
             <div
-              className="flex text-primary text-sm gap-x-[.9375rem] cursor-pointer"
-              onClick={() => setShowLibrary(true)}
+              className="flex text-primary text-sm gap-x-[.9375rem] cursor-not-allowed opacity-45"
+              title="Coming soon"
             >
-              <img src={menu} alt="" />
+              <img src={menu} alt="" className="opacity-45" />
               See More Books
             </div>
           </div>
@@ -254,12 +248,9 @@ const AvailableBooks: React.FunctionComponent<IAvailableBooks> = () => {
               </div>
             </div>
 
-            <div className="flex justify-between max-w-[12.4375rem] items-center cursor-pointer">
-              <div
-                className="flex gap-x-[1.875rem]"
-                onClick={() => setShowNotificationsModal(true)}
-              >
-                <Notification className="ml-[3px]" />
+            <div className="flex justify-between max-w-[12.4375rem] items-center cursor-not-allowed opacity-45">
+              <div className="flex gap-x-[1.875rem]" title="Coming soon">
+                <Notification className="ml-[3px] opacity-45" />
                 <span className="font-medium">Notifications</span>
               </div>
 

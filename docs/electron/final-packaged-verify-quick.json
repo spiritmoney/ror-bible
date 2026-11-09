@@ -1,0 +1,39 @@
+{
+  "marketing": {
+    "about": {
+      "hashAfterClose": "#/about",
+      "chapterBefore": "Genesis 2",
+      "chapterAfter": "Genesis 2",
+      "pass": false
+    },
+    "product": {
+      "hashAfterClose": "#/product",
+      "chapterBefore": "Genesis 2",
+      "chapterAfter": "Genesis 2",
+      "pass": false
+    },
+    "partner": {
+      "hashAfterClose": "#/product",
+      "chapterBefore": "Genesis 2",
+      "chapterAfter": "Genesis 2",
+      "pass": false
+    },
+    "give": {
+      "hashAfterClose": "#/about",
+      "chapterBefore": "Genesis 2",
+      "chapterAfter": "Genesis 2",
+      "pass": false
+    }
+  },
+  "gated": {
+    "Favourites": true,
+    "Store": true,
+    "Downloads": true,
+    "Notifications": true
+  },
+  "forms": {
+    "productOverlay": true,
+    "giveSubmit": false
+  },
+  "chapterBaseline": "Genesis 2"
+}

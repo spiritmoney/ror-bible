@@ -22,9 +22,7 @@ import f8 from '../../assets/website/new/feature-08-roar.jpg';
 import f9 from '../../assets/website/new/feature-09-colour-search.jpg';
 import f10 from '../../assets/website/new/feature-10-study-workspace.jpg';
 import bibleOnline from '../../assets/website/new/bible-online-reader.jpg';
-import lwStore from '../../assets/website/new/loveworld-app-store.png';
-import googlePlay from '../../assets/website/new/google-play.png';
-import appStore from '../../assets/website/new/app-store.png';
+import MarketingStoreBadgeRow from '../../components/Website/MarketingStoreBadgeRow';
 import macos from '../../assets/website/new/macos.png';
 import windows from '../../assets/website/new/windows.png';
 import linux from '../../assets/website/new/linux.png';
@@ -41,20 +39,7 @@ export default function ProductMobileMain() {
 <h1 className="u0288f9">The Word <span className="ub8bc62">wherever you go.</span></h1>
 <p className="u742aa7">“Your Bible. Your ministry. Everywhere.”</p>
 <p className="u62020b">The native iOS and Android app that turns your phone or tablet into a ministry powerhouse: multi-layout reading, audio tools and sermon preparation with @Pulpit in one seamless experience.</p>
-<div className="ubb5495"><span className="ue7d6fe">Download now on</span><div className="u230928">
-<a href="#" className="btn-lift u466af7">
-<img className="ue0f809" src={lwStore} alt="" /><span className="uad67f1"><span className="u7103c4">Get it on</span>
-<span className="uc7be1b">Loveworld App Store</span></span>
-</a>
-<a href="#" className="btn-lift u466af7">
-<img className="ue0f809" src={googlePlay} alt="" /><span className="uad67f1"><span className="u7103c4">Get it on</span>
-<span className="uc7be1b">Google Play</span></span>
-</a>
-<a href="#" className="btn-lift u466af7">
-<img className="ue0f809" src={appStore} alt="" /><span className="uad67f1"><span className="u7103c4">Download on the</span>
-<span className="uc7be1b">App Store</span></span>
-</a>
-</div></div>
+<div className="ubb5495"><span className="ue7d6fe">Download now on</span><MarketingStoreBadgeRow /></div>
 </div>
 <div className="u1c0f7c"><div className="ubb75a4"><div className="u57f2e4"><img className="u024490" src={f1} alt="ROR Bible+ Personalized Study Experience shown on iPhone" /></div><div className="u7e139b"><div className="u57f2e4"><img className="u024490" src={f2} alt="ROR Bible+ Solution Search shown on iPhone" /></div></div></div></div>
 </div>

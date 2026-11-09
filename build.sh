@@ -1,5 +1,12 @@
 echo build in Progres
 
+# Git Bash on Windows maps `PUBLIC_URL=/` to Program Files/Git unless conversion is off.
+export MSYS_NO_PATHCONV=1
+
+# Web/PWA default false; `npm run build-electron` sets REACT_APP_IS_ELECTRON=true via cross-env.
+export REACT_APP_IS_ELECTRON="${REACT_APP_IS_ELECTRON:-false}"
+export PUBLIC_URL="${PUBLIC_URL:-/}"
+
 export REACT_APP_CI=false \
 export REACT_APP_EMAIL_API_URL="https://rhapsodybible-notification.herokuapp.com/" \
 # BUILDING FOR PWA & MOBILE!

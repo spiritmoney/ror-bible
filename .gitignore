@@ -12,4 +12,11 @@ backup/**/.env
 docs/*
 !docs/electron/
 !docs/electron/**
-ROR_Bible_Plus_Website/
+!docs/deploy/
+!docs/deploy/**
+ROR_Bible_Plus_Website/*
+!ROR_Bible_Plus_Website/README.md
+!ROR_Bible_Plus_Website/package.json
+!ROR_Bible_Plus_Website/package-lock.json
+!ROR_Bible_Plus_Website/package.json.lock
+!ROR_Bible_Plus_Website/package.json.lock

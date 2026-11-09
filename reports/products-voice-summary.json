@@ -1,0 +1,59 @@
+{
+  "page": "products/voice",
+  "refUrl": "http://localhost:58840/voice.html",
+  "reactUrl": "http://localhost:3400/products/voice",
+  "fontsBlocked": true,
+  "indexHtmlGoogleFontsNote": "public/index.html loads fonts.googleapis.com Montserrat; blocked in capture. Recommend removing that link so dev matches reference without blocking.",
+  "heights": {
+    "ref": 2564,
+    "react": 2564,
+    "deltaPx": 0
+  },
+  "pixel": {
+    "390": {
+      "pct": 0,
+      "firstDiffRow": null,
+      "paddedHeight": 4966
+    },
+    "768": {
+      "pct": 0,
+      "firstDiffRow": null,
+      "paddedHeight": 3540
+    },
+    "1440": {
+      "pct": 0.0007,
+      "firstDiffRow": 18,
+      "paddedHeight": 2564
+    }
+  },
+  "dom": {
+    "domDiff": 0,
+    "domMissingRef": 0,
+    "domMissingReact": 0,
+    "styleDiffCount": 0,
+    "styleSample": [],
+    "pathsOnlyRef": [],
+    "pathsOnlyReact": []
+  },
+  "fonts": {
+    "ref": [
+      "Montserrat:400:loaded",
+      "Montserrat:500:loaded",
+      "Montserrat:600:loaded",
+      "Montserrat:700:loaded",
+      "Montserrat:800:loaded"
+    ],
+    "react": [
+      "Montserrat:400:loaded",
+      "Montserrat:500:loaded",
+      "Montserrat:600:loaded",
+      "Montserrat:700:loaded",
+      "Montserrat:800:loaded",
+      "Montserrat:400:loaded",
+      "Montserrat:500:loaded",
+      "Montserrat:600:loaded",
+      "Montserrat:700:loaded",
+      "Montserrat:800:loaded"
+    ]
+  }
+}
