@@ -113,6 +113,7 @@
     "eject": "react-scripts eject",
     "electron:compile": "tsc -p electron/tsconfig.json",
     "electron:start": "npm run electron:compile && concurrently \"npm run react\" \"wait-on http://localhost:3400 && electron .\"",
+    "electron:build": "sh scripts/electron-build.sh",
     "electron:build:win": "npm run electron:compile && npm run build-electron && electron-builder --win --x64 --publish never",
     "electron:build:mac": "npm run electron:compile && npm run build-electron && electron-builder --mac --x64 --arm64 --publish never",
     "electron:build:linux": "npm run electron:compile && npm run build-electron && electron-builder --linux AppImage deb --x64 --publish never",

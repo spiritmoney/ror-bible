@@ -17,6 +17,7 @@ on:
       - 'build-resources/**'
       - 'package.json'
       - 'yarn.lock'
+      - 'scripts/electron-build.sh'
       - '.github/workflows/electron-build.yml'
 
 jobs:
@@ -31,14 +32,12 @@ jobs:
           node-version: '22'
           cache: yarn
       - run: yarn install --frozen-lockfile
-      - run: npm run electron:compile
       - run: npm test -- --watchAll=false --passWithNoTests
-      - run: npm run build-electron
+      - run: npm run electron:build:win
         env:
           CI: "false"
           NODE_OPTIONS: --max-old-space-size=6144
           GENERATE_SOURCEMAP: "false"
-      - run: npx electron-builder --win --x64 --publish never
       - uses: actions/upload-artifact@v4
         with:
           name: rhapsody-bible-windows
@@ -57,14 +56,12 @@ jobs:
           node-version: '22'
           cache: yarn
       - run: yarn install --frozen-lockfile
-      - run: npm run electron:compile
       - run: npm test -- --watchAll=false --passWithNoTests
-      - run: npm run build-electron
+      - run: npm run electron:build:mac
         env:
           CI: "false"
           NODE_OPTIONS: --max-old-space-size=6144
           GENERATE_SOURCEMAP: "false"
-      - run: npx electron-builder --mac dmg --x64 --arm64 --publish never
       - name: Rename macOS artifacts
         run: |
           if [ -f dist/Rhapsody-Bible-arm64.dmg ]; then
@@ -91,14 +88,12 @@ jobs:
           node-version: '22'
           cache: yarn
       - run: yarn install --frozen-lockfile
-      - run: npm run electron:compile
       - run: npm test -- --watchAll=false --passWithNoTests
-      - run: npm run build-electron
+      - run: npm run electron:build:linux
         env:
           CI: "false"
           NODE_OPTIONS: --max-old-space-size=6144
           GENERATE_SOURCEMAP: "false"
-      - run: npx electron-builder --linux AppImage deb --x64 --publish never
       - uses: actions/upload-artifact@v4
         with:
           name: rhapsody-bible-linux

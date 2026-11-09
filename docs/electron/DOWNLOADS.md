@@ -1,6 +1,6 @@
 # Desktop downloads
 
-Unsigned installers built by GitHub Actions (`.github/workflows/electron-build.yml`) or locally with `npm run electron:build:win` / `npm run electron:build:mac`.
+Unsigned installers built by GitHub Actions (`.github/workflows/electron-build.yml`) or locally with `npm run electron:build` (Win + Linux on Windows hosts), `npm run electron:build:linux`, `npm run electron:build:win`, or `npm run electron:build:mac`.
 
 ## Where to get files
 
