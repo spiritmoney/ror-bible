@@ -189,6 +189,7 @@
       "installerHeaderIcon": "build-resources/icon.ico"
     },
     "mac": {
+      "artifactName": "Rhapsody-Bible-${arch}.${ext}",
       "category": "public.app-category.reference",
       "target": ["dmg", "zip"],
       "icon": "build-resources/icon.icns",

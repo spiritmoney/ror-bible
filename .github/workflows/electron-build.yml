@@ -4,6 +4,7 @@ on:
   workflow_dispatch:
   push:
     branches:
+      - main
       - electron-wrap
       - electron-icon
       - electron-open-bible
@@ -64,12 +65,10 @@ jobs:
           GENERATE_SOURCEMAP: "false"
       - name: Rename macOS artifacts
         run: |
-          if [ -f dist/Rhapsody-Bible-arm64.dmg ]; then
-            mv dist/Rhapsody-Bible-arm64.dmg dist/Rhapsody-Bible-Apple-Silicon.dmg
-          fi
-          if [ -f dist/Rhapsody-Bible-x64.dmg ]; then
-            mv dist/Rhapsody-Bible-x64.dmg dist/Rhapsody-Bible-Intel.dmg
-          fi
+          mv dist/Rhapsody-Bible-arm64.dmg dist/Rhapsody-Bible-Apple-Silicon.dmg
+          mv dist/Rhapsody-Bible-x64.dmg dist/Rhapsody-Bible-Intel.dmg
+          test -f dist/Rhapsody-Bible-Apple-Silicon.dmg
+          test -f dist/Rhapsody-Bible-Intel.dmg
       - uses: actions/upload-artifact@v4
         with:
           name: rhapsody-bible-macos
@@ -112,13 +111,21 @@ jobs:
           pattern: rhapsody-bible-*
           merge-multiple: true
           path: release-assets
+      - name: Verify release assets
+        run: |
+          ls -la release-assets/
+          for f in Rhapsody-Bible-Setup.exe Rhapsody-Bible-Apple-Silicon.dmg Rhapsody-Bible-Intel.dmg Rhapsody-Bible.AppImage Rhapsody-Bible.deb; do
+            test -f "release-assets/$f" || (echo "Missing $f" && exit 1)
+          done
       - name: Upload to GitHub Release (latest)
         uses: softprops/action-gh-release@v2
         with:
           tag_name: desktop-build-${{ github.run_id }}
           name: Desktop build ${{ github.run_id }}
+          draft: false
           make_latest: true
           prerelease: false
+          fail_on_unmatched_files: true
           files: |
             release-assets/Rhapsody-Bible-Setup.exe
             release-assets/Rhapsody-Bible-Apple-Silicon.dmg
