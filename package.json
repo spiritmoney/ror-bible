@@ -1,7 +1,10 @@
 {
   "name": "rorbible",
   "version": "2.0.1",
-  "author": "Loveworld Xceptia, New Media Technologies.",
+  "author": {
+    "name": "Loveworld Xceptia, New Media Technologies",
+    "email": "mail@rorbible.com"
+  },
   "main": "dist-electron/main.js",
   "homepage": "./",
   "private": true,
@@ -102,14 +105,13 @@
   },
   "scripts": {
     "ci": "source-map-explorer 'build/static/js/*.js'",
-    "react": "cross-env REACT_APP_IS_ELECTRON=false PORT=3400 craco start",
+    "react": "cross-env PORT=3400 craco start",
     "local": "npm run dev:payments",
     "server": "node src/server.js",
     "dev:payments": "concurrently \"npm run server\" \"npm run react\"",
-    "build": "cross-env REACT_APP_IS_ELECTRON=false sh build.sh && node scripts/assert-web-build-not-electron.mjs",
+    "build": "PUBLIC_URL=/ sh build.sh",
     "build-electron": "cross-env REACT_APP_IS_ELECTRON=true REACT_APP_KINGSCHAT_REDIRECT_URL=rhapsody-bible://auth/callback sh build.sh && sh scripts/prune-electron-build.sh",
     "test": "craco test",
-    "tsc": "tsc --noEmit",
     "eject": "react-scripts eject",
     "electron:compile": "tsc -p electron/tsconfig.json",
     "electron:start": "npm run electron:compile && concurrently \"npm run react\" \"wait-on http://localhost:3400 && electron .\"",
@@ -187,9 +189,8 @@
       "installerHeaderIcon": "build-resources/icon.ico"
     },
     "mac": {
-      "artifactName": "Rhapsody-Bible-${arch}.${ext}",
       "category": "public.app-category.reference",
-      "target": ["dmg"],
+      "target": ["dmg", "zip"],
       "icon": "build-resources/icon.icns",
       "hardenedRuntime": true,
       "entitlements": "electron/entitlements.mac.plist",
@@ -198,10 +199,17 @@
     },
     "linux": {
       "artifactName": "Rhapsody-Bible.${ext}",
+      "category": "Education",
+      "maintainer": "Loveworld Xceptia <mail@rorbible.com>",
       "icon": "build-resources/icon.png",
       "target": ["AppImage", "deb"]
     },
-    "publish": null
+    "publish": [
+      {
+        "provider": "github",
+        "releaseType": "release"
+      }
+    ]
   },
   "devDependencies": {
     "@babel/plugin-proposal-private-property-in-object": "7.21.11",
