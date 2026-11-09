@@ -1,12 +1,5 @@
 echo build in Progres
 
-# Git Bash on Windows maps `PUBLIC_URL=/` to Program Files/Git unless conversion is off.
-export MSYS_NO_PATHCONV=1
-
-# Web/PWA default false; `npm run build-electron` sets REACT_APP_IS_ELECTRON=true via cross-env.
-export REACT_APP_IS_ELECTRON="${REACT_APP_IS_ELECTRON:-false}"
-export PUBLIC_URL="${PUBLIC_URL:-/}"
-
 export REACT_APP_CI=false \
 export REACT_APP_EMAIL_API_URL="https://rhapsodybible-notification.herokuapp.com/" \
 # BUILDING FOR PWA & MOBILE!
@@ -20,4 +13,6 @@ export REACT_APP_KINGSCHAT_REDIRECT_URL="https://rhapsodybible.web.app/auth/call
 export REACT_APP_KINGSCHAT_TOKEN_URL="https://connect.kingsch.at/developer/api/oauth2/token" \
 export REACT_APP_KINGSCHAT_PROFILE_URL="https://connect.kingsch.at/developer/api/profile" \
 
-craco build
+# Use node + relative path so Git Bash on Windows does not mangle
+# node_modules/.bin/craco into D:\d\a\... (MODULE_NOT_FOUND).
+node ./node_modules/@craco/craco/dist/bin/craco.js build
