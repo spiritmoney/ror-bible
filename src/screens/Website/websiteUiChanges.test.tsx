@@ -75,6 +75,21 @@ describe('footer marketing columns', () => {
       'Follow us',
     ]);
   });
+
+  it('reveals extra product links when the Products heading is clicked', () => {
+    render(
+      <MemoryRouter>
+        <Footer />
+      </MemoryRouter>
+    );
+    const toggle = screen.getByRole('button', { name: /^products$/i });
+    const voiceLink = screen.getByRole('link', { name: /ROR Bible\+ Voice/i });
+    expect(toggle).toHaveAttribute('aria-expanded', 'false');
+    expect(voiceLink).not.toHaveClass('is-visible');
+    fireEvent.click(toggle);
+    expect(toggle).toHaveAttribute('aria-expanded', 'true');
+    expect(voiceLink).toHaveClass('is-visible');
+  });
 });
 
 describe('web product hero mockup', () => {
@@ -103,16 +118,19 @@ describe('partner translator form', () => {
   });
 
   it('submits translator form with test input', async () => {
-    const onSubmit = jest.fn((e: Event) => e.preventDefault());
     render(wrap(<Partner />, '/partner'));
     const panel = document.getElementById('be_a_translator') as HTMLElement;
-    const formEl = panel.querySelector('form') as HTMLFormElement;
-    formEl.addEventListener('submit', onSubmit);
     await userEvent.type(within(panel).getByLabelText(/^name$/i), 'Test');
     await userEvent.type(within(panel).getByLabelText(/^surname$/i), 'User');
+    await userEvent.selectOptions(within(panel).getByLabelText(/birth day/i), '10');
+    await userEvent.selectOptions(within(panel).getByLabelText(/birth month/i), '06');
+    await userEvent.selectOptions(within(panel).getByLabelText(/birth year/i), '1995');
     await userEvent.type(within(panel).getByLabelText(/^email$/i), 'test@example.com');
+    await userEvent.selectOptions(within(panel).getByLabelText(/language to translate 1/i), 'English');
     fireEvent.click(within(panel).getByRole('button', { name: /^submit$/i }));
-    expect(onSubmit).toHaveBeenCalled();
+    expect(
+      await within(panel).findByText(/translator application has been received/i)
+    ).toBeInTheDocument();
   });
 });
 

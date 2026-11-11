@@ -42,6 +42,7 @@
   --ds-blue: #19688b;
   --ds-navy: #0b2f44;
   --ds-orange: #ff5900;
+  --ds-cta-orange: #f26a1b;
   --ds-pale: #f6fbfd;
   --ds-mist: #eaf5f8;
   --ds-ink: #3d5566;
@@ -86,6 +87,30 @@ body a {
 .ds-btn-lift:hover:not(:disabled) {
   transform: translateY(-2px);
   filter: brightness(1.04);
+}
+
+/* Primary brand CTAs: invert orange <-> navy, keep label white */
+.ds-cta-invert {
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease,
+    border-color 0.2s ease;
+}
+.ds-cta-invert--orange {
+  background-color: var(--ds-cta-orange);
+  color: var(--ds-white);
+}
+.ds-cta-invert--orange:hover:not(:disabled) {
+  background-color: var(--ds-navy);
+  color: var(--ds-white);
+}
+.ds-cta-invert--navy {
+  background-color: var(--ds-navy);
+  color: var(--ds-white);
+}
+.ds-cta-invert--navy:hover:not(:disabled) {
+  background-color: var(--ds-cta-orange);
+  color: var(--ds-white);
 }
 
 .ds-card-lift {

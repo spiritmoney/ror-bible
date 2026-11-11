@@ -1,5 +1,4 @@
 import { atom } from "recoil";
-import persistAtom from "../persist/persist";
 
 export const headerHeightAtom = atom({
   key: 'headerHeight',

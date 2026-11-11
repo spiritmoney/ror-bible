@@ -7,7 +7,7 @@
 @font-face{font-family:"Montserrat";src:url("../../assets/website/fonts/montserrat-bold.woff") format("woff");font-weight:700;font-style:normal;font-display:swap}
 @font-face{font-family:"Montserrat";src:url("../../assets/website/fonts/montserrat-extrabold.woff") format("woff");font-weight:800;font-style:normal;font-display:swap}
 /* ===== ROR Bible+ Premium Bible Reader: base ===== */
-.website-root{--cyan:#07BDD2;--teal:#099DB2;--blue:#19688B;--navy:#0B2F44;--orange:#FF5900;--pale:#F6FBFD;--mist:#EAF5F8;--ink:#3D5566}
+.website-root{--cyan:#07BDD2;--teal:#099DB2;--blue:#19688B;--navy:#0B2F44;--orange:#FF5900;--cta-orange:#F26A1B;--pale:#F6FBFD;--mist:#EAF5F8;--ink:#3D5566}
 .website-root *, .website-root *::before, .website-root *::after{box-sizing:border-box}
 .website-root{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
 .website-root{margin:0;background:var(--pale);font-family:"Montserrat",system-ui,-apple-system,"Segoe UI",sans-serif;color:var(--navy);-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
@@ -15,7 +15,24 @@
 .website-root a{color:var(--blue);text-decoration:none;transition:color .2s ease,background-color .2s ease,box-shadow .2s ease,transform .2s ease}
 .website-root a:hover{color:var(--navy)}
 .website-root a:focus-visible, .website-root button:focus-visible, .website-root input:focus-visible, .website-root select:focus-visible, .website-root textarea:focus-visible, .website-root summary:focus-visible{outline:3px solid var(--orange);outline-offset:3px;border-radius:8px}
-.website-root button{font-family:inherit}
+.website-root button{font-family:inherit;transition:background-color .2s ease,color .2s ease,border-color .2s ease}
+/* Brand CTA hover: #F26A1B <-> #0B2F44, label stays white */
+.website-root a.u05f1f4:hover,
+.website-root a.u5c4e6f:hover,
+.website-root button.u5c4e6f:hover,
+.website-root a.u5fbba1:hover,
+.website-root button.u113805:hover,
+.website-root button.u5fbba1:hover{background:var(--navy);color:#FFFFFF}
+.website-root a.u7e7fd6:hover,
+.website-root a.u466af7:hover,
+.website-root a.u11b395:hover{background:var(--cta-orange);color:#FFFFFF}
+.website-root a.u311bd0:hover,
+.website-root a.u9c2843:hover{background:var(--navy);color:#FFFFFF}
+.website-root a.u311bd0:hover svg,
+.website-root a.u9c2843:hover svg{stroke:#FFFFFF}
+.website-root a.ubee0d4:hover,
+.website-root button.ubee0d4:hover{background:var(--navy);color:#FFFFFF;border-color:var(--navy)}
+.website-root a.uc80603:hover{background:var(--cta-orange);color:#FFFFFF}
 .website-root .skip-link{position:absolute;left:16px;top:-60px;z-index:100;background:var(--navy);color:#fff;padding:12px 18px;border-radius:10px;font-weight:700}
 .website-root .skip-link:focus{top:12px;color:#fff}
 .website-root .site-header{position:sticky;top:0;z-index:50}
@@ -60,7 +77,7 @@ body.no-scroll{overflow:hidden}
 .website-root .u406034{position: relative; display: inline-flex; align-items: center; gap: 6px; min-height: 76px; padding: 0 2px; font-size: 16px; font-weight: 600; color: #0B2F44}
 .website-root .u133d27{display: flex; align-items: center; gap: 10px}
 .website-root .u421e53{width: 44px; height: 44px; border: 0; border-radius: 50%; background: #EAF5F8; display: inline-flex; align-items: center; justify-content: center; cursor: pointer}
-.website-root .u05f1f4{white-space: nowrap; flex: none; display: inline-flex; align-items: center; min-height: 48px; padding: 0 22px; border-radius: 999px; background: #FF5900; color: #FFFFFF; font-size: 19px; font-weight: 800; box-shadow: 0 8px 20px rgba(255,89,0,0.25)}
+.website-root .u05f1f4{white-space: nowrap; flex: none; display: inline-flex; align-items: center; min-height: 48px; padding: 0 22px; border-radius: 999px; background: var(--cta-orange); color: #FFFFFF; font-size: 19px; font-weight: 800; box-shadow: 0 8px 20px rgba(242,106,27,0.25)}
 .website-root .u1eed2d{width: 44px; height: 44px; border: 0; background: #EAF5F8; border-radius: 12px; align-items: center; justify-content: center; cursor: pointer}
 .website-root .uad67f1{display: flex; flex-direction: column}
 .website-root .u3e339b{height: 2px; background: #07BDD2}
@@ -94,8 +111,10 @@ body.no-scroll{overflow:hidden}
 .website-root .u7b00c8{margin: 0; font-size: 24px; font-weight: 700; color: #19688B}
 .website-root .u9a3d6a{margin: 0; font-size: 18px; line-height: 1.6; color: #3D5566; max-width: 540px}
 .website-root .uba2fef{display: flex; flex-wrap: wrap; gap: 14px; margin-top: 8px}
-.website-root .u5c4e6f{white-space: nowrap; flex: none; display: inline-flex; align-items: center; justify-content: center; min-height: 52px; padding: 0 28px; border-radius: 999px; font-size: 16px; font-weight: 800; background: #FF5900; color: #FFFFFF; font-size: 19px !important; box-shadow: 0 10px 24px rgba(255,89,0,0.28)}
-.website-root .ubee0d4{white-space: nowrap; flex: none; display: inline-flex; align-items: center; justify-content: center; min-height: 52px; padding: 0 28px; border-radius: 999px; font-size: 16px; font-weight: 800; background: #FFFFFF; color: #19688B; border: 2px solid #19688B}
+.website-root .u5c4e6f,
+.website-root button.u5c4e6f{white-space: nowrap; flex: none; display: inline-flex; align-items: center; justify-content: center; min-height: 52px; padding: 0 28px; border-radius: 999px; font-size: 16px; font-weight: 800; background: var(--cta-orange); color: #FFFFFF; font-size: 19px !important; box-shadow: 0 10px 24px rgba(242,106,27,0.28); border:0; cursor:pointer; font-family:inherit}
+.website-root .ubee0d4,
+.website-root button.ubee0d4{white-space: nowrap; flex: none; display: inline-flex; align-items: center; justify-content: center; min-height: 52px; padding: 0 28px; border-radius: 999px; font-size: 16px; font-weight: 800; background: #FFFFFF; color: #19688B; border: 2px solid #19688B; cursor:pointer; font-family:inherit}
 .website-root .ufc8380{display: inline-flex; align-items: center; gap: 10px; min-height: 52px; padding: 0 8px; font-size: 16px; font-weight: 700; color: #19688B}
 .website-root .u7c01c9{width: 36px; height: 36px; border-radius: 50%; background: #FF5900; display: inline-flex; align-items: center; justify-content: center}
 .website-root .u316a78{display: flex; flex-wrap: wrap; gap: 10px; margin-top: 10px}
@@ -112,7 +131,7 @@ body.no-scroll{overflow:hidden}
 .website-root .u64b517{position: absolute; inset: 0; display: flex; align-items: center; justify-content: center}
 .website-root .u9753d2{position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover}
 .website-root .u3f945b{position: absolute; inset: 0; background: linear-gradient(90deg, rgba(11,47,68,0.10), rgba(11,47,68,0.45))}
-.website-root .u113805{position: relative; width: 96px; height: 96px; border-radius: 50%; border: 0; background: #FF5900; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 0 0 14px rgba(255,89,0,0.22)}
+.website-root .u113805{position: relative; width: 96px; height: 96px; border-radius: 50%; border: 0; background: var(--cta-orange); color: #FFFFFF; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 0 0 14px rgba(242,106,27,0.22)}
 .website-root .uf3342a{position: absolute; left: 0; right: 0; bottom: 0; display: flex; align-items: center; gap: 14px; padding: 18px 24px; background: linear-gradient(transparent, rgba(11,47,68,0.85)); color: #FFFFFF; font-size: 14px; font-weight: 600}
 .website-root .u4dc7e3{flex: 1; height: 4px; border-radius: 2px; background: rgba(255,255,255,0.3)}
 .website-root .u5be1ed{position: absolute; inset: 0; width: 100%; height: 100%; background: #000000}
@@ -164,20 +183,26 @@ body.no-scroll{overflow:hidden}
 .website-root .uc7be1b{font-size: 18px; font-weight: 700}
 .website-root .u74c5a0{font-size: 15px; font-weight: 700; color: #FFFFFF}
 .website-root .u6971eb{background: #0B2F44; color: #FFFFFF}
-.website-root .uf37b3e{max-width: 1120px; margin: 0 auto; padding: 80px 24px 0; box-sizing: border-box; display: flex; flex-wrap: wrap; gap: 48px; width: 100%; min-width: 0; align-items: start}
+.website-root .uf37b3e{max-width: 1120px; margin: 0 auto; padding: 48px 20px 0; box-sizing: border-box; display: flex; flex-wrap: wrap; gap: 32px; width: 100%; min-width: 0; align-items: start}
 .website-root .uf3b8e2{display: grid; flex: 1 1 0; min-width: 0; gap: 48px; grid-template-columns: repeat(4, minmax(0, 1fr)); align-items: start}
 .website-root .u1fd187{display: flex; flex-direction: column; gap: 12px; flex: 1.4 1 260px; min-width: 0; max-width: 100%}
 .website-root .u8092d7{display: flex; align-items: flex-start; gap: 12px; flex-wrap: wrap; max-width: 100%}
 .website-root .u2ab49f{height: 48px; width: auto; display: block; flex: none}
 .website-root .u55f5af{display: flex; flex-direction: column; gap: 2px; min-width: 0; max-width: 220px}
-.website-root .ub6a52a{display: block; font-size: 24px; line-height: 1.1; font-weight: 800; color: #FFFFFF; letter-spacing: -0.3px; white-space: normal}
-.website-root .u329d23{display: block; font-size: 14px; line-height: 1.25; font-weight: 500; color: #BDE9F0; white-space: normal; max-width: 220px}
-.website-root .u5fe755{margin: 0; font-size: 14px; font-weight: 600; color: #FFFFFF; max-width: 220px; line-height: 1.45}
-.website-root .uc56752{display: flex; flex-direction: column; gap: 12px; flex: 1 1 180px; min-width: 0}
-.website-root .u902935{margin: 0 0 4px; font-size: 12px; font-weight: 700; color: #FFFFFF; letter-spacing: 0.12em; text-transform: uppercase}
+.website-root .ub6a52a{display: block; font-size: 20px; line-height: 1.1; font-weight: 800; color: #FFFFFF; letter-spacing: -0.3px; white-space: normal}
+.website-root .u329d23{display: block; font-size: 12px; line-height: 1.25; font-weight: 500; color: #BDE9F0; white-space: normal; max-width: 220px}
+.website-root .u5fe755{margin: 0; font-size: 12px; font-weight: 600; color: #FFFFFF; max-width: 220px; line-height: 1.45}
+.website-root .uc56752{display: flex; flex-direction: column; gap: 10px; flex: 1 1 180px; min-width: 0}
+.website-root .u902935{margin: 0 0 4px; font-size: 11px; font-weight: 700; color: #FFFFFF; letter-spacing: 0.12em; text-transform: uppercase}
+.website-root .u6971eb .u8c9a26{font-size: 12px; min-height: 28px; display: inline-flex; align-items: center; line-height: 1.35}
+.website-root .u6971eb .u-footer-col-toggle{margin:0;padding:0;border:0;background:transparent;color:inherit;font:inherit;font-size:inherit;font-weight:inherit;letter-spacing:inherit;text-transform:inherit;cursor:pointer;text-align:left;line-height:inherit}
+.website-root .u6971eb .u-footer-col-toggle:focus-visible{outline:2px solid #FF5900;outline-offset:3px;border-radius:4px}
+.website-root .u6971eb .u8c9a26--extra{display:none}
+.website-root .u6971eb .u8c9a26--extra.is-visible{display:inline-flex}
+.website-root .u6971eb .u-footer-col-panel{display:flex;flex-direction:column;gap:10px}
 .website-root .u8c9a26{font-size: 14px; min-height: 32px; display: inline-flex; align-items: center}
-.website-root .ua95fd4{border-top: 1px solid rgba(255,255,255,0.18); margin-top: 56px}
-.website-root .u94c3c2{max-width: 1120px; margin: 0 auto; padding: 22px 24px; box-sizing: border-box; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; font-size: 13px; color: #B5D3DE}
+.website-root .ua95fd4{border-top: 1px solid rgba(255,255,255,0.18); margin-top: 36px}
+.website-root .u94c3c2{max-width: 1120px; margin: 0 auto; padding: 14px 20px 18px; box-sizing: border-box; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; font-size: 11px; color: #B5D3DE}
 .website-root .ub77529{display: flex; gap: 20px}
 .website-root .uc0e2c3{color: #B5D3DE}
 .website-root .ua7c764{min-height: 100%; font-family: Montserrat, system-ui, sans-serif; color: #0B2F44; background: #F6FBFD; width: 100%; min-width: 0; display: flex; flex-direction: column}
@@ -198,7 +223,7 @@ body.no-scroll{overflow:hidden}
 .website-root .ub0f8e7{display: flex; align-items: center; gap: 12px; min-height: 48px; font-size: 16px; font-weight: 600; color: #0B2F44}
 .website-root .ubf62a4{display: flex; flex-wrap: wrap; gap: 14px 20px; padding: 18px 0}
 .website-root .uc637f1{font-size: 15px; font-weight: 600; color: #19688B}
-.website-root .u5fbba1{white-space: nowrap; display: flex; align-items: center; justify-content: center; min-height: 54px; border-radius: 999px; background: #FF5900; color: #FFFFFF; font-size: 19px; font-weight: 800}
+.website-root .u5fbba1{white-space: nowrap; display: flex; align-items: center; justify-content: center; min-height: 54px; border-radius: 999px; background: var(--cta-orange); color: #FFFFFF; font-size: 19px; font-weight: 800}
 .website-root .ufb0589{margin-top: 12px; display: flex; align-items: center; justify-content: center; gap: 10px; min-height: 50px; border-radius: 999px; background: #19688B; color: #FFFFFF; font-size: 16px; font-weight: 700}
 .website-root .uddbb6d{position: relative; display: inline-flex; align-items: center; gap: 6px; min-height: 76px; padding: 0 2px; font-size: 16px; font-weight: 800; color: #19688B}
 .website-root .u3084a3{position: absolute; left: 50%; bottom: 6px; width: 28px; height: 4px; margin-left: -14px; border-radius: 2px; background: #FF5900}
@@ -353,7 +378,7 @@ body.no-scroll{overflow:hidden}
 
 /* ===== Responsive ===== */
 @media (min-width:1100px){
-  .website-root .uf37b3e{display:grid;grid-template-columns:1.4fr repeat(4,minmax(0,1fr));gap:48px;align-items:start}
+  .website-root .uf37b3e{display:grid;grid-template-columns:1.4fr repeat(4,minmax(0,1fr));gap:32px;align-items:start}
   .website-root .uf3b8e2{display:contents}
   .website-root .u1fd187{max-width:100%}
 }

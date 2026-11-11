@@ -28,7 +28,7 @@ module.exports = {
         'brand-teal': '#099DB2',
         'brand-blue': '#19688B',
         'brand-navy': '#0B2F44',
-        'brand-orange': '#FF5900',
+        'brand-orange': '#F26A1B',
         'brand-pale': '#F6FBFD',
         'brand-mist': '#EAF5F8',
         'brand-ink': '#3D5566',
@@ -45,8 +45,8 @@ module.exports = {
       boxShadow: {
         'brand-header': '0 10px 30px rgba(11, 47, 68, 0.10)',
         'brand-card': '0 30px 80px rgba(11, 47, 68, 0.18)',
-        'brand-orange': '0 10px 24px rgba(255, 89, 0, 0.28)',
-        'brand-orange-sm': '0 8px 20px rgba(255, 89, 0, 0.25)',
+        'brand-orange': '0 10px 24px rgba(242, 106, 27, 0.28)',
+        'brand-orange-sm': '0 8px 20px rgba(242, 106, 27, 0.25)',
       },
       maxWidth: {
         website: '1200px',

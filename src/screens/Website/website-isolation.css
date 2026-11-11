@@ -74,11 +74,18 @@ html:has(.website-root) #root {
 }
 
 .website-root .uddc867 a.u05f1f4:hover,
-.website-root .uddc867 a.getapp:hover {
-  color: #ffffff;
-}
-
-.website-root a.u466af7:hover {
+.website-root .uddc867 a.getapp:hover,
+.website-root a.u5c4e6f:hover,
+.website-root a.u5fbba1:hover,
+.website-root a.u7e7fd6:hover,
+.website-root a.u466af7:hover,
+.website-root a.u11b395:hover,
+.website-root a.u311bd0:hover,
+.website-root a.u9c2843:hover,
+.website-root a.ubee0d4:hover,
+.website-root a.uc80603:hover,
+.website-root button.u113805:hover,
+.website-root button.u5fbba1:hover {
   color: #ffffff;
 }
 

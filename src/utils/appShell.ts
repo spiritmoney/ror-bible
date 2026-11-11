@@ -1,8 +1,5 @@
 import { isElectron } from './general';
-import {
-  hasInstalledLaunchInSession,
-  persistInstalledLaunchFromLocation,
-} from './appShellInstalledLaunch';
+import { hasInstalledLaunchInSession } from './appShellInstalledLaunch';
 
 export { persistInstalledLaunchFromLocation } from './appShellInstalledLaunch';
 

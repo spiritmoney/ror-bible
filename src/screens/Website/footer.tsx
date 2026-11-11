@@ -1,13 +1,87 @@
-import React from 'react';
+import React, { useId, useState } from 'react';
 import { Link } from 'react-router-dom';
 import {
-  WebsiteDownloadRoute,
   WebsiteProductDesktopRoute,
   WebsiteProductMobileRoute,
   WebsiteProductVoiceRoute,
 } from './websitePaths';
 import icon from '../../assets/website/new/ror-bible-plus-icon.png';
 import { isAppShell } from 'utils/appShell';
+
+type FooterLinkItem = {
+  label: string;
+  to?: string;
+  href?: string;
+  placeholder?: boolean;
+};
+
+function FooterLink({ item, className }: { item: FooterLinkItem; className: string }) {
+  if (item.to) {
+    return (
+      <Link className={className} to={item.to}>
+        {item.label}
+      </Link>
+    );
+  }
+  if (item.href) {
+    return (
+      <a className={className} href={item.href} target="_blank" rel="noopener noreferrer">
+        {item.label}
+      </a>
+    );
+  }
+  return (
+    <a className={className} href="#" onClick={(e) => e.preventDefault()}>
+      {item.label}
+    </a>
+  );
+}
+
+function FooterColumn({
+  title,
+  primary,
+  extra,
+}: {
+  title: string;
+  primary: FooterLinkItem[];
+  extra: FooterLinkItem[];
+}) {
+  const [open, setOpen] = useState(false);
+  const panelId = useId();
+  const hasExtra = extra.length > 0;
+
+  return (
+    <div className={`uc56752${open ? ' uc56752--open' : ''}${hasExtra ? ' uc56752--collapsible' : ''}`}>
+      <h3 className="u902935">
+        {hasExtra ? (
+          <button
+            type="button"
+            className="u-footer-col-toggle"
+            aria-expanded={open}
+            aria-controls={panelId}
+            onClick={() => setOpen((value) => !value)}
+          >
+            {title}
+          </button>
+        ) : (
+          title
+        )}
+      </h3>
+      <div id={panelId} className="u-footer-col-panel">
+        {primary.map((item) => (
+          <FooterLink key={`${title}-${item.label}`} item={item} className="u8c9a26" />
+        ))}
+        {extra.map((item) => (
+          <FooterLink
+            key={`${title}-extra-${item.label}`}
+            item={item}
+            className={`u8c9a26 u8c9a26--extra${open ? ' is-visible' : ''}`}
+          />
+        ))}
+      </div>
+    </div>
+  );
+}
 
 export default function Footer() {
   const appShell = isAppShell();
@@ -29,81 +103,56 @@ export default function Footer() {
             </span>
           </Link>
           <p className="u5fe755">Read. Study. Meditate. Triumph.</p>
-          {!appShell && (
-            <>
-              <Link className="u8c9a26" to={`${WebsiteDownloadRoute}#support`}>
-                Technical support
-              </Link>
-              <Link className="u8c9a26" to={`${WebsiteDownloadRoute}#contact`}>
-                Contact us
-              </Link>
-            </>
-          )}
         </div>
         {!appShell && (
           <div className="uf3b8e2">
-            <div className="uc56752">
-              <h3 className="u902935">Products</h3>
-              <Link className="u8c9a26" to="/bible-online">
-                ROR Bible+ Web (Bible Online &amp; Lite)
-              </Link>
-              <Link className="u8c9a26" to={WebsiteProductMobileRoute}>
-                ROR Bible+ Mobile
-              </Link>
-              <Link className="u8c9a26" to={WebsiteProductDesktopRoute}>
-                ROR Bible+ Desktop
-              </Link>
-              <Link className="u8c9a26" to={WebsiteProductVoiceRoute}>
-                ROR Bible+ Voice
-              </Link>
-              <a className="u8c9a26" href="#" onClick={(e) => e.preventDefault()}>
-                @MySpot: Digital Evangelism
-              </a>
-              <a className="u8c9a26" href="#" onClick={(e) => e.preventDefault()}>
-                RORK Bible for Kids
-              </a>
-              <a className="u8c9a26" href="#" onClick={(e) => e.preventDefault()}>
-                Teevo Bible for Teens
-              </a>
-            </div>
-            <div className="uc56752">
-              <h3 className="u902935">About ROR Bible+</h3>
-              {[
-                ['Mission', '/about#mission'],
-                ['Stories', '/about#stories'],
-                ['Careers', '/about#careers'],
-                ['Global Hubs', '/about#hub'],
-                ['Bible Translation', '/about#bible'],
-                ['Press', '/about#press'],
-              ].map(([label, path]) => (
-                <Link key={path} className="u8c9a26" to={path}>
-                  {label}
-                </Link>
-              ))}
-            </div>
-            <div className="uc56752">
-              <h3 className="u902935">Partners</h3>
-              {[
-                ['Content Partner', '/partner#content'],
-                ['Bible Partner', '/partner#ror_bible_partners'],
-                ['Churches', '/partner#churches'],
-                ['Volunteers', '/partner#volunteers'],
-                ['Give', '/give'],
-              ].map(([label, path]) => (
-                <Link key={path} className="u8c9a26" to={path}>
-                  {label}
-                </Link>
-              ))}
-            </div>
-            <div className="uc56752">
-              <h3 className="u902935">Follow us</h3>
-              <a className="u8c9a26" href="https://www.kingchat.online">
-                KingsChat
-              </a>
-              <a className="u8c9a26" href="#" onClick={(e) => e.preventDefault()}>
-                CeFlix
-              </a>
-            </div>
+            <FooterColumn
+              title="Products"
+              primary={[
+                { label: 'ROR Bible+ Web', to: '/bible-online' },
+                { label: 'ROR Bible+ Mobile', to: WebsiteProductMobileRoute },
+                { label: 'ROR Bible+ Desktop', to: WebsiteProductDesktopRoute },
+              ]}
+              extra={[
+                { label: 'ROR Bible+ Voice', to: WebsiteProductVoiceRoute },
+                { label: '@MySpot: Digital Evangelism', placeholder: true },
+                { label: 'RORK Bible for Kids', placeholder: true },
+                { label: 'Teevo Bible for Teens', placeholder: true },
+              ]}
+            />
+            <FooterColumn
+              title="About ROR Bible+"
+              primary={[
+                { label: 'Mission', to: '/about#mission' },
+                { label: 'Stories', to: '/about#stories' },
+              ]}
+              extra={[
+                { label: 'Careers', to: '/about#careers' },
+                { label: 'Global Hubs', to: '/about#hub' },
+                { label: 'Bible Translation', to: '/about#bible' },
+                { label: 'Press', to: '/about#press' },
+              ]}
+            />
+            <FooterColumn
+              title="Partners"
+              primary={[
+                { label: 'Bible Partner', to: '/partner#ror_bible_partners' },
+                { label: 'Give', to: '/give' },
+              ]}
+              extra={[
+                { label: 'Content Partner', to: '/partner#content_partners' },
+                { label: 'Churches', to: '/partner#churches' },
+                { label: 'Volunteers', to: '/partner#volunteers' },
+              ]}
+            />
+            <FooterColumn
+              title="Follow us"
+              primary={[
+                { label: 'KingsChat', href: 'https://www.kingchat.online' },
+                { label: 'CeFlix', placeholder: true },
+              ]}
+              extra={[]}
+            />
           </div>
         )}
       </div>

@@ -4,27 +4,36 @@
 
 .partner-phone-input .form-control {
   width: 100% !important;
-  height: 32px !important;
-  border: 0 !important;
-  border-radius: 4px !important;
-  background: #e9e5e5 !important;
-  color: #2f2f2f !important;
-  font-size: 13px !important;
-  line-height: 32px !important;
+  min-height: 48px !important;
+  height: 48px !important;
+  border: 1px solid #a9cfdb !important;
+  border-radius: 12px !important;
+  background: var(--ds-pale, #f6fbfd) !important;
+  color: var(--ds-navy, #0b2f44) !important;
+  font-size: clamp(0.9375rem, 0.9rem + 0.15vw, 1rem) !important;
+  font-weight: 500 !important;
+  line-height: 1.4 !important;
   padding-left: 82px !important;
-  padding-right: 10px !important;
+  padding-right: 16px !important;
   letter-spacing: 0 !important;
+  box-sizing: border-box !important;
 }
 
 .partner-phone-input .form-control:focus {
-  box-shadow: inset 0 0 0 1px #0f7fa7 !important;
+  outline: 3px solid var(--ds-orange, #ff5900) !important;
+  outline-offset: 2px !important;
+  box-shadow: none !important;
+}
+
+.partner-phone-input--invalid .form-control {
+  border-color: #c44b2d !important;
 }
 
 .partner-phone-input .flag-dropdown {
   border: 0 !important;
-  border-right: 1px solid #cfcfcf !important;
-  border-radius: 4px 0 0 4px !important;
-  background: #e9e5e5 !important;
+  border-right: 1px solid #a9cfdb !important;
+  border-radius: 12px 0 0 12px !important;
+  background: var(--ds-pale, #f6fbfd) !important;
   width: 74px !important;
 }
 
@@ -34,6 +43,12 @@
   display: flex !important;
   align-items: center !important;
   justify-content: flex-start !important;
+  height: 48px !important;
+}
+
+.partner-phone-input .selected-flag:hover,
+.partner-phone-input .selected-flag:focus {
+  background: transparent !important;
 }
 
 .partner-phone-input .selected-flag .flag {
@@ -48,9 +63,10 @@
 
 .partner-phone-input .country-list {
   z-index: 65 !important;
-  border-radius: 8px !important;
-  border: 1px solid #d8d8d8 !important;
-  font-size: 13px !important;
+  border-radius: 12px !important;
+  border: 1px solid #a9cfdb !important;
+  font-size: 14px !important;
+  box-shadow: 0 16px 40px rgba(11, 47, 68, 0.12);
 }
 
 .partner-phone-input .search {
@@ -59,7 +75,7 @@
 
 .partner-phone-input .search-box {
   width: calc(100% - 16px) !important;
-  height: 30px !important;
-  border: 1px solid #d2d2d2 !important;
-  border-radius: 6px !important;
+  min-height: 40px !important;
+  border: 1px solid #a9cfdb !important;
+  border-radius: 10px !important;
 }

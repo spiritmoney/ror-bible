@@ -54,11 +54,11 @@ const Button = React.forwardRef(
     const variantClasses = clsx(
       { 'w-full': fullWidth },
       {
-        'rounded-full bg-brand-orange text-white shadow-brand-orange hover:text-white':
+        'rounded-full bg-brand-orange text-white shadow-brand-orange hover:text-white hover:bg-brand-navy transition-colors':
           primary,
       },
       {
-        'rounded-full bg-white text-brand-blue border-2 border-brand-blue hover:text-brand-blue':
+        'rounded-full bg-brand-navy text-white border-2 border-brand-navy hover:text-white hover:bg-brand-orange transition-colors':
           secondary,
       },
       {
@@ -77,8 +77,7 @@ const Button = React.forwardRef(
           <Spinner
             className={clsx('w-6 h-6', {
               'mr-3 -ml-1': !removeSpinnerMargin,
-              'text-white': primary || danger,
-              'text-brand-blue': secondary,
+              'text-white': primary || secondary || danger,
               'text-brand-ink': light,
             })}
           />

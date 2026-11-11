@@ -67,7 +67,7 @@ export function WebsiteDownloadCtaBand() {
               <WebsiteStoreAnchor
                 key={label}
                 href={href}
-                className="website-btn-lift flex items-center gap-3 bg-white text-brand-navy hover:text-brand-navy rounded-2xl px-4 py-3 min-w-[160px]"
+                className="website-btn-lift flex items-center gap-3 bg-brand-navy text-white hover:text-white hover:bg-brand-orange rounded-2xl px-4 py-3 min-w-[160px] transition-colors"
               >
                 <img src={img} alt="" className="h-10 w-auto" />
                 <span className="text-sm font-bold">{label}</span>

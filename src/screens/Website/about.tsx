@@ -6,7 +6,7 @@ import { scrollToHash } from '../../utils/scrolToHash';
 import PageHero from './PageHero';
 import WebsitePageMeta from './WebsitePageMeta';
 import WebsiteButton from './WebsiteButton';
-import Card from './Card';
+import MarketingSourceBand, { SourceBulletList } from './MarketingSourceBand';
 import { WebsiteDownloadRoute } from './websitePaths';
 import './appMarketingPages.css';
 
@@ -35,90 +35,6 @@ type AboutPageProps = {
   onClose?: () => void;
 };
 
-function BulletList({ items }: { items: string[] }) {
-  return (
-    <ul className="m-0 pl-5 text-[15px] leading-relaxed text-brand-ink space-y-2 list-disc">
-      {items.map((item) => (
-        <li key={item}>{item}</li>
-      ))}
-    </ul>
-  );
-}
-
-function SplitFeatureBand({
-  id,
-  tone,
-  image,
-  imageAlt,
-  title,
-  children,
-}: {
-  id?: string;
-  tone: 'white' | 'alt';
-  image: string;
-  imageAlt: string;
-  title: string;
-  children: React.ReactNode;
-}) {
-  return (
-    <section id={id} className={`mkt-section mkt-band-${tone === 'white' ? 'white' : 'alt'}`}>
-      <div className="mkt-container mkt-split-47">
-        <img src={image} alt={imageAlt} className="mkt-img w-full" loading="lazy" />
-        <div>
-          <h3 className="m-0 text-[28px] font-extrabold text-brand-blue leading-tight">{title}</h3>
-          <div className="mt-4">{children}</div>
-        </div>
-      </div>
-    </section>
-  );
-}
-
-function ExtraFeatureSection({
-  id,
-  title,
-  description,
-  bullets,
-  image,
-  imageAlt,
-}: {
-  id?: string;
-  title: string;
-  description?: string;
-  bullets?: string[];
-  image?: string;
-  imageAlt?: string;
-}) {
-  return (
-    <section id={id} className="mkt-section mkt-band-white">
-      <div className="mkt-container">
-        <Card className="mkt-card !p-0 overflow-hidden">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-0">
-            {image ? (
-              <img
-                src={image}
-                alt={imageAlt || title}
-                className="mkt-img !rounded-none md:min-h-[280px] object-cover w-full h-full"
-                loading="lazy"
-              />
-            ) : null}
-            <div className="p-7 md:p-9">
-              <h3 className="m-0 text-2xl font-extrabold text-brand-blue">{title}</h3>
-              {description ? (
-                <p className="mt-4 text-[15px] leading-relaxed text-brand-ink">{description}</p>
-              ) : null}
-              {bullets ? (
-                <div className="mt-4">
-                  <BulletList items={bullets} />
-                </div>
-              ) : null}
-            </div>
-          </div>
-        </Card>
-      </div>
-    </section>
-  );
-}
-
 export default function AboutPage({
   isModal = false,
   onClose,
@@ -140,23 +56,14 @@ export default function AboutPage({
     });
   }, [location, isModal]);
 
-  const readBullets = [
-    'Experience the illumination of God’s Word in 20+ flavors of the Rhapsody Bible',
-    'Switch between several Bible versions, in over 70 languages',
-    'Offline Feature: Download and read ALL Bibles without Internet access',
-    'Read daily Rhapsody of Realities inspirational articles by the author.',
-  ];
-
-  const studyBullets = [
-    'Inspirational articles: Do topical study with hundreds of daily inspirations articles by Pastor Chris, all year round',
-    'Bible Study Plans: Topical study of the entire Bible using the Rhapsody 1-Year® or 2- Year® Bible Study Planners.',
-    'Study Resources: Adopt immersive study, take advantage of study resources like the Hebrew Greek Bible, Enhanced Hebrew & Greek Dictionaries, LoveWorld Concordance, Enhanced Exhaustive Strong’s concordance.',
-    'Parallel Study: Use the Split view to enhance your Parallel Bible Study experience; comparing scriptures or scripture in one Bible Version with another.',
-  ];
-
-  const friendsBullets = [
-    'Share your daily reading with your friends.',
-    'Send your notes via email, KingsChat to loved ones or evangelism contacts.',
+  const customizeBullets = [
+    'On-Screen Setting: Make the ROR Bible+ completely yours. Personalize your Bible Study experience. Adjust the fonts, font type, and color to your preference. Switch the reference letters and Strong’s numbers off/on etc.',
+    'Easy Reading & Night Mode: Adjust font, text size, and contrast for bright or low-light.',
+    'Highlights: Keep your favorite scripture in your choice color',
+    'Bookmarks: Smart utility for sharing, memorizing, finding your favorite verses.',
+    'Share verses with friends: on social media, email, or via SMS/text,',
+    'Notes: Keep your study notes privately, or share them with friends',
+    "Cloud Sync: With your free ROR Bible+ account, see all of your Notes, Highlights, Bookmarks, on any supported devices, just at the tap of the Sync button!",
   ];
 
   const PageInner = (
@@ -172,169 +79,136 @@ export default function AboutPage({
         description={INTRO}
       />
 
-      <section id="mission" className="mkt-section mkt-band-white">
-        <div className="mkt-container grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-          <img
-            src={aboutImg}
-            alt="About ROR Bible"
-            className="mkt-img w-full max-w-full"
-            loading="lazy"
-          />
-          <div>
-            <h2 className="m-0 text-[32px] font-extrabold text-brand-blue leading-tight">
-              More Than Just A Bible!
-            </h2>
-            <p className="mt-4 text-[16px] leading-[1.65] text-brand-ink">{MISSION_BODY}</p>
-          </div>
-        </div>
-      </section>
-
-      <SplitFeatureBand
+      <MarketingSourceBand
         id="read"
         tone="alt"
+        title="Read The Rhapsody Bible Daily"
         image={aboutImg2}
         imageAlt="Read The Rhapsody Bible Daily"
-        title="Read The Rhapsody Bible Daily"
       >
-        <BulletList items={readBullets} />
-      </SplitFeatureBand>
+        <SourceBulletList
+          items={[
+            'Experience the illumination of God’s Word in 20+ flavors of the Rhapsody Bible',
+            'Switch between several Bible versions, in over 70 languages',
+            'Offline Feature: Download and read ALL Bibles without Internet access',
+            'Read daily Rhapsody of Realities inspirational articles by the author.',
+          ]}
+        />
+      </MarketingSourceBand>
 
-      <SplitFeatureBand
+      <MarketingSourceBand
         id="meditate"
         tone="white"
+        title="Study & Meditate On Rhapsody Bible"
         image={aboutImg3}
         imageAlt="Study & Meditate On Rhapsody Bible"
-        title="Study & Meditate On Rhapsody Bible"
       >
-        <BulletList items={studyBullets} />
-      </SplitFeatureBand>
+        <SourceBulletList
+          items={[
+            'Inspirational articles: Do topical study with hundreds of daily inspirations articles by Pastor Chris, all year round',
+            'Bible Study Plans: Topical study of the entire Bible using the Rhapsody 1-Year® or 2- Year® Bible Study Planners.',
+            'Study Resources: Adopt immersive study, take advantage of study resources like the Hebrew Greek Bible, Enhanced Hebrew & Greek Dictionaries, LoveWorld Concordance, Enhanced Exhaustive Strong’s concordance.',
+            'Parallel Study: Use the Split view to enhance your Parallel Bible Study experience; comparing scriptures or scripture in one Bible Version with another.',
+          ]}
+        />
+      </MarketingSourceBand>
 
-      <SplitFeatureBand
+      <MarketingSourceBand
         id="hub"
         tone="alt"
+        title="Use the Rhapsody Bible with Friends"
         image={aboutImg4}
         imageAlt="Use the Rhapsody Bible with Friends"
-        title="Use the Rhapsody Bible with Friends"
       >
-        <BulletList items={friendsBullets} />
-      </SplitFeatureBand>
+        <SourceBulletList
+          items={[
+            'Share your daily reading with your friends.',
+            'Send your notes via email, KingsChat to loved ones or evangelism contacts.',
+          ]}
+        />
+      </MarketingSourceBand>
 
-      <ExtraFeatureSection
+      <MarketingSourceBand
+        tone="white"
         title="Customize Your Free Rhapsody Bible"
         image={aboutImg5}
         imageAlt="Customize Your Free Rhapsody Bible"
-        bullets={[
-          'On-Screen Setting: Make the ROR Bible+ completely yours. Personalize your Bible Study experience. Adjust the fonts, font type, and color to your preference. Switch the reference letters and Strong’s numbers off/on etc.',
-          'Easy Reading & Night Mode: Adjust font, text size, and contrast for bright or low-light.',
-          'Highlights: Keep your favorite scripture in your choice color',
-          'Bookmarks: Smart utility for sharing, memorizing, finding your favorite verses.',
-          'Share verses with friends: on social media, email, or via SMS/text,',
-          'Notes: Keep your study notes privately, or share them with friends',
-          "Cloud Sync: With your free ROR Bible+ account, see all of your Notes, Highlights, Bookmarks, on any supported devices, just at the tap of the Sync button!",
-        ]}
-      />
+      >
+        <SourceBulletList items={customizeBullets} />
+      </MarketingSourceBand>
 
-      <section className="mkt-section mkt-band-alt">
-        <div className="mkt-container">
-          <Card className="mkt-card">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
-              <img
-                src={aboutImg6}
-                alt="Connect With ROR Bible+"
-                className="mkt-img"
-                loading="lazy"
-              />
-              <div>
-                <h3 className="m-0 text-2xl font-extrabold text-brand-blue">Connect With ROR Bible+</h3>
-                <ul className="mt-4 pl-5 text-[15px] text-brand-ink space-y-3 list-disc">
-                  <li>Contact support from inside the ROR Bible+ App</li>
-                  <li>
-                    Follow us on KingsChat app, download @:{' '}
-                    <a
-                      className="text-brand-blue font-semibold inline-flex items-center gap-1"
-                      href="https://kingschat.online/user/rorbible"
-                    >
-                      <img src={kc} alt="" className="w-4 h-4" />
-                      ROR Bible+ Superuser
-                    </a>
-                  </li>
-                  <li>
-                    Keep current on our blog:{' '}
-                    <a
-                      className="text-brand-blue font-semibold inline-flex items-center gap-1"
-                      href="https://blog.rorbible.plus"
-                    >
-                      <img src={link} alt="" className="w-4 h-4" />
-                      https://blog.rorbible.plus
-                    </a>
-                  </li>
-                  <li>
-                    ROR Bible+ Online:{' '}
-                    <a className="text-brand-blue font-semibold inline-flex items-center gap-1" href="/bible-online">
-                      <img src={link} alt="" className="w-4 h-4" />
-                      https://www.rorbible.plus
-                    </a>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </Card>
-        </div>
-      </section>
+      <MarketingSourceBand
+        tone="alt"
+        title="Connect With ROR Bible+"
+        image={aboutImg6}
+        imageAlt="Connect With ROR Bible+"
+      >
+        <ul className="mkt-list mkt-source-list">
+          <li>Contact support from inside the ROR Bible+ App</li>
+          <li>
+            Follow us on KingsChat app, download @:{' '}
+            <a className="mkt-link inline-flex items-center gap-1" href="https://kingschat.online/user/rorbible">
+              <img src={kc} alt="" className="w-4 h-4" />
+              ROR Bible+ Superuser
+            </a>
+          </li>
+          <li>
+            Keep current on our blog:{' '}
+            <a className="mkt-link inline-flex items-center gap-1" href="https://blog.rorbible.plus">
+              <img src={link} alt="" className="w-4 h-4" />
+              https://blog.rorbible.plus
+            </a>
+          </li>
+          <li>
+            ROR Bible+ Online:{' '}
+            <a className="mkt-link inline-flex items-center gap-1" href="/bible-online">
+              <img src={link} alt="" className="w-4 h-4" />
+              https://www.rorbible.plus
+            </a>
+          </li>
+        </ul>
+      </MarketingSourceBand>
 
-      <ExtraFeatureSection
+      <MarketingSourceBand
         id="bible"
+        tone="white"
         title="Several ROR Bible Versions:"
         image={aboutImg7}
         imageAlt="Several ROR Bible Versions:"
-        bullets={[
-          'King James Version (KJV)',
-          'New King James Version (NKJV)',
-          'Amplified Classic Bible (AMPC)',
-          'New International Version (NIV)',
-          'New Living Translation (NLT)',
-          'English Standard Version (ESV)',
-          'The Message (MSG)',
-          'and many more! ',
-        ]}
-      />
+      >
+        <SourceBulletList
+          items={[
+            'King James Version (KJV)',
+            'New King James Version (NKJV)',
+            'Amplified Classic Bible (AMPC)',
+            'New International Version (NIV)',
+            'New Living Translation (NLT)',
+            'English Standard Version (ESV)',
+            'The Message (MSG)',
+            'and many more! ',
+          ]}
+        />
+      </MarketingSourceBand>
 
-      <ExtraFeatureSection
+      <MarketingSourceBand
+        tone="alt"
         title="More Than 2000+ Int’l Languages"
-        description="English, Spanish, Hindi, Urdu, Myanmar, Mandarin, Portuguese, Korean, German, French, Russian, Malayalam, Indonesian, Arabic, Zulu, Efik, Igbo, Tagalog, Bengali, Nepali, Swedish, Norwegian, Kazakh, Acehnese, Cebuano, Turkmen, Mongol, Javanese, Kannada, Italian, Afrikaans, Albanian, Amharic, Bulgarian, Czech, Farsi, Gujarati, Hebrew, Marathi, Orija, Swahili, Thai, Ukrainian, Vietnamese, Latvian."
         image={aboutImg8}
         imageAlt="More Than 2000+ Int’l Languages"
-      />
-
-      <section className="mkt-section mkt-band-alt pt-0">
-        <div className="mkt-container">
-          <img src={appreciation} alt="Appreciation block" className="mkt-img w-full" loading="lazy" />
-        </div>
-      </section>
-
-      <section className="mkt-section mkt-band-white pt-0">
-        <div className="mkt-container grid grid-cols-1 md:grid-cols-2 gap-6">
-          <article id="stories" className="mkt-card">
-            <img src={stories} alt="Stories" className="mkt-img mb-4" loading="lazy" />
-            <h3 className="m-0 text-xl font-extrabold text-brand-blue">Stories</h3>
-            <p className="mt-3 text-[15px] text-brand-ink">
-              See how God is using ROR Bible+ to impact lives across the world.
-            </p>
-          </article>
-          <article id="press" className="mkt-card">
-            <img src={press} alt="Press" className="mkt-img mb-4" loading="lazy" />
-            <h3 className="m-0 text-xl font-extrabold text-brand-blue">Press</h3>
-            <p className="mt-3 text-[15px] text-brand-ink">
-              ROR Bible+ have been covered by the press all over the world.
-            </p>
-          </article>
-        </div>
-      </section>
+      >
+        <p className="mkt-body">
+          English, Spanish, Hindi, Urdu, Myanmar, Mandarin, Portuguese, Korean, German, French, Russian,
+          Malayalam, Indonesian, Arabic, Zulu, Efik, Igbo, Tagalog, Bengali, Nepali, Swedish, Norwegian,
+          Kazakh, Acehnese, Cebuano, Turkmen, Mongol, Javanese, Kannada, Italian, Afrikaans, Albanian,
+          Amharic, Bulgarian, Czech, Farsi, Gujarati, Hebrew, Marathi, Orija, Swahili, Thai, Ukrainian,
+          Vietnamese, Latvian.
+        </p>
+      </MarketingSourceBand>
 
       <section className="mkt-cta-band">
         <div className="mkt-container">
-          <h2 className="m-0 text-[32px] font-extrabold text-white">Stories</h2>
-          <p className="mt-3 text-[16px] text-white/90 max-w-xl mx-auto">
+          <h2 className="mkt-h2">Stories</h2>
+          <p className="mkt-body">
             See how God is using ROR Bible+ to impact lives across the world.
           </p>
           <div className="mt-8 flex justify-center">

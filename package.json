@@ -101,7 +101,8 @@
     "workbox-streams": "^6.5.4",
     "xml-js": "^1.6.11",
     "xml2js": "^0.6.2",
-    "yup": "^0.32.11"
+    "yup": "^0.32.11",
+    "zod": "^3.23.8"
   },
   "scripts": {
     "ci": "source-map-explorer 'build/static/js/*.js'",
@@ -174,7 +175,9 @@
       "target": [
         {
           "target": "nsis",
-          "arch": ["x64"]
+          "arch": [
+            "x64"
+          ]
         }
       ],
       "icon": "build-resources/icon.ico",
@@ -191,7 +194,10 @@
     "mac": {
       "artifactName": "Rhapsody-Bible-${arch}.${ext}",
       "category": "public.app-category.reference",
-      "target": ["dmg", "zip"],
+      "target": [
+        "dmg",
+        "zip"
+      ],
       "icon": "build-resources/icon.icns",
       "hardenedRuntime": true,
       "entitlements": "electron/entitlements.mac.plist",
@@ -203,7 +209,10 @@
       "category": "Education",
       "maintainer": "Loveworld Xceptia <mail@rorbible.com>",
       "icon": "build-resources/icon.png",
-      "target": ["AppImage", "deb"]
+      "target": [
+        "AppImage",
+        "deb"
+      ]
     },
     "publish": [
       {

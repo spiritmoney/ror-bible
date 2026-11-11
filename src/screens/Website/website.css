@@ -67,7 +67,24 @@
 }
 
 .website-root a.bg-brand-navy:hover,
-.website-root a.bg-brand-navy:focus-visible {
+.website-root a.bg-brand-navy:focus-visible,
+.website-root button.bg-brand-navy:hover,
+.website-root button.bg-brand-navy:focus-visible {
+  color: #ffffff;
+}
+
+.website-root a.bg-brand-orange:hover,
+.website-root a.bg-brand-orange:focus-visible,
+.website-root button.bg-brand-orange:hover,
+.website-root button.bg-brand-orange:focus-visible {
+  color: #ffffff;
+}
+
+.website-root .hover\:bg-brand-navy:hover {
+  color: #ffffff;
+}
+
+.website-root .hover\:bg-brand-orange:hover {
   color: #ffffff;
 }
 

@@ -1,34 +1,13 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import {
-  WebsiteDownloadRoute,
-  WebsiteFeaturesRoute,
-  WebsitePricingRoute,
   WebsiteProductDesktopRoute,
   WebsiteProductMobileRoute,
   WebsiteProductVoiceRoute,
   WebsiteProductWebRoute,
 } from './websitePaths';
-import heroIpad from '../../assets/website/new/hero-ipad-reader.jpg';
-import tvPoster from '../../assets/website/new/tv-promo-poster.jpg';
-import f1 from '../../assets/website/new/feature-01-personalized-study.jpg';
-import f2 from '../../assets/website/new/feature-02-solution-search.jpg';
-import f3 from '../../assets/website/new/feature-03-audio-bible.jpg';
-import f4 from '../../assets/website/new/feature-04-pulpit.jpg';
-import f5 from '../../assets/website/new/feature-05-study-resources.jpg';
-import f6 from '../../assets/website/new/feature-06-parallel-study.jpg';
 import f7 from '../../assets/website/new/feature-07-study-utilities.jpg';
-import f8 from '../../assets/website/new/feature-08-roar.jpg';
-import f9 from '../../assets/website/new/feature-09-colour-search.jpg';
-import f10 from '../../assets/website/new/feature-10-study-workspace.jpg';
 import ProductHeroMonitorMockup from './ProductHeroMonitorMockup';
-import lwStore from '../../assets/website/new/loveworld-app-store.png';
-import googlePlay from '../../assets/website/new/google-play.png';
-import appStore from '../../assets/website/new/app-store.png';
-import macos from '../../assets/website/new/macos.png';
-import windows from '../../assets/website/new/windows.png';
-import linux from '../../assets/website/new/linux.png';
-import icon from '../../assets/website/new/ror-bible-plus-icon.png';
 
 export default function ProductWebMain() {
   return (
@@ -74,7 +53,7 @@ export default function ProductWebMain() {
 <h2 className="u710805">Install once. Carry <span className="ub8bc62">everywhere.</span></h2>
 <p className="u62020b">Bible Lite is the progressive web app version of Premium Bible Reader 2.0: lightweight, powerful and designed for speed. Install it on any phone, tablet or desktop and enjoy offline access to your Bible study.</p>
 <ul className="ua8091c"><li className="u23b391"><span className="u3a78e7"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#099DB2" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span><span>Verse Compare, Bookmarks and Highlights</span></li><li className="u23b391"><span className="u3a78e7"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#099DB2" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span><span>Split View for parallel study</span></li><li className="u23b391"><span className="u3a78e7"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#099DB2" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span><span>Cloud sync via your ROR Bible+ account</span></li></ul>
-<div className="u3f28ac"><a className="u5c4e6f" href="#">Install Bible Lite</a></div>
+<div className="u3f28ac"><button type="button" className="u5c4e6f">Install Bible Lite</button></div>
 </div>
 </div>
 </section><section className="u1717c3">

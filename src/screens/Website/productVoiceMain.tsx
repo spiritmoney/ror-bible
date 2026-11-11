@@ -1,34 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import {
-  WebsiteDownloadRoute,
-  WebsiteFeaturesRoute,
-  WebsitePricingRoute,
   WebsiteProductDesktopRoute,
   WebsiteProductMobileRoute,
   WebsiteProductVoiceRoute,
   WebsiteProductWebRoute,
 } from './websitePaths';
-import heroIpad from '../../assets/website/new/hero-ipad-reader.jpg';
-import tvPoster from '../../assets/website/new/tv-promo-poster.jpg';
-import f1 from '../../assets/website/new/feature-01-personalized-study.jpg';
-import f2 from '../../assets/website/new/feature-02-solution-search.jpg';
-import f3 from '../../assets/website/new/feature-03-audio-bible.jpg';
-import f4 from '../../assets/website/new/feature-04-pulpit.jpg';
-import f5 from '../../assets/website/new/feature-05-study-resources.jpg';
-import f6 from '../../assets/website/new/feature-06-parallel-study.jpg';
-import f7 from '../../assets/website/new/feature-07-study-utilities.jpg';
-import f8 from '../../assets/website/new/feature-08-roar.jpg';
-import f9 from '../../assets/website/new/feature-09-colour-search.jpg';
-import f10 from '../../assets/website/new/feature-10-study-workspace.jpg';
-import bibleOnline from '../../assets/website/new/bible-online-reader.jpg';
-import lwStore from '../../assets/website/new/loveworld-app-store.png';
-import googlePlay from '../../assets/website/new/google-play.png';
-import appStore from '../../assets/website/new/app-store.png';
-import macos from '../../assets/website/new/macos.png';
-import windows from '../../assets/website/new/windows.png';
-import linux from '../../assets/website/new/linux.png';
-import icon from '../../assets/website/new/ror-bible-plus-icon.png';
 
 export default function ProductVoiceMain() {
   return (
@@ -41,7 +18,7 @@ export default function ProductVoiceMain() {
 <h1 className="u0288f9">Speak. Listen. Engage with <span className="ub8bc62">the Word.</span></h1>
 <p className="u742aa7">“Let ROR Bible+ speak to you!”</p>
 <p className="u62020b">Hands-free Scripture access on Amazon Alexa and Google Home. At home, in the car or preparing a sermon, keep the Scriptures alive on your lips and in your heart.</p>
-<div className="u3f28ac"><a className="u5c4e6f" href="#">Enable on Amazon Alexa</a><a className="ubee0d4" href="#">Enable on Google Home</a></div>
+<div className="u3f28ac"><button type="button" className="u5c4e6f">Enable on Amazon Alexa</button><button type="button" className="ubee0d4">Enable on Google Home</button></div>
 </div>
 <div className="u1c0f7c"><div className="ub43b67">
 <div className="u591aca" aria-hidden="true"><span className="ubb3d39"></span><span className="u370ccc"></span><span className="ue1e7ec"></span><span className="u7ae6da"></span><span className="uc480b9"></span><span className="uf5e00e"></span><span className="uc55b8a"></span><span className="u38fce1"></span><span className="ua957e2"></span><span className="u887446"></span><span className="u3fe7af"></span><span className="ufacbf1"></span><span className="u21f0b7"></span><span className="u16566f"></span><span className="ubf33a8"></span><span className="ufbe89a"></span></div>

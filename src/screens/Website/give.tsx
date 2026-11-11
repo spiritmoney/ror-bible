@@ -5,10 +5,10 @@ import { HEADER_HEIGHT } from './constants';
 import WebsiteLayout from './WebsiteLayout';
 import PageHero from './PageHero';
 import WebsitePageMeta from './WebsitePageMeta';
+import MarketingSourceBand from './MarketingSourceBand';
 import './appMarketingPages.css';
 
 import give2 from '../../assets/give/give2.png';
-import givePay from '../../assets/give/givePay.png';
 import giveGiftCard from '../../assets/give/giveGiftCard.png';
 
 type GivePageProps = {
@@ -18,14 +18,14 @@ type GivePageProps = {
 
 function EspeesBlock({ code, address }: { code: string; address: string }) {
   return (
-    <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-4 text-[15px] text-brand-ink">
+    <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-4">
       <div>
-        <p className="m-0 font-semibold text-brand-ink">ESPEES Code:</p>
-        <p className="mt-1 font-extrabold text-brand-navy">{code}</p>
+        <p className="mkt-label">ESPEES Code:</p>
+        <p className="mkt-body mkt-stat">{code}</p>
       </div>
       <div>
-        <p className="m-0 font-semibold text-brand-ink">ESPEES Address</p>
-        <p className="mt-1 font-medium break-all">{address}</p>
+        <p className="mkt-label">ESPEES Address</p>
+        <p className="mkt-body break-all">{address}</p>
       </div>
     </div>
   );
@@ -186,20 +186,13 @@ export default function GivePage({
           <img
             src={give2}
             alt="One seed can change the world"
-            className="mkt-img mkt-form-photo"
+            className="mkt-src-img"
             loading="lazy"
           />
 
           <div id="give_now" className="mkt-form-card">
-            <img src={givePay} alt="Payment header" className="w-full h-auto rounded-2xl mb-4" loading="lazy" />
-            <h3 className="m-0 text-2xl font-extrabold text-brand-blue">Give Now</h3>
-            <p className="mt-2 text-[15px] text-brand-ink">Enter ESPEES amount</p>
-
-            <div className="mkt-amount-tiles" aria-hidden>
-              <span className="mkt-amount-tile" />
-              <span className="mkt-amount-tile" />
-              <span className="mkt-amount-tile" />
-            </div>
+            <h3 className="mkt-h3-lg">Give Now</h3>
+            <p className="mkt-note">Enter ESPEES amount</p>
 
             <label className="block mt-4">
               <span className="mkt-label">Amount</span>
@@ -209,7 +202,7 @@ export default function GivePage({
                 step="0.01"
                 value={amount}
                 onChange={(e) => setAmount(e.target.value)}
-                className="mkt-input text-xl font-bold"
+                className="mkt-input"
                 aria-label="Enter ESPEES amount"
               />
             </label>
@@ -252,47 +245,42 @@ export default function GivePage({
             </div>
 
             {paymentMessage ? (
-              <p className="mt-4 text-[15px] text-brand-ink">{paymentMessage}</p>
+              <p className="mt-4 mkt-note">{paymentMessage}</p>
             ) : null}
 
-            <p className="mt-8 text-center text-sm font-semibold text-brand-ink uppercase tracking-wide">
-              Other Options
-            </p>
+            <p className="mkt-kicker mkt-kicker--spaced mkt-kicker--center">Other Options</p>
             <EspeesBlock code={ESPEES_CODE} address={ESPEES_ADDRESS} />
           </div>
         </div>
       </section>
 
-      <section id="give_intro" className="mkt-section mkt-band-white">
-        <div className="mkt-container max-w-3xl">
-          <h2 className="m-0 text-[32px] font-extrabold text-brand-blue leading-tight">
-            One Seed Can Change the World
-          </h2>
-          <p className="mt-4 text-[16px] leading-[1.65] text-brand-ink">
+      <MarketingSourceBand id="give_intro" tone="alt" title="One Seed Can Change the World">
+          <p className="mkt-body">
             God&apos;s Word is the seed that has the power to transform lives. Every time someone
             download a Bible, a seed is planted. And every time that person opens their Bibles, that
             seed is watered.
           </p>
-          <p className="mt-4 text-[16px] leading-[1.65] text-brand-ink">
+          <p className="mkt-body">
             Join our growing community of sowers by making a monthly recurring commitment to reach
             everyone, everywhere with God&apos;s Word.
           </p>
-        </div>
-      </section>
+      </MarketingSourceBand>
 
-      <section id="gift_card" className="mkt-section mkt-band-alt">
-        <div className="mkt-container grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
-          <div>
-            <h3 className="m-0 text-2xl font-extrabold text-brand-blue">Gift a Card</h3>
-            <p className="mt-4 text-[16px] leading-[1.65] text-brand-ink">
+      <section id="gift_card" className="mkt-section mkt-band-white">
+        <div className="mkt-container mkt-split-47 mkt-split-balanced">
+          <img src={giveGiftCard} alt="Gift card" className="mkt-src-img" loading="lazy" />
+          <div className="mkt-band-copy mkt-band-copy--col">
+            <h2 className="mkt-band-title">Gift a Card</h2>
+            <p className="mkt-body mkt-band-content">
               Gift inspirational and uplifting Cards to your love ones, colleague friends and more.
               send them these faith fill and encouraging Gift Card to lighting up their day.
             </p>
-            <button type="button" className="mt-6 mkt-btn-give">
-              SEE MORE
-            </button>
+            <div className="mkt-band-content">
+              <button type="button" className="mkt-btn-give">
+                SEE MORE
+              </button>
+            </div>
           </div>
-          <img src={giveGiftCard} alt="Gift card" className="mkt-img w-full max-w-md mx-auto" loading="lazy" />
         </div>
       </section>
 
@@ -309,7 +297,7 @@ export default function GivePage({
               <button
                 type="button"
                 onClick={onSuccessToastOk}
-                className="h-[48px] px-10 rounded-[12px] bg-[#1E96AF] text-white text-[18px] font-semibold"
+                className="mkt-btn-give h-[48px] px-10 rounded-[12px] text-[18px] font-semibold"
               >
                 OK
               </button>

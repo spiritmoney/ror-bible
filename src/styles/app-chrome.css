@@ -162,8 +162,8 @@ button.app-top-nav-item {
   padding: 0 1.35rem;
   border-radius: var(--ds-radius-pill);
   border: none;
-  background: var(--ds-orange);
-  color: var(--ds-navy);
+  background: var(--ds-cta-orange);
+  color: var(--ds-white);
   font-size: 14px;
   font-weight: 700;
   box-shadow: var(--ds-shadow-orange);
@@ -175,6 +175,10 @@ button.app-top-nav-item {
 
 .app-top-sign-in:hover {
   background: var(--ds-navy);
+  color: var(--ds-white);
+}
+
+.app-top-sign-in:focus-visible {
   color: var(--ds-white);
 }
 
