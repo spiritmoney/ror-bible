@@ -1,5 +1,6 @@
 import React from 'react';
-import { render, screen, within } from '@testing-library/react';
+import { fireEvent, render, screen, within } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import Footer from './footer';
 import ProductWebMain from './productWebMain';
@@ -99,6 +100,19 @@ describe('partner translator form', () => {
     render(wrap(<Partner />, '/partner'));
     expect(screen.getAllByRole('button', { name: /^submit$/i }).length).toBeGreaterThanOrEqual(1);
     expect(screen.queryByRole('button', { name: /cancel/i })).not.toBeInTheDocument();
+  });
+
+  it('submits translator form with test input', async () => {
+    const onSubmit = jest.fn((e: Event) => e.preventDefault());
+    render(wrap(<Partner />, '/partner'));
+    const panel = document.getElementById('be_a_translator') as HTMLElement;
+    const formEl = panel.querySelector('form') as HTMLFormElement;
+    formEl.addEventListener('submit', onSubmit);
+    await userEvent.type(within(panel).getByLabelText(/^name$/i), 'Test');
+    await userEvent.type(within(panel).getByLabelText(/^surname$/i), 'User');
+    await userEvent.type(within(panel).getByLabelText(/^email$/i), 'test@example.com');
+    fireEvent.click(within(panel).getByRole('button', { name: /^submit$/i }));
+    expect(onSubmit).toHaveBeenCalled();
   });
 });
 

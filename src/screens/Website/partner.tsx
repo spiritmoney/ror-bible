@@ -62,7 +62,7 @@ export default function PartnerPage({
   }, [location, isModal]);
 
   const PageInner = (
-    <div className="website-root app-marketing-page bg-brand-pale text-brand-navy font-montserrat">
+    <div className="website-root app-marketing-page bg-white text-brand-navy font-montserrat">
       <PageHero
         variant="flat"
         eyebrow="Partners"
@@ -74,7 +74,7 @@ export default function PartnerPage({
         description={ROR_PARTNERS_TEXT}
       />
 
-      <section className="mkt-section pt-0">
+      <section className="mkt-section mkt-band-white">
         <div className="mkt-container grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
           {[
             ['Content Partner', '#content_partners'],
@@ -90,16 +90,14 @@ export default function PartnerPage({
         </div>
       </section>
 
-      <section id="volunteers" className="mkt-section">
-        <div className="mkt-container grid grid-cols-1 lg:grid-cols-[5fr_6fr] gap-12 items-start">
-          <div className="min-h-[320px] lg:min-h-[520px] flex items-stretch">
-            <img
-              src={partnerTranslator}
-              alt="Be a Translator"
-              className="mkt-img w-full object-cover min-h-[320px] lg:min-h-[520px]"
-              loading="lazy"
-            />
-          </div>
+      <section id="volunteers" className="mkt-section mkt-band-alt">
+        <div className="mkt-container mkt-split-56">
+          <img
+            src={partnerTranslator}
+            alt="Be a Translator"
+            className="mkt-img mkt-partner-photo"
+            loading="lazy"
+          />
 
           <div id="be_a_translator" className="mkt-form-card">
             <h2 className="m-0 text-[28px] font-extrabold text-brand-blue">Be a Translator</h2>
@@ -171,7 +169,7 @@ export default function PartnerPage({
         </div>
       </section>
 
-      <section id="ror_bible_partners" className="mkt-section">
+      <section id="ror_bible_partners" className="mkt-section mkt-band-white">
         <div className="mkt-container">
           <Card className="mkt-card" lift={false}>
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
@@ -185,7 +183,7 @@ export default function PartnerPage({
         </div>
       </section>
 
-      <section id="churches" className="mkt-section pt-0">
+      <section id="churches" className="mkt-section mkt-band-alt">
         <div className="mkt-container">
           <Card className="mkt-card" lift={false}>
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
@@ -199,7 +197,7 @@ export default function PartnerPage({
         </div>
       </section>
 
-      <section id="content_partners" className="mkt-section pt-0">
+      <section id="content_partners" className="mkt-section mkt-band-white">
         <div className="mkt-container">
           <Card className="mkt-card" lift={false}>
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
@@ -213,7 +211,7 @@ export default function PartnerPage({
         </div>
       </section>
 
-      <section id="careers" className="mkt-section">
+      <section id="careers" className="mkt-section mkt-band-alt">
         <div className="mkt-container grid grid-cols-1 lg:grid-cols-2 gap-12">
           <img src={partnerCareer} alt="Careers" className="mkt-img" loading="lazy" />
           <div className="mkt-form-card">

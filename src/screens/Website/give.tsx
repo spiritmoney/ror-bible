@@ -7,8 +7,6 @@ import PageHero from './PageHero';
 import WebsitePageMeta from './WebsitePageMeta';
 import './appMarketingPages.css';
 
-import giveBanner from '../../assets/give/giveBanner.png';
-import giveText from '../../assets/give/giveText.png';
 import give2 from '../../assets/give/give2.png';
 import givePay from '../../assets/give/givePay.png';
 import giveGiftCard from '../../assets/give/giveGiftCard.png';
@@ -170,7 +168,7 @@ export default function GivePage({
     <div
       ref={containerRef}
       tabIndex={-1}
-      className="website-root app-marketing-page bg-brand-pale text-brand-navy font-montserrat"
+      className="website-root app-marketing-page bg-white text-brand-navy font-montserrat"
     >
       <PageHero
         variant="flat"
@@ -183,45 +181,25 @@ export default function GivePage({
         description="Intimacy with God has the power to transform lives, and living generously is one way we can partner with him. When you surrender to God by living generously, it changes lives."
       />
 
-      <section className="mkt-section pt-0">
-        <div className="mkt-container relative overflow-hidden rounded-3xl">
-          <img src={giveBanner} alt="Give banner" className="mkt-img w-full max-h-[280px] object-cover" loading="lazy" />
+      <section id="seed" className="mkt-section mkt-band-white">
+        <div className="mkt-container mkt-split-65">
           <img
-            src={giveText}
-            alt="Give - Let's reach everyone, everywhere, every day"
-            className="absolute left-6 bottom-6 max-w-[min(100%,420px)] h-auto rounded-2xl shadow-brand-card"
+            src={give2}
+            alt="One seed can change the world"
+            className="mkt-img mkt-form-photo"
             loading="lazy"
           />
-        </div>
-      </section>
-
-      <section id="seed" className="mkt-section">
-        <div className="mkt-container grid grid-cols-1 lg:grid-cols-[6fr_5fr] gap-12 items-start">
-          <div id="give_intro">
-            <h2 className="m-0 text-[32px] font-extrabold text-brand-blue leading-tight">
-              One Seed Can Change the World
-            </h2>
-            <p className="mt-4 text-[16px] leading-[1.65] text-brand-ink">
-              God's Word is the seed that has the power to transform lives. Every time someone
-              download a Bible, a seed is planted. And every time that person opens their Bibles,
-              that seed is watered.
-            </p>
-            <p className="mt-4 text-[16px] leading-[1.65] text-brand-ink">
-              Join our growing community of sowers by making a monthly recurring commitment to reach
-              everyone, everywhere with God's Word.
-            </p>
-            <img
-              src={give2}
-              alt="One seed can change the world"
-              className="mkt-img mt-8 w-full max-w-md"
-              loading="lazy"
-            />
-          </div>
 
           <div id="give_now" className="mkt-form-card">
             <img src={givePay} alt="Payment header" className="w-full h-auto rounded-2xl mb-4" loading="lazy" />
             <h3 className="m-0 text-2xl font-extrabold text-brand-blue">Give Now</h3>
             <p className="mt-2 text-[15px] text-brand-ink">Enter ESPEES amount</p>
+
+            <div className="mkt-amount-tiles" aria-hidden>
+              <span className="mkt-amount-tile" />
+              <span className="mkt-amount-tile" />
+              <span className="mkt-amount-tile" />
+            </div>
 
             <label className="block mt-4">
               <span className="mkt-label">Amount</span>
@@ -285,7 +263,24 @@ export default function GivePage({
         </div>
       </section>
 
-      <section id="gift_card" className="mkt-section pt-0">
+      <section id="give_intro" className="mkt-section mkt-band-white">
+        <div className="mkt-container max-w-3xl">
+          <h2 className="m-0 text-[32px] font-extrabold text-brand-blue leading-tight">
+            One Seed Can Change the World
+          </h2>
+          <p className="mt-4 text-[16px] leading-[1.65] text-brand-ink">
+            God&apos;s Word is the seed that has the power to transform lives. Every time someone
+            download a Bible, a seed is planted. And every time that person opens their Bibles, that
+            seed is watered.
+          </p>
+          <p className="mt-4 text-[16px] leading-[1.65] text-brand-ink">
+            Join our growing community of sowers by making a monthly recurring commitment to reach
+            everyone, everywhere with God&apos;s Word.
+          </p>
+        </div>
+      </section>
+
+      <section id="gift_card" className="mkt-section mkt-band-alt">
         <div className="mkt-container grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
           <div>
             <h3 className="m-0 text-2xl font-extrabold text-brand-blue">Gift a Card</h3>

@@ -11,6 +11,9 @@ import { WebsiteDownloadRoute } from './websitePaths';
 import './appMarketingPages.css';
 
 import aboutImg from '../../assets/about/image1.png';
+import aboutImg2 from '../../assets/about/about-2.png';
+import aboutImg3 from '../../assets/about/about-3.png';
+import aboutImg4 from '../../assets/about/about-4.png';
 import aboutImg5 from '../../assets/about/about-5.png';
 import aboutImg6 from '../../assets/about/about-6.png';
 import aboutImg7 from '../../assets/about/about-7.png';
@@ -24,6 +27,9 @@ import link from '../../assets/about/link.png';
 const INTRO =
   'All around the world, over 3 billion people are daily reading and sharing the #1 best-selling  daily devotional “Rhapsody of Realities” by Rev. (Dr.) Chris Oyakhilome, DSc. Dsc. DD., completely free. From the desk of the same author, comes the ROR Bible+, a fully interactive Bible reader developed to deliver the most exhilarating study experience!';
 
+const MISSION_BODY =
+  'Apart from the usual electronic stationery features like note-keeping, highlighting, bookmarking etc., this novel app is built on solid interactive technologies that avail users of the opportunities to take advantage of the following extra-special features: inspirational articles reading, access all online or download versions to use offline. Read, study, meditate and triumph in life while you share your victories verses with friends.';
+
 type AboutPageProps = {
   isModal?: boolean;
   onClose?: () => void;
@@ -36,6 +42,34 @@ function BulletList({ items }: { items: string[] }) {
         <li key={item}>{item}</li>
       ))}
     </ul>
+  );
+}
+
+function SplitFeatureBand({
+  id,
+  tone,
+  image,
+  imageAlt,
+  title,
+  children,
+}: {
+  id?: string;
+  tone: 'white' | 'alt';
+  image: string;
+  imageAlt: string;
+  title: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <section id={id} className={`mkt-section mkt-band-${tone === 'white' ? 'white' : 'alt'}`}>
+      <div className="mkt-container mkt-split-47">
+        <img src={image} alt={imageAlt} className="mkt-img w-full" loading="lazy" />
+        <div>
+          <h3 className="m-0 text-[28px] font-extrabold text-brand-blue leading-tight">{title}</h3>
+          <div className="mt-4">{children}</div>
+        </div>
+      </div>
+    </section>
   );
 }
 
@@ -55,7 +89,7 @@ function ExtraFeatureSection({
   imageAlt?: string;
 }) {
   return (
-    <section id={id} className="mkt-section">
+    <section id={id} className="mkt-section mkt-band-white">
       <div className="mkt-container">
         <Card className="mkt-card !p-0 overflow-hidden">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-0">
@@ -126,7 +160,7 @@ export default function AboutPage({
   ];
 
   const PageInner = (
-    <div className="website-root app-marketing-page bg-brand-pale text-brand-navy font-montserrat">
+    <div className="website-root app-marketing-page bg-white text-brand-navy font-montserrat">
       <PageHero
         variant="flat"
         eyebrow="About"
@@ -138,7 +172,7 @@ export default function AboutPage({
         description={INTRO}
       />
 
-      <section id="mission" className="mkt-section">
+      <section id="mission" className="mkt-section mkt-band-white">
         <div className="mkt-container grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           <img
             src={aboutImg}
@@ -150,44 +184,40 @@ export default function AboutPage({
             <h2 className="m-0 text-[32px] font-extrabold text-brand-blue leading-tight">
               More Than Just A Bible!
             </h2>
-            <p className="mt-4 text-[16px] leading-[1.65] text-brand-ink">
-              Apart from the usual electronic stationery features like note-keeping, highlighting,
-              bookmarking etc., this novel app is built on solid interactive technologies that avail
-              users of the opportunities to take advantage of the following extra-special features:
-              inspirational articles reading, access all online or download versions to use
-              offline. Read, study, meditate and triumph in life while you share your victories
-              verses with friends.
-            </p>
+            <p className="mt-4 text-[16px] leading-[1.65] text-brand-ink">{MISSION_BODY}</p>
           </div>
         </div>
       </section>
 
-      <section className="mkt-section pt-0">
-        <div className="mkt-container grid grid-cols-1 md:grid-cols-3 gap-6">
-          <article id="read" className="mkt-card">
-            <h3 className="m-0 text-lg font-extrabold text-brand-navy">Read The Rhapsody Bible Daily</h3>
-            <div className="mt-4">
-              <BulletList items={readBullets} />
-            </div>
-          </article>
-          <article id="meditate" className="mkt-card">
-            <h3 className="m-0 text-lg font-extrabold text-brand-navy">
-              Study &amp; Meditate On Rhapsody Bible
-            </h3>
-            <div className="mt-4">
-              <BulletList items={studyBullets} />
-            </div>
-          </article>
-          <article id="hub" className="mkt-card">
-            <h3 className="m-0 text-lg font-extrabold text-brand-navy">
-              Use the Rhapsody Bible with Friends
-            </h3>
-            <div className="mt-4">
-              <BulletList items={friendsBullets} />
-            </div>
-          </article>
-        </div>
-      </section>
+      <SplitFeatureBand
+        id="read"
+        tone="alt"
+        image={aboutImg2}
+        imageAlt="Read The Rhapsody Bible Daily"
+        title="Read The Rhapsody Bible Daily"
+      >
+        <BulletList items={readBullets} />
+      </SplitFeatureBand>
+
+      <SplitFeatureBand
+        id="meditate"
+        tone="white"
+        image={aboutImg3}
+        imageAlt="Study & Meditate On Rhapsody Bible"
+        title="Study & Meditate On Rhapsody Bible"
+      >
+        <BulletList items={studyBullets} />
+      </SplitFeatureBand>
+
+      <SplitFeatureBand
+        id="hub"
+        tone="alt"
+        image={aboutImg4}
+        imageAlt="Use the Rhapsody Bible with Friends"
+        title="Use the Rhapsody Bible with Friends"
+      >
+        <BulletList items={friendsBullets} />
+      </SplitFeatureBand>
 
       <ExtraFeatureSection
         title="Customize Your Free Rhapsody Bible"
@@ -204,7 +234,7 @@ export default function AboutPage({
         ]}
       />
 
-      <section className="mkt-section">
+      <section className="mkt-section mkt-band-alt">
         <div className="mkt-container">
           <Card className="mkt-card">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
@@ -230,7 +260,10 @@ export default function AboutPage({
                   </li>
                   <li>
                     Keep current on our blog:{' '}
-                    <a className="text-brand-blue font-semibold inline-flex items-center gap-1" href="https://blog.rorbible.plus">
+                    <a
+                      className="text-brand-blue font-semibold inline-flex items-center gap-1"
+                      href="https://blog.rorbible.plus"
+                    >
                       <img src={link} alt="" className="w-4 h-4" />
                       https://blog.rorbible.plus
                     </a>
@@ -273,13 +306,13 @@ export default function AboutPage({
         imageAlt="More Than 2000+ Int’l Languages"
       />
 
-      <section className="mkt-section pt-0">
+      <section className="mkt-section mkt-band-alt pt-0">
         <div className="mkt-container">
           <img src={appreciation} alt="Appreciation block" className="mkt-img w-full" loading="lazy" />
         </div>
       </section>
 
-      <section className="mkt-section pt-0">
+      <section className="mkt-section mkt-band-white pt-0">
         <div className="mkt-container grid grid-cols-1 md:grid-cols-2 gap-6">
           <article id="stories" className="mkt-card">
             <img src={stories} alt="Stories" className="mkt-img mb-4" loading="lazy" />
@@ -298,7 +331,7 @@ export default function AboutPage({
         </div>
       </section>
 
-      <section className="mkt-navy-band">
+      <section className="mkt-cta-band">
         <div className="mkt-container">
           <h2 className="m-0 text-[32px] font-extrabold text-white">Stories</h2>
           <p className="mt-3 text-[16px] text-white/90 max-w-xl mx-auto">

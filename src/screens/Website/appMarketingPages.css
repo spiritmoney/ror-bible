@@ -81,6 +81,50 @@
   padding: 64px 0;
 }
 
+.app-marketing-page .mkt-band-white {
+  background: var(--ds-white, #fff);
+}
+
+.app-marketing-page .mkt-band-alt {
+  background: var(--ds-pale, #f6fbfd);
+}
+
+.app-marketing-page .mkt-cta-band {
+  background: var(--ds-blue, #19688b);
+  color: var(--ds-white, #fff);
+  text-align: center;
+  padding: 64px 0;
+}
+
+.app-marketing-page .mkt-split-47 {
+  display: grid;
+  grid-template-columns: minmax(0, 4fr) minmax(0, 7fr);
+  gap: 48px;
+  align-items: center;
+}
+
+.app-marketing-page .mkt-split-56 {
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+  gap: 48px;
+  align-items: stretch;
+}
+
+.app-marketing-page .mkt-split-65 {
+  display: grid;
+  grid-template-columns: minmax(0, 6fr) minmax(0, 5fr);
+  gap: 48px;
+  align-items: start;
+}
+
+@media (max-width: 799px) {
+  .app-marketing-page .mkt-split-47,
+  .app-marketing-page .mkt-split-56,
+  .app-marketing-page .mkt-split-65 {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
 .app-marketing-page .mkt-hero-flat {
   background: var(--ds-mist, #eaf5f8);
   padding: 72px 0 64px;
@@ -219,9 +263,45 @@
   transform: translateY(-4px);
 }
 
-.app-marketing-page .mkt-navy-band {
-  background: var(--ds-navy, #0b2f44);
-  color: #fff;
-  text-align: center;
-  padding: 64px 24px;
+.app-marketing-page .mkt-amount-tiles {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.app-marketing-page .mkt-amount-tile {
+  min-height: 48px;
+  border-radius: 12px;
+  border: 1px solid #a9cfdb;
+  background: var(--ds-white, #fff);
+  cursor: pointer;
+}
+
+.app-marketing-page .mkt-amount-tile:focus-visible {
+  outline: 3px solid var(--ds-orange, #ff5900);
+  outline-offset: 3px;
+}
+
+.app-marketing-page .mkt-form-photo {
+  min-height: 260px;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.app-marketing-page .mkt-partner-photo {
+  min-height: 320px;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+@media (min-width: 800px) {
+  .app-marketing-page .mkt-partner-photo {
+    min-height: 520px;
+  }
+  .app-marketing-page .mkt-form-photo {
+    min-height: 260px;
+  }
 }
