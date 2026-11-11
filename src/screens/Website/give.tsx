@@ -18,6 +18,21 @@ type GivePageProps = {
   onClose?: () => void;
 };
 
+function EspeesBlock({ code, address }: { code: string; address: string }) {
+  return (
+    <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-4 text-[15px] text-brand-ink">
+      <div>
+        <p className="m-0 font-semibold text-brand-ink">ESPEES Code:</p>
+        <p className="mt-1 font-extrabold text-brand-navy">{code}</p>
+      </div>
+      <div>
+        <p className="m-0 font-semibold text-brand-ink">ESPEES Address</p>
+        <p className="mt-1 font-medium break-all">{address}</p>
+      </div>
+    </div>
+  );
+}
+
 export default function GivePage({
   isModal = false,
   onClose,
@@ -152,230 +167,137 @@ export default function GivePage({
   }, [location.pathname, location.search, navigate]);
 
   const PageInner = (
-    <div className="website-root app-marketing-page bg-brand-pale text-brand-navy font-montserrat">
+    <div
+      ref={containerRef}
+      tabIndex={-1}
+      className="website-root app-marketing-page bg-brand-pale text-brand-navy font-montserrat"
+    >
       <PageHero
+        variant="flat"
         eyebrow="Give"
-        title="Partner with the mission"
-        description="Your generosity helps put God's Word in more hands—every gift plants seed that grows for generations."
+        title={
+          <>
+            One Seed Can <span className="text-brand-orange">Change the World</span>
+          </>
+        }
+        description="Intimacy with God has the power to transform lives, and living generously is one way we can partner with him. When you surrender to God by living generously, it changes lives."
       />
-      <section className="relative w-full overflow-hidden">
-        <img
-          src={giveBanner}
-          alt="Give banner"
-          className="w-full h-auto object-cover"
-          draggable={false}
-        />
-        <div className="absolute inset-y-0 left-0 flex items-center pl-[7%] md:pl-[7%] lg:pl-[7%]">
+
+      <section className="mkt-section pt-0">
+        <div className="mkt-container relative overflow-hidden rounded-3xl">
+          <img src={giveBanner} alt="Give banner" className="mkt-img w-full max-h-[280px] object-cover" loading="lazy" />
           <img
             src={giveText}
             alt="Give - Let's reach everyone, everywhere, every day"
-            className="w-[100%] min-w-[170px] max-w-[520px] h-auto"
-            draggable={false}
+            className="absolute left-6 bottom-6 max-w-[min(100%,420px)] h-auto rounded-2xl shadow-brand-card"
+            loading="lazy"
           />
         </div>
       </section>
 
-      <section
-        className="max-w-6xl mx-auto px-6 py-14 text-center"
-        id="give_intro"
-      >
-        <p className="text-[25px] md:text-[28px] leading-[1.42] font-medium text-[#2B2B2B]">
-          Intimacy with God has the power to transform lives, and living
-          generously is one way we can partner with him. When you surrender to
-          God by living generously, it changes lives.
-        </p>
-      </section>
-
-      <section className="bg-[#6D757E] py-14 md:py-16" id="seed">
-        <div className="max-w-6xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 items-center gap-10 lg:gap-12">
-          <div className="text-white">
-            <h2 className="text-[38px] md:text-[50px] leading-[1.05] font-medium tracking-[-0.02em] max-w-[560px]">
+      <section id="seed" className="mkt-section">
+        <div className="mkt-container grid grid-cols-1 lg:grid-cols-[6fr_5fr] gap-12 items-start">
+          <div id="give_intro">
+            <h2 className="m-0 text-[32px] font-extrabold text-brand-blue leading-tight">
               One Seed Can Change the World
             </h2>
-            <p className="mt-6 text-[20px] md:text-[29px] leading-[1.48] font-normal text-white/90 max-w-[560px]">
-              God's Word is the seed that has the power to transform lives.
-              Every time someone download a Bible, a seed is planted. And every
-              time that person opens their Bibles, that seed is watered.
+            <p className="mt-4 text-[16px] leading-[1.65] text-brand-ink">
+              God's Word is the seed that has the power to transform lives. Every time someone
+              download a Bible, a seed is planted. And every time that person opens their Bibles,
+              that seed is watered.
             </p>
-            <p className="mt-5 text-[20px] md:text-[29px] leading-[1.48] font-normal text-white/90 max-w-[560px]">
-              Join our growing community of sowers by making a monthly recurring
-              commitment to reach everyone, everywhere with God's Word.
+            <p className="mt-4 text-[16px] leading-[1.65] text-brand-ink">
+              Join our growing community of sowers by making a monthly recurring commitment to reach
+              everyone, everywhere with God's Word.
             </p>
-          </div>
-
-          <div className="flex justify-center lg:justify-end">
             <img
               src={give2}
               alt="One seed can change the world"
-              className="w-full max-w-[430px] rounded-[26px] object-cover"
-              draggable={false}
+              className="mkt-img mt-8 w-full max-w-md"
+              loading="lazy"
             />
           </div>
-        </div>
-      </section>
 
-      <section className="max-w-6xl mx-auto px-6 py-16 md:py-20" id="give_now">
-        <h3 className="text-center mb-5 text-[40px] md:text-[56px] leading-[1.1] font-semibold text-[#222]">
-          Give Now
-        </h3>
+          <div id="give_now" className="mkt-form-card">
+            <img src={givePay} alt="Payment header" className="w-full h-auto rounded-2xl mb-4" loading="lazy" />
+            <h3 className="m-0 text-2xl font-extrabold text-brand-blue">Give Now</h3>
+            <p className="mt-2 text-[15px] text-brand-ink">Enter ESPEES amount</p>
 
-        <div className="mt-16 app-marketing-form-card max-w-[980px] mx-auto px-4 md:px-10 pb-10 pt-20">
-          <div className="w-full flex justify-center -mt-[120px] mb-8">
-            <div className="w-full max-w-[420px]">
-              <img
-                src={givePay}
-                alt="Payment header"
-                className="w-full h-auto rounded-t-[24px]"
-                draggable={false}
-              />
-
-              <div className="bg-[#EAE7E9] rounded-b-[24px] px-3 pb-4 pt-3 shadow-[0_8px_18px_rgba(0,0,0,0.08)]">
-                <p className="text-center text-[22px] text-[#3E3E3E] font-medium">
-                  Enter ESPEES amount
-                </p>
-
-                <div className="mt-3 h-[58px] rounded-[16px] bg-white px-4 flex items-center gap-3">
-                  <span
-                    className="h-[35px] w-[34px] flex items-center justify-center"
-                    aria-hidden="true"
-                  >
-                    <svg
-                      width="34"
-                      height="35"
-                      viewBox="0 0 34 35"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        fillRule="evenodd"
-                        clipRule="evenodd"
-                        d="M16.6378 0C25.8271 0 33.2758 7.44866 33.2758 16.638C33.2758 23.5554 29.0546 29.4858 23.0477 31.9957H32.0529V35H1.22247V31.9957H10.2281C4.22117 29.4858 0 23.5554 0 16.638C0 7.44866 7.44866 0 16.638 0H16.6378ZM2.40758 15.1358H10.3862V8.91921H21.1197V12.0151H13.5148V15.0863H21.1197V18.1822H13.4679L13.5148 22.8527H21.1197V25.9013H10.3862V18.1402H2.40758C3.15834 25.337 9.24229 30.9466 16.6378 30.9466C24.0334 30.9466 30.1173 25.337 30.8681 18.1402H22.7288V15.1359H30.8681C30.1173 7.93912 24.0335 2.32959 16.6378 2.32959C9.24229 2.32959 3.15834 7.93925 2.40758 15.1359V15.1358Z"
-                        fill="#515151"
-                      />
-                    </svg>
-                  </span>
-                  <input
-                    type="number"
-                    min="0"
-                    step="0.01"
-                    value={amount}
-                    onChange={e => setAmount(e.target.value)}
-                    className="w-full bg-transparent outline-none text-[44px] leading-none font-semibold text-[#4D4D4D]"
-                    aria-label="Enter ESPEES amount"
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-5 max-w-[760px] mx-auto">
-            <div>
-              <label className="block text-[18px] md:text-[22px] font-semibold text-[#707070] mb-2">
-                Espees or KingsPay:
-              </label>
-              <select
-                value={platform}
-                onChange={e =>
-                  setPlatform(e.target.value as 'espees' | 'kingspay')
-                }
-                className="w-full h-[54px] rounded-[14px] px-4 text-[18px] md:text-[22px] bg-white border border-transparent outline-none text-[#646464]"
-              >
-                <option value="espees">Espees</option>
-                <option value="kingspay" disabled>
-                  KingsPay
-                </option>
-              </select>
-            </div>
-            <div>
-              <label className="block text-[18px] md:text-[22px] font-semibold text-[#707070] mb-2">
-                Enter Fullname:
-              </label>
+            <label className="block mt-4">
+              <span className="mkt-label">Amount</span>
               <input
-                type="text"
-                placeholder="Enter your fullname here"
-                value={payerId}
-                onChange={e => setPayerId(e.target.value)}
-                className="w-full h-[54px] rounded-[14px] px-4 text-[18px] md:text-[22px] bg-white border border-transparent outline-none"
+                type="number"
+                min="0"
+                step="0.01"
+                value={amount}
+                onChange={(e) => setAmount(e.target.value)}
+                className="mkt-input text-xl font-bold"
+                aria-label="Enter ESPEES amount"
               />
+            </label>
+
+            <div className="mt-4 grid grid-cols-1 gap-4">
+              <label className="block">
+                <span className="mkt-label">Espees or KingsPay:</span>
+                <select
+                  value={platform}
+                  onChange={(e) => setPlatform(e.target.value as 'espees' | 'kingspay')}
+                  className="mkt-input"
+                >
+                  <option value="espees">Espees</option>
+                  <option value="kingspay" disabled>
+                    KingsPay
+                  </option>
+                </select>
+              </label>
+              <label className="block">
+                <span className="mkt-label">Enter Fullname:</span>
+                <input
+                  type="text"
+                  placeholder="Enter your fullname here"
+                  value={payerId}
+                  onChange={(e) => setPayerId(e.target.value)}
+                  className="mkt-input"
+                />
+              </label>
             </div>
-          </div>
 
-          <div className="flex justify-center mt-7">
-            <button
-              type="button"
-              disabled={isSubmitting}
-              onClick={submitEspeesPayment}
-              className="h-[56px] px-14 rounded-[16px] bg-[#1E96AF] text-white text-[20px] md:text-[24px] font-semibold tracking-[0.01em]"
-            >
-              {isSubmitting ? 'PROCESSING...' : 'GIVE NOW'}
-            </button>
-          </div>
+            <div className="mt-6">
+              <button
+                type="button"
+                disabled={isSubmitting}
+                onClick={submitEspeesPayment}
+                className="mkt-btn-give w-full sm:w-auto"
+              >
+                {isSubmitting ? 'PROCESSING...' : 'GIVE NOW'}
+              </button>
+            </div>
 
-          {paymentMessage ? (
-            <p className="text-center mt-4 text-[15px] md:text-[16px] text-[#5D5D5D]">
-              {paymentMessage}
-            </p>
-          ) : null}
+            {paymentMessage ? (
+              <p className="mt-4 text-[15px] text-brand-ink">{paymentMessage}</p>
+            ) : null}
 
-          <div className="max-w-[760px] mx-auto mt-9 flex items-center gap-4 text-[#5B5B5B]">
-            <div className="h-[1px] bg-[#CFCBCF] flex-1" />
-            <span className="text-[20px] md:text-[28px] leading-none font-medium">
+            <p className="mt-8 text-center text-sm font-semibold text-brand-ink uppercase tracking-wide">
               Other Options
-            </span>
-            <div className="h-[1px] bg-[#CFCBCF] flex-1" />
-          </div>
-
-          <div className="max-w-[760px] mx-auto mt-8 grid grid-cols-1 md:grid-cols-[1fr_auto_2fr] items-center gap-5 text-[#4F4F4F]">
-            <div>
-              <p className="text-[20px] md:text-[26px] font-semibold text-[#8D8C8F]">
-                ESPEES Code:
-              </p>
-              <p className="text-[19px] md:text-[43px] leading-[1.1] font-semibold text-[#4F4F4F] mt-1">
-                {ESPEES_CODE}
-              </p>
-            </div>
-
-            <div className="hidden md:block w-[1px] h-[74px] bg-[#C7C7C9]" />
-
-            <div>
-              <p className="text-[19px] md:text-[26px] font-semibold text-[#8D8C8F]">
-                ESPEES Address
-              </p>
-              <p className="text-[18px] md:text-[30px] leading-[1.25] font-medium text-[#4F4F4F] mt-1 break-all">
-                {ESPEES_ADDRESS}
-              </p>
-            </div>
+            </p>
+            <EspeesBlock code={ESPEES_CODE} address={ESPEES_ADDRESS} />
           </div>
         </div>
       </section>
 
-      <section className="max-w-6xl mx-auto px-6 py-20 md:py-24" id="gift_card">
-        <div className="grid grid-cols-1 lg:grid-cols-2 items-center gap-12 lg:gap-16">
+      <section id="gift_card" className="mkt-section pt-0">
+        <div className="mkt-container grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
           <div>
-            <h3 className="text-[40px] md:text-[56px] leading-[1.05] font-semibold text-[#242424]">
-              Gift a Card
-            </h3>
-            <p className="mt-6 text-[20px] md:text-[28px] leading-[1.5] font-normal text-[#4A4A4A] max-w-[620px]">
-              Gift inspirational and uplifting Cards to your love ones,
-              colleague friends and more. send them these faith fill and
-              encouraging Gift Card to lighting up their day.
+            <h3 className="m-0 text-2xl font-extrabold text-brand-blue">Gift a Card</h3>
+            <p className="mt-4 text-[16px] leading-[1.65] text-brand-ink">
+              Gift inspirational and uplifting Cards to your love ones, colleague friends and more.
+              send them these faith fill and encouraging Gift Card to lighting up their day.
             </p>
-            <button
-              type="button"
-              className="mt-8 inline-flex items-center rounded-full border border-[#979797] px-6 py-2 text-[16px] leading-none font-semibold text-[#474747]"
-            >
+            <button type="button" className="mt-6 mkt-btn-give">
               SEE MORE
             </button>
           </div>
-
-          <div className="flex justify-center lg:justify-end">
-            <img
-              src={giveGiftCard}
-              alt="Gift card"
-              className="w-full max-w-[430px] rounded-[26px] object-cover"
-              draggable={false}
-            />
-          </div>
+          <img src={giveGiftCard} alt="Gift card" className="mkt-img w-full max-w-md mx-auto" loading="lazy" />
         </div>
       </section>
 
@@ -414,8 +336,8 @@ export default function GivePage({
   return (
     <WebsiteLayout>
       <WebsitePageMeta
-        title="Give | ROR Bible+"
-        description="Partner with the mission through generosity—help put God's Word in every language and every home."
+        title="Rhapsody Bible"
+        description="The Ultimate Bible Reader & Study Resource Tool!"
       />
       {PageInner}
     </WebsiteLayout>

@@ -164,19 +164,20 @@ body.no-scroll{overflow:hidden}
 .website-root .uc7be1b{font-size: 18px; font-weight: 700}
 .website-root .u74c5a0{font-size: 15px; font-weight: 700; color: #FFFFFF}
 .website-root .u6971eb{background: #0B2F44; color: #FFFFFF}
-.website-root .uf37b3e{max-width: 1200px; margin: 0 auto; padding: 0 32px; box-sizing: border-box; padding-top: 64px; padding-bottom: 40px; display: flex; flex-wrap: wrap; gap: 40px; width: 100%; min-width: 0}
-.website-root .uf3b8e2{display: grid; flex: 1 1 0; min-width: 0; gap: 40px; grid-template-columns: repeat(4, minmax(0, 1fr)); align-items: start}
-.website-root .u1fd187{display: flex; flex-direction: column; gap: 16px; flex: 1.4 1 300px; min-width: 0}
-.website-root .u8092d7{display: flex; align-items: center; gap: 15px; flex: none}
-.website-root .u2ab49f{height: 56px; width: auto; display: block; flex: none}
-.website-root .u55f5af{height: 56px; display: flex; flex-direction: column; justify-content: space-between}
-.website-root .ub6a52a{display: block; font-size: 32px; line-height: 0.683; font-weight: 800; color: #FFFFFF; letter-spacing: -0.3px; white-space: nowrap}
-.website-root .u329d23{display: block; font-size: 19px; line-height: 0.683; font-weight: 500; color: #BDE9F0; white-space: nowrap}
-.website-root .u5fe755{margin: 0; font-size: 15px; font-weight: 600; color: #FFFFFF}
-.website-root .uc56752{display: flex; flex-direction: column; gap: 12px; flex: 1 1 180px}
-.website-root .u902935{margin: 0 0 4px; font-size: 14px; font-weight: 700; color: #FFFFFF; letter-spacing: 0.6px; text-transform: uppercase}
-.website-root .ua95fd4{border-top: 1px solid rgba(255,255,255,0.14)}
-.website-root .u94c3c2{max-width: 1200px; margin: 0 auto; padding: 0 32px; box-sizing: border-box; padding-top: 20px; padding-bottom: 24px; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; font-size: 13px; color: #B5D3DE}
+.website-root .uf37b3e{max-width: 1120px; margin: 0 auto; padding: 80px 24px 0; box-sizing: border-box; display: flex; flex-wrap: wrap; gap: 48px; width: 100%; min-width: 0; align-items: start}
+.website-root .uf3b8e2{display: grid; flex: 1 1 0; min-width: 0; gap: 48px; grid-template-columns: repeat(4, minmax(0, 1fr)); align-items: start}
+.website-root .u1fd187{display: flex; flex-direction: column; gap: 12px; flex: 1.4 1 260px; min-width: 0; max-width: 100%}
+.website-root .u8092d7{display: flex; align-items: flex-start; gap: 12px; flex-wrap: wrap; max-width: 100%}
+.website-root .u2ab49f{height: 48px; width: auto; display: block; flex: none}
+.website-root .u55f5af{display: flex; flex-direction: column; gap: 2px; min-width: 0; max-width: 220px}
+.website-root .ub6a52a{display: block; font-size: 24px; line-height: 1.1; font-weight: 800; color: #FFFFFF; letter-spacing: -0.3px; white-space: normal}
+.website-root .u329d23{display: block; font-size: 14px; line-height: 1.25; font-weight: 500; color: #BDE9F0; white-space: normal; max-width: 220px}
+.website-root .u5fe755{margin: 0; font-size: 14px; font-weight: 600; color: #FFFFFF; max-width: 220px; line-height: 1.45}
+.website-root .uc56752{display: flex; flex-direction: column; gap: 12px; flex: 1 1 180px; min-width: 0}
+.website-root .u902935{margin: 0 0 4px; font-size: 12px; font-weight: 700; color: #FFFFFF; letter-spacing: 0.12em; text-transform: uppercase}
+.website-root .u8c9a26{font-size: 14px; min-height: 32px; display: inline-flex; align-items: center}
+.website-root .ua95fd4{border-top: 1px solid rgba(255,255,255,0.18); margin-top: 56px}
+.website-root .u94c3c2{max-width: 1120px; margin: 0 auto; padding: 22px 24px; box-sizing: border-box; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; font-size: 13px; color: #B5D3DE}
 .website-root .ub77529{display: flex; gap: 20px}
 .website-root .uc0e2c3{color: #B5D3DE}
 .website-root .ua7c764{min-height: 100%; font-family: Montserrat, system-ui, sans-serif; color: #0B2F44; background: #F6FBFD; width: 100%; min-width: 0; display: flex; flex-direction: column}
@@ -352,14 +353,14 @@ body.no-scroll{overflow:hidden}
 
 /* ===== Responsive ===== */
 @media (min-width:1100px){
-  .website-root .uf37b3e{flex-wrap:nowrap;align-items:flex-start}
-  .website-root .u1fd187{flex:0 0 260px;max-width:280px}
-  .website-root .uf3b8e2{flex:1 1 0}
+  .website-root .uf37b3e{display:grid;grid-template-columns:1.4fr repeat(4,minmax(0,1fr));gap:48px;align-items:start}
+  .website-root .uf3b8e2{display:contents}
+  .website-root .u1fd187{max-width:100%}
 }
 @media (max-width:1099px){
-  .website-root .uf37b3e{flex-direction:column}
+  .website-root .uf37b3e{flex-direction:column;display:flex}
   .website-root .u1fd187{flex:none;width:100%;max-width:none}
-  .website-root .uf3b8e2{width:100%;grid-template-columns:repeat(2,minmax(0,1fr))}
+  .website-root .uf3b8e2{width:100%;grid-template-columns:repeat(2,minmax(0,1fr));display:grid}
 }
 @media (max-width:699px){
   .website-root .uf3b8e2{grid-template-columns:minmax(0,1fr)}

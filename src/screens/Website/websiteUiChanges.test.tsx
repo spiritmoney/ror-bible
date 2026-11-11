@@ -43,6 +43,16 @@ function wrap(ui: React.ReactElement, path = '/') {
 }
 
 describe('footer marketing columns', () => {
+  it('uses 1120px grid with brand plus four link columns at wide widths', () => {
+    const { container } = render(
+      <MemoryRouter>
+        <Footer />
+      </MemoryRouter>
+    );
+    expect(container.querySelector('.uf37b3e')).toBeInTheDocument();
+    expect(container.querySelector('.uf3b8e2')).toBeInTheDocument();
+  });
+
   it('has Follow us as a fourth column without Blog or Store', () => {
     const { container } = render(
       <MemoryRouter>
@@ -81,6 +91,14 @@ describe('web product hero mockup', () => {
     const { container } = render(<ProductHeroMonitorMockup />);
     expect(container.querySelector('.u21ba85')).toBeInTheDocument();
     expect(container.querySelector('.ud68c8f')).toBeInTheDocument();
+  });
+});
+
+describe('partner translator form', () => {
+  it('shows submit without cancel toggle', () => {
+    render(wrap(<Partner />, '/partner'));
+    expect(screen.getAllByRole('button', { name: /^submit$/i }).length).toBeGreaterThanOrEqual(1);
+    expect(screen.queryByRole('button', { name: /cancel/i })).not.toBeInTheDocument();
   });
 });
 

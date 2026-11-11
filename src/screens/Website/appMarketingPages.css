@@ -64,3 +64,164 @@
     padding-right: 0.75rem;
   }
 }
+
+/* —— Marketing page layout (1120 container, flat hero) —— */
+.app-marketing-page .mkt-container {
+  max-width: 1120px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 24px;
+  padding-right: 24px;
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+}
+
+.app-marketing-page .mkt-section {
+  padding: 64px 0;
+}
+
+.app-marketing-page .mkt-hero-flat {
+  background: var(--ds-mist, #eaf5f8);
+  padding: 72px 0 64px;
+}
+
+.app-marketing-page .mkt-hero-flat .mkt-h1 {
+  margin: 16px 0 0;
+  font-size: 52px;
+  line-height: 1.1;
+  font-weight: 800;
+  color: var(--ds-blue, #19688b);
+  letter-spacing: -0.02em;
+}
+
+@media (max-width: 799px) {
+  .app-marketing-page .mkt-hero-flat .mkt-h1 {
+    font-size: 36px;
+  }
+}
+
+.app-marketing-page .mkt-hero-intro {
+  margin: 16px 0 0;
+  max-width: 640px;
+  font-size: 16px;
+  line-height: 1.65;
+  color: var(--ds-ink, #3d5566);
+}
+
+.app-marketing-page .mkt-eyebrow {
+  margin: 0;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ds-blue, #19688b);
+}
+
+.app-marketing-page .mkt-eyebrow-bar {
+  display: block;
+  width: 40px;
+  height: 4px;
+  margin-top: 8px;
+  border-radius: 2px;
+  background: var(--ds-orange, #ff5900);
+}
+
+.app-marketing-page .mkt-card {
+  border-radius: 24px;
+  padding: 28px;
+  background: #fff;
+  box-shadow: 0 24px 60px rgba(11, 47, 68, 0.1);
+  border: 1px solid #d5e7ee;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.app-marketing-page .mkt-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 30px 70px rgba(11, 47, 68, 0.14);
+}
+
+.app-marketing-page .mkt-img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 24px;
+  object-fit: cover;
+}
+
+.app-marketing-page .mkt-form-card {
+  border-radius: 24px;
+  padding: 36px;
+  background: #fff;
+  box-shadow: 0 24px 60px rgba(11, 47, 68, 0.1);
+  border: 1px solid #d5e7ee;
+}
+
+.app-marketing-page .mkt-label {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ds-navy, #0b2f44);
+}
+
+.app-marketing-page .mkt-input,
+.app-marketing-page .mkt-form-card select {
+  width: 100%;
+  min-height: 48px;
+  padding: 0 16px;
+  border-radius: 12px;
+  border: 1px solid #a9cfdb;
+  background: var(--ds-pale, #f6fbfd);
+  font: inherit;
+  font-size: 15px;
+  color: var(--ds-navy, #0b2f44);
+  box-sizing: border-box;
+}
+
+.app-marketing-page .mkt-btn-give {
+  min-height: 48px;
+  padding: 0 28px;
+  border: 0;
+  border-radius: 999px;
+  background: var(--ds-orange, #ff5900);
+  color: var(--ds-navy, #0b2f44);
+  font-size: 16px;
+  font-weight: 800;
+  cursor: pointer;
+  box-shadow: 0 8px 20px rgba(255, 89, 0, 0.25);
+}
+
+.app-marketing-page .mkt-btn-give:hover {
+  background: var(--ds-navy, #0b2f44);
+  color: #fff;
+}
+
+.app-marketing-page .mkt-btn-give:focus-visible {
+  outline: 3px solid var(--ds-orange, #ff5900);
+  outline-offset: 3px;
+}
+
+.app-marketing-page .mkt-category-card {
+  border-radius: 24px;
+  padding: 20px;
+  background: #fff;
+  box-shadow: 0 24px 60px rgba(11, 47, 68, 0.1);
+  border: 1px solid #d5e7ee;
+  text-align: center;
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--ds-navy, #0b2f44);
+  transition: transform 0.2s ease;
+}
+
+.app-marketing-page .mkt-category-card:hover {
+  transform: translateY(-4px);
+}
+
+.app-marketing-page .mkt-navy-band {
+  background: var(--ds-navy, #0b2f44);
+  color: #fff;
+  text-align: center;
+  padding: 64px 24px;
+}

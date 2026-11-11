@@ -9,6 +9,8 @@ type Props = {
   description?: string;
   actions?: React.ReactNode;
   className?: string;
+  /** Flat mist band without decorative waves (About / Partner / Give). */
+  variant?: 'default' | 'flat';
 };
 
 export function HeroWaves() {
@@ -47,7 +49,21 @@ export function HeroWaves() {
   );
 }
 
-export function Eyebrow({ children }: { children: React.ReactNode }) {
+export function Eyebrow({
+  children,
+  flat = false,
+}: {
+  children: React.ReactNode;
+  flat?: boolean;
+}) {
+  if (flat) {
+    return (
+      <>
+        <p className="mkt-eyebrow">{children}</p>
+        <span className="mkt-eyebrow-bar" aria-hidden />
+      </>
+    );
+  }
   return (
     <>
       <p className="text-xs font-extrabold tracking-[0.14em] uppercase text-brand-blue">
@@ -65,7 +81,24 @@ export default function PageHero({
   description,
   actions,
   className,
+  variant = 'default',
 }: Props) {
+  if (variant === 'flat') {
+    return (
+      <section className={clsx('mkt-hero-flat', className)}>
+        <div className="mkt-container">
+          <Eyebrow flat>{eyebrow}</Eyebrow>
+          <h1 className="mkt-h1">{title}</h1>
+          {subtitle ? (
+            <p className="mt-3 text-xl font-bold text-brand-navy">{subtitle}</p>
+          ) : null}
+          {description ? <p className="mkt-hero-intro">{description}</p> : null}
+          {actions ? <div className="mt-8 flex flex-wrap gap-4">{actions}</div> : null}
+        </div>
+      </section>
+    );
+  }
+
   return (
     <Section pad="hero" className={clsx('relative bg-brand-pale overflow-hidden', className)}>
       <HeroWaves />
