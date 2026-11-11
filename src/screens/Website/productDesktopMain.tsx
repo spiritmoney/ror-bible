@@ -21,8 +21,8 @@ import f7 from '../../assets/website/new/feature-07-study-utilities.jpg';
 import f8 from '../../assets/website/new/feature-08-roar.jpg';
 import f9 from '../../assets/website/new/feature-09-colour-search.jpg';
 import f10 from '../../assets/website/new/feature-10-study-workspace.jpg';
-import bibleOnline from '../../assets/website/new/bible-online-reader.jpg';
 import DesktopDownloadButtons from '../../components/Website/DesktopDownloadButtons';
+import ProductHeroMonitorMockup from './ProductHeroMonitorMockup';
 import icon from '../../assets/website/new/ror-bible-plus-icon.png';
 
 export default function ProductDesktopMain() {
@@ -38,11 +38,7 @@ export default function ProductDesktopMain() {
 <p className="u62020b">Premium Bible Reader 2.0 for Windows, MacOS and Linux: a distraction-free workspace for ministers, teachers and Bible scholars who want depth and focus.</p>
 <DesktopDownloadButtons variant="product-hero" />
 </div>
-<div className="u1c0f7c"><div className="u20d6c8">
-<div className="u21ba85"><img className="u064c8c" src={bibleOnline} alt="ROR Bible+ study workspace on a desktop monitor" /></div>
-<div className="u8df831"></div>
-<div className="ud68c8f"></div>
-</div></div>
+<ProductHeroMonitorMockup />
 </div>
 </section><section className="u0f44dd">
 <div className="wrap u22987b">

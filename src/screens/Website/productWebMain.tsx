@@ -21,7 +21,7 @@ import f7 from '../../assets/website/new/feature-07-study-utilities.jpg';
 import f8 from '../../assets/website/new/feature-08-roar.jpg';
 import f9 from '../../assets/website/new/feature-09-colour-search.jpg';
 import f10 from '../../assets/website/new/feature-10-study-workspace.jpg';
-import bibleOnline from '../../assets/website/new/bible-online-reader.jpg';
+import ProductHeroMonitorMockup from './ProductHeroMonitorMockup';
 import lwStore from '../../assets/website/new/loveworld-app-store.png';
 import googlePlay from '../../assets/website/new/google-play.png';
 import appStore from '../../assets/website/new/app-store.png';
@@ -43,13 +43,7 @@ export default function ProductWebMain() {
 <p className="u62020b">Bible Online brings the full Premium Bible Reader 2.0 experience right to your browser: no downloads, no installations. At work, in church or on the go, the Word is always one tab away.</p>
 <div className="u35d18b"><Link className="u5c4e6f" to="/bible-online">Open Bible Online</Link><span className="u59de19">rhapsodybible.web.app</span></div>
 </div>
-<div className="u1c0f7c"><div className="u852f09"><div className="u4fb701">
-<div className="u0e98fb">
-<span className="uc68d82"></span><span className="u2f8b50"></span><span className="u9aaf65"></span>
-<span className="ufb1ef0">rhapsodybible.web.app</span>
-</div>
-<img className="u024490" src={bibleOnline} alt="ROR Bible+ Bible Online study workspace showing Genesis 2 with Strong's numbers, cross references and the audio player" />
-</div></div></div>
+<ProductHeroMonitorMockup imageAlt="ROR Bible+ Bible Online study workspace showing Genesis 2 with Strong's numbers, cross references and the audio player" />
 </div>
 </section><section className="u0f44dd">
 <div className="wrap u22987b">
