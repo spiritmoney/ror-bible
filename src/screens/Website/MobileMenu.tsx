@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { LoginRoute } from 'navigation/routes';
 import { useWebsiteMenu } from './websiteMenuContext';
 import {
@@ -18,9 +18,6 @@ export default function MobileMenu() {
   const appShell = isAppShell();
   const { mobileOpen, setMobileOpen } = useWebsiteMenu();
   const closeRef = useRef<HTMLButtonElement>(null);
-  const location = useLocation();
-  const navigate = useNavigate();
-
   useEffect(() => {
     if (mobileOpen) {
       closeRef.current?.focus();
@@ -32,11 +29,6 @@ export default function MobileMenu() {
     document.querySelectorAll('[data-open-menu]').forEach((o) => {
       o.setAttribute('aria-expanded', 'false');
     });
-  };
-
-  const openModal = (path: string) => {
-    closeMenu();
-    navigate(path, { state: { backgroundLocation: location } });
   };
 
   if (appShell) {
@@ -121,48 +113,21 @@ export default function MobileMenu() {
           <Link className="ub51bfc" to={WebsiteDownloadRoute} onClick={closeMenu}>
             Download
           </Link>
-          <a
-            className="ub51bfc"
-            href="#"
-            onClick={(e) => {
-              e.preventDefault();
-              openModal('/about');
-            }}
-          >
+          <Link className="ub51bfc" to="/about" onClick={closeMenu}>
             About
-          </a>
+          </Link>
           <div className="ubf62a4">
             <Link className="uc637f1" to="/bible-online" onClick={closeMenu}>
               Bible Online
             </Link>
-            <a className="uc637f1" href="https://blog.rorbible.plus">
-              Blog
-            </a>
-            <a
-              className="uc637f1"
-              href="#"
-              onClick={(e) => {
-                e.preventDefault();
-                openModal('/partner');
-              }}
-            >
+            <Link className="uc637f1" to="/partner" onClick={closeMenu}>
               Partner
-            </a>
-            <a
-              className="uc637f1"
-              href="#"
-              onClick={(e) => {
-                e.preventDefault();
-                openModal('/give');
-              }}
-            >
+            </Link>
+            <Link className="uc637f1" to="/give" onClick={closeMenu}>
               Give
-            </a>
+            </Link>
             <Link className="uc637f1" to={`${WebsiteDownloadRoute}#support`} onClick={closeMenu}>
               Support
-            </Link>
-            <Link className="uc637f1" to="/store" onClick={closeMenu} data-allowed="1">
-              Store
             </Link>
             <Link className="uc637f1" to={`${WebsiteDownloadRoute}#contact`} onClick={closeMenu} data-allowed="1">
               Contact

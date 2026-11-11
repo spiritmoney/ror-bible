@@ -7,6 +7,7 @@ import FeaturesSection from "./featuresAbout";
 import { scrollToHash } from "../../utils/scrolToHash"; // fixed import
 import PageHero from "./PageHero";
 import Section from "./Section";
+import WebsitePageMeta from "./WebsitePageMeta";
 import "./appMarketingPages.css";
 
 
@@ -300,5 +301,13 @@ export default function AboutPage({ isModal = false, onClose }: AboutPageProps):
     );
   }
 
-  return <WebsiteLayout>{PageInner}</WebsiteLayout>;
+  return (
+    <WebsiteLayout>
+      <WebsitePageMeta
+        title="About ROR Bible+ | ROR Bible+"
+        description="All around the world, over 3 billion people are daily reading and sharing Rhapsody of Realities—explore the ROR Bible+ interactive Bible reader."
+      />
+      {PageInner}
+    </WebsiteLayout>
+  );
 }

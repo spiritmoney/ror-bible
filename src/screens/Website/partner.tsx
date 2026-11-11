@@ -11,6 +11,7 @@ import FeaturesSection, { ProductFeature } from './featureProduct';
 import { scrollToHash } from '../../utils/scrolToHash';
 import PageHero from './PageHero';
 import Section from './Section';
+import WebsitePageMeta from './WebsitePageMeta';
 import './appMarketingPages.css';
 
 import partnerBanner from '../../assets/partner/partnerBanner.svg';
@@ -433,5 +434,13 @@ export default function PartnerPage({
     );
   }
 
-  return <WebsiteLayout>{PageInner}</WebsiteLayout>;
+  return (
+    <WebsiteLayout>
+      <WebsitePageMeta
+        title="Partner with ROR Bible+ | ROR Bible+"
+        description="Publishers, churches, content partners, translators and volunteers—discover ways to participate in the ROR Bible+ mission."
+      />
+      {PageInner}
+    </WebsiteLayout>
+  );
 }

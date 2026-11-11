@@ -4,6 +4,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { HEADER_HEIGHT } from './constants';
 import WebsiteLayout from './WebsiteLayout';
 import PageHero from './PageHero';
+import WebsitePageMeta from './WebsitePageMeta';
 import './appMarketingPages.css';
 
 import giveBanner from '../../assets/give/giveBanner.png';
@@ -410,5 +411,13 @@ export default function GivePage({
     );
   }
 
-  return <WebsiteLayout>{PageInner}</WebsiteLayout>;
+  return (
+    <WebsiteLayout>
+      <WebsitePageMeta
+        title="Give | ROR Bible+"
+        description="Partner with the mission through generosity—help put God's Word in every language and every home."
+      />
+      {PageInner}
+    </WebsiteLayout>
+  );
 }

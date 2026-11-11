@@ -83,12 +83,6 @@ export default function DownloadMain() {
 <span className="u5ab6fa">Follow ROR Bible+ on KingsChat for updates and announcements.</span>
 <span className="u219613">Follow on KingsChat<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#19688B" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
 </a>
-<a className="uff3b82" href="https://blog.rorbible.plus">
-<div className="ue39012"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#19688B" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2z"/><path d="M4 21V5"/><path d="M9 7h6"/></svg></div>
-<span className="u164584">Blog</span>
-<span className="u5ab6fa">Keep current with news, guides and stories on our blog.</span>
-<span className="u219613">Read the blog<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#19688B" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
-</a>
 </div>
 </div>
 </section><section className="ud2629f" id="contact">

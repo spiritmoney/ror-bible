@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { useUser } from 'hooks/useUser';
 import ProfileMenu from 'components/ProfileMenu';
 import { LoginRoute } from 'navigation/routes';
@@ -23,7 +23,6 @@ export default function Header() {
   const megaRef = useRef<HTMLDivElement>(null);
   const triggerRef = useRef<HTMLAnchorElement>(null);
   const location = useLocation();
-  const navigate = useNavigate();
   const { user } = useUser();
   const path = location.pathname;
   const appShell = isAppShell();
@@ -38,6 +37,7 @@ export default function Header() {
       path === WebsiteProductVoiceRoute,
     pricing: path === WebsitePricingRoute,
     download: path === WebsiteDownloadRoute,
+    about: path === '/about' || path.startsWith('/about/'),
   };
   const navClass = (active: boolean) => (active ? 'uddbb6d' : 'u406034');
   const navMarker = (active: boolean) =>
@@ -73,10 +73,6 @@ export default function Header() {
     return () => document.removeEventListener('click', onDoc);
   }, [megaOpen, setMegaOpen]);
 
-  const openModal = (path: string) => {
-    navigate(path, { state: { backgroundLocation: location } });
-  };
-
   const openMenu = () => {
     setMobileOpen(true);
     const openBtn = document.querySelector('[data-open-menu]');
@@ -108,32 +104,15 @@ export default function Header() {
             </Link>
             {!appShell && (
               <>
-            <a className="u2ee821" href="https://blog.rorbible.plus">
-              Blog
-            </a>
-            <a
-              className="u2ee821"
-              href="#"
-              onClick={(e) => {
-                e.preventDefault();
-                openModal('/partner');
-              }}
-            >
-              Partner
-            </a>
-            <a
-              className="u2ee821"
-              href="#"
-              onClick={(e) => {
-                e.preventDefault();
-                openModal('/give');
-              }}
-            >
-              Give
-            </a>
-            <Link className="u2ee821" to={`${WebsiteDownloadRoute}#support`}>
-              Support
-            </Link>
+                <Link className="u2ee821" to="/partner">
+                  Partner
+                </Link>
+                <Link className="u2ee821" to="/give">
+                  Give
+                </Link>
+                <Link className="u2ee821" to={`${WebsiteDownloadRoute}#support`}>
+                  Support
+                </Link>
               </>
             )}
             <span className="u07d673" aria-hidden="true" />
@@ -142,9 +121,6 @@ export default function Header() {
                 <path d="M4 5h16v11H9l-5 4z" />
               </svg>
               Sign in with KingsChat
-            </Link>
-            <Link className="u2ee821" to="/store" data-allowed="1">
-              Store
             </Link>
             <Link className="u2ee821" to={`${WebsiteDownloadRoute}#contact`} data-allowed="1">
               Contact
@@ -194,20 +170,13 @@ export default function Header() {
               Download
               {navMarker(navActive.download)}
             </Link>
-            <a
-              className="u406034"
-              href="#"
-              aria-expanded="false"
-              onClick={(e) => {
-                e.preventDefault();
-                openModal('/about');
-              }}
-            >
+            <Link className={navClass(navActive.about)} to="/about">
               About
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0B2F44" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                 <path d="M6 9l6 6 6-6" />
               </svg>
-            </a>
+              {navMarker(navActive.about)}
+            </Link>
           </nav>
           )}
           <div className="u133d27">
